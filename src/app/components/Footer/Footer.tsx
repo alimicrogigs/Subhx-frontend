@@ -10,11 +10,13 @@ export default function Footer() {
   return (
     <>
       <Container isborder={false} topborder={true}>
-        <div className="relative w-[100%]  flex justify-between px-[120px]  pt-[30px] text-textdull">
+        <div className="relative w-[100%]  flex justify-between px-[120px]  pt-[30px] text-textdull ">
           {/* quick links */}
           <div>
             <ul className="flex flex-col gap-[10px]">
-              <h1 className="pb-[15px] text-white">Quick Links</h1>
+              <h1 className="pb-[15px] text-white font-poppinsBold">
+                Quick Links
+              </h1>
               <li>Blog</li>
               <li>Fees</li>
               <li>Trading</li>
@@ -25,7 +27,9 @@ export default function Footer() {
           {/* resources */}
           <div>
             <ul className="flex flex-col gap-[10px]">
-              <h1 className="pb-[15px] text-white">Resources</h1>
+              <h1 className="pb-[15px] text-white font-poppinsBold">
+                Resources
+              </h1>
               <li>Risk Disclosures</li>
               <li>Terms Of Use</li>
               <li>Privacy Policy</li>
@@ -36,14 +40,18 @@ export default function Footer() {
           {/* referal program */}
           <div className="flex flex-col justify-between">
             <div>
-              <h1 className="pb-[15px] text-white">Referral Program</h1>
+              <h1 className="pb-[15px] text-white font-poppinsBold">
+                Referral Program
+              </h1>
               <p>
                 Refer friends and earn a generous flat 50% <br />
                 commission on their trading fees.
               </p>
             </div>
             <div>
-              <h1 className="pb-[15px] text-white">Risk Disclosure</h1>
+              <h1 className="pb-[15px] text-white font-poppinsBold">
+                Risk Disclosure
+              </h1>
               <p>
                 Trading in cryptocurrencies carries inherent <br />
                 risks. trade responsibly.
@@ -53,7 +61,9 @@ export default function Footer() {
         </div>
       </Container>
       <div className="mt-[50px] w-[100vw] bg-copywright h-[80px] backdrop-blur-2 mb-[100px] flex justify-between items-center text-white px-[80px]">
-        <h1>Copyright © 2023 - SubhX Infotech Pvt Ltd.</h1>
+        <h1 className="font-poppinsSemibold">
+          Copyright © 2023 - SubhX Infotech Pvt Ltd.
+        </h1>
         <div className="text-[1.8rem] flex gap-[20px]">
           <FaInstagram />
           <FaLinkedin />

@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        poppinsBold: "Poppins-Bold",
+        poppinsRegular: "Poppins-regular",
+        poppinsSemibold: "Poppins-semibold",
+        poppinsMedium: "Poppins-medium",
+      },
       colors: {
         primary: "#00090C",
         borderline: "rgba(0, 191, 255, 0.30);",
