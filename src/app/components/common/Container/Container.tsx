@@ -16,10 +16,10 @@ const Container: React.FC<ContainerProps> = ({
     <section
       className={`${
         topborder ? `border-t` : ``
-      } w-[100vw] bg-primary  border-borderline`}
+      } w-[100vw]   border-borderline `}
     >
       <div
-        className={`${styles.border_div} relative w-[95%] m-auto bg-primary ${
+        className={`${styles.border_div} relative w-[95%] m-auto  ${
           isborder ? "border-l border-r" : ""
         } border-borderline`}
       >
