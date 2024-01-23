@@ -1,8 +1,6 @@
 .border_to_design {
-  border-image: linear-gradient(#dc04ff, #00bfff) 30;
-  border-width: 2px;
-  border-style: solid;
   background-image: url(/signup/border.svg);
-  background-size: 200%;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
 }
