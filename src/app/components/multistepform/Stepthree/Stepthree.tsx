@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface StepthreeProps {
   active: boolean;
@@ -15,6 +17,34 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Log all form data to the console
+    if (adharno == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide adhar no "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+
+    // Log all form data to the console
+    if (adharotp == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide adhar OTP"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
 
     console.log({
       adharno,

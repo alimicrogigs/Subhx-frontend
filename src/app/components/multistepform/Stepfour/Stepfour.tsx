@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface StepfourProps {
   active: boolean;
@@ -10,8 +12,6 @@ interface StepfourProps {
 
 const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
   const [PANno, setPANno] = useState("");
-  const [confirmbankaccount, setconfirmbankaccount] = useState("");
-  const [ifsc, setifsc] = useState("");
 
   const handleifscfind = () => {
     // add logic to find ifsc code here
@@ -19,13 +19,25 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Log all form data to the console
-    onNextStep();
+    // Log all form data to the console
+    if (PANno == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide Pan no "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
 
     console.log({
       PANno,
-      confirmbankaccount,
-      ifsc,
     });
+    onNextStep();
   };
 
   return (

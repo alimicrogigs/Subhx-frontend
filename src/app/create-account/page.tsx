@@ -10,18 +10,30 @@ import Stepseven from "../components/multistepform/Stepseven/Stepseven";
 import Stepeight from "../components/multistepform/Stepeight/Stepeight";
 import styles from "./page.module.css";
 export default function page() {
-  const [currentstep, setcurrentstep] = useState(1);
+  const [currentstep, setcurrentstep] = useState(7);
   const handleNextStep = () => {
     // Update the current step to move to the next one
-    setcurrentstep((prevStep) => prevStep + 1);
+    setcurrentstep((prevStep) => (prevStep < 8 ? prevStep + 1 : prevStep));
+  };
+  const handlePrevStep = () => {
+    // Update the current step to move to the previous one, but not below 1
+    setcurrentstep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
   return (
     <section
       style={{
         backgroundImage: "url(/signup/signupbg.svg)",
       }}
-      className="w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
+      className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
     >
+      <div
+        onClick={handlePrevStep}
+        style={{
+          backgroundImage: "url(/signup/backarrow.svg)",
+          display: `${currentstep == 1 ? "none" : "block"}`,
+        }}
+        className="absolute w-[50px] h-[50px]  top-[50px] left-[50px] bg-center bg-no-repeat"
+      ></div>
       <div className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}>
         <Stepone
           onNextStep={handleNextStep}

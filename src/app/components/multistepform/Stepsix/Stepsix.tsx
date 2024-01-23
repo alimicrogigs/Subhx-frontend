@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface StepsixProps {
   active: boolean;
@@ -18,7 +20,61 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Log all form data to the console
+    if (bankaccount == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide bank account no"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
 
+    if (confirmbankaccount == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please confirm bank account no"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    //...//
+    if (bankaccount != confirmbankaccount) {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Your Bank Account does not match with confirm bank account no "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    //...//
+    if (ifsc == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide IFSC NO."
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
     console.log({
       bankaccount,
       confirmbankaccount,

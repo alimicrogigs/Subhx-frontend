@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface StepsevenProps {
   active: boolean;
@@ -13,7 +15,20 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Log all form data to the console
-
+    // Log all form data to the console
+    if (VPAaddress == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide VPA address"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
     console.log({
       VPAaddress,
     });

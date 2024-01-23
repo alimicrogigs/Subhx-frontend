@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface SteptwoProps {
   active: boolean;
@@ -18,6 +20,34 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Log all form data to the console
+    // this validate that email is provided or not
+    if (phonecode == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Mobile verification code is empty"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    // this validate that email is provided or not
+    if (emailcode == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Email verification code is empty"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
 
     console.log({
       phonecode,
