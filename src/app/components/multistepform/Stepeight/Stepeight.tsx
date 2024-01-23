@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 
-export default function Stepeight() {
+interface stepeightprops {
+  active: boolean;
+  onNextStep: () => void;
+}
+
+const Stepeight: React.FC<stepeightprops> = ({ active, onNextStep }) => {
+  const gotohome = () => {
+    onNextStep();
+  };
+
   return (
-    <div className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white">
+    <div
+      style={{ display: active ? "flex" : "none" }}
+      className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
+    >
       {/* ............. heading ............. */}
 
       <div
@@ -28,4 +40,5 @@ export default function Stepeight() {
       {/* ... */}
     </div>
   );
-}
+};
+export default Stepeight;

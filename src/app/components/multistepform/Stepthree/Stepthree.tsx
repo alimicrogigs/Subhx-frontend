@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
 
-export default function Stepsix() {
+interface StepthreeProps {
+  active: boolean;
+  onNextStep: () => void;
+}
+
+const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
   const [adharno, setadharno] = useState("");
   const [adharotp, setadharotp] = useState("");
 
@@ -15,11 +20,13 @@ export default function Stepsix() {
       adharno,
       adharotp,
     });
+    onNextStep();
   };
 
   return (
     <form
       action=""
+      style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
     >
       {/* ............. heading ............. */}
@@ -97,4 +104,6 @@ export default function Stepsix() {
       </div>
     </form>
   );
-}
+};
+
+export default Stepthree;

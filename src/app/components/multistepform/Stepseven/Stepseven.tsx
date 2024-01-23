@@ -2,7 +2,12 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 
-export default function Steptwo() {
+interface StepsevenProps {
+  active: boolean;
+  onNextStep: () => void;
+}
+
+const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
   const [VPAaddress, setVPAaddress] = useState("");
 
   const handleSubmit = (e: any) => {
@@ -12,11 +17,13 @@ export default function Steptwo() {
     console.log({
       VPAaddress,
     });
+    onNextStep();
   };
 
   return (
     <form
       action=""
+      style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
     >
       {/* ............. heading ............. */}
@@ -53,4 +60,5 @@ export default function Steptwo() {
       </div>
     </form>
   );
-}
+};
+export default Stepseven;

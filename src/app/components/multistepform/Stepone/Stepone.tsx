@@ -2,7 +2,12 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 
-export default function StepOne() {
+interface SteponeProps {
+  active: boolean;
+  onNextStep: () => void;
+}
+
+const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -47,11 +52,13 @@ export default function StepOne() {
       referralOptional,
       agreeTerms,
     });
+    onNextStep();
   };
 
   return (
     <form
       action=""
+      style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
     >
       {/* ............. heading ............. */}
@@ -140,4 +147,5 @@ export default function StepOne() {
       </div>
     </form>
   );
-}
+};
+export default Stepone;
