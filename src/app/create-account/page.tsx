@@ -22,7 +22,7 @@ export default function page() {
       }}
       className="w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
     >
-      <div className={`${styles.border_to_design} w-[32%] h-[90%] `}>
+      <div className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}>
         <Stepone
           onNextStep={handleNextStep}
           active={currentstep == 1 ? true : false}

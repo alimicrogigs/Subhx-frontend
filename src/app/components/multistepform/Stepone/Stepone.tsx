@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface SteponeProps {
   active: boolean;
@@ -34,13 +36,104 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // Log all form data to the console
-    if (password != retypePassword) {
-      alert("password not match ");
+
+    // this validate that email is provided or not
+    if (email == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide Your Email address "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
       return;
     }
+    // this validate that email is valid
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="this is not a valid email "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+
+    // this validate that validate agree terms
+    if (!agreeTerms) {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please Accept our Terms and Condition "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    // this validate is password match or confirm password does not match ...
+    if (password != retypePassword) {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Password Does not match ! "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    // this validate that password and confirm password is empty
     if (password == "" || retypePassword == "") {
-      alert("password is empty  ");
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Password or Confirm-Password should not be empty"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+
+    // this validate that terms and condiotn is signed or not
+    if (phoneNumber == "") {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide Your Mobile no! "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    if (phoneNumber.length < 10) {
+      toast.custom(
+        <ToasterCustom
+          gif="/signup/tick.svg"
+          message="Please provide 10 digit mobile no "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
       return;
     }
 
