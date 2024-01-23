@@ -24,7 +24,7 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
     if (phonecode == "") {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Mobile verification code is empty"
         />,
         {
@@ -38,7 +38,7 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
     if (emailcode == "") {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Email verification code is empty"
         />,
         {
@@ -65,7 +65,7 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
       {/* ............. heading ............. */}
 
       <div>
-        <h1 className="text-[2rem] font-poppinsSemibold">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
           Security Authentication
         </h1>
 

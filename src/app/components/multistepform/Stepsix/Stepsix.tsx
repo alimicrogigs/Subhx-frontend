@@ -22,10 +22,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
     // Log all form data to the console
     if (bankaccount == "") {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Please provide bank account no"
-        />,
+        <ToasterCustom type="error" message="Please provide bank account no" />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -36,10 +33,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
 
     if (confirmbankaccount == "") {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Please confirm bank account no"
-        />,
+        <ToasterCustom type="error" message="Please confirm bank account no" />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -51,7 +45,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
     if (bankaccount != confirmbankaccount) {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Your Bank Account does not match with confirm bank account no "
         />,
         {
@@ -64,10 +58,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
     //...//
     if (ifsc == "") {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Please provide IFSC NO."
-        />,
+        <ToasterCustom type="error" message="Please provide IFSC NO." />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -92,7 +83,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
       {/* ............. heading ............. */}
 
       <div>
-        <h1 className="text-[1.6rem] font-poppinsSemibold">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
           Bank Account Verification
         </h1>
 

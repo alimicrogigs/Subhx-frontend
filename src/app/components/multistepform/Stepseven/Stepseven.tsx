@@ -18,10 +18,7 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
     // Log all form data to the console
     if (VPAaddress == "") {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Please provide VPA address"
-        />,
+        <ToasterCustom type="error" message="Please provide VPA address" />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -44,7 +41,7 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
       {/* ............. heading ............. */}
 
       <div>
-        <h1 className="text-[1.8rem] font-poppinsSemibold">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
           Finish Your UPI Verification
         </h1>
 

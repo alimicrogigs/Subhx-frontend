@@ -19,10 +19,7 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
     // Log all form data to the console
     if (adharno == "") {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Please provide adhar no "
-        />,
+        <ToasterCustom type="error" message="Please provide adhar no " />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -34,10 +31,7 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
     // Log all form data to the console
     if (adharotp == "") {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Please provide adhar OTP"
-        />,
+        <ToasterCustom type="error" message="Please provide adhar OTP" />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -62,7 +56,7 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
       {/* ............. heading ............. */}
 
       <div>
-        <h1 className="text-[1.6rem] font-poppinsSemibold">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
           KYC Documentation
         </h1>
 

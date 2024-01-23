@@ -20,6 +20,10 @@ const config: Config = {
         copywright: "rgba(0, 22, 43, 0.50);",
         textdull: "rgba(255, 255, 255, 0.60);",
       },
+      fontSize: {
+        signupheading: "2rem",
+        signupheadingmobile: "1.6rem",
+      },
     },
   },
   plugins: [],

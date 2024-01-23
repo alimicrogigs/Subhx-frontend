@@ -25,7 +25,7 @@ const Stepeight: React.FC<stepeightprops> = ({ active, onNextStep }) => {
       ></div>
 
       <div>
-        <h1 className="text-[2rem] font-poppinsSemibold mt-[50px]">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold mt-[50px] text-center">
           Congratulations!
         </h1>
 

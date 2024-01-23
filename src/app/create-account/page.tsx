@@ -8,9 +8,11 @@ import Stepfive from "../components/multistepform/Stepfive/Stepfive";
 import Stepsix from "../components/multistepform/Stepsix/Stepsix";
 import Stepseven from "../components/multistepform/Stepseven/Stepseven";
 import Stepeight from "../components/multistepform/Stepeight/Stepeight";
+import Link from "next/link";
+
 import styles from "./page.module.css";
 export default function page() {
-  const [currentstep, setcurrentstep] = useState(7);
+  const [currentstep, setcurrentstep] = useState(1);
   const handleNextStep = () => {
     // Update the current step to move to the next one
     setcurrentstep((prevStep) => (prevStep < 8 ? prevStep + 1 : prevStep));
@@ -26,14 +28,23 @@ export default function page() {
       }}
       className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
     >
+      <Link href="/">
+        <div
+          style={{
+            backgroundImage: "url(/signup/crossbutton.svg)",
+          }}
+          className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:right-[50px] right-[25px] bg-center bg-no-repeat crossarrow"
+        ></div>
+      </Link>
       <div
         onClick={handlePrevStep}
         style={{
           backgroundImage: "url(/signup/backarrow.svg)",
           display: `${currentstep == 1 ? "none" : "block"}`,
         }}
-        className="absolute w-[50px] h-[50px]  top-[50px] left-[50px] bg-center bg-no-repeat"
+        className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:left-[50px] left-[25px] bg-center bg-no-repeat"
       ></div>
+
       <div className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}>
         <Stepone
           onNextStep={handleNextStep}

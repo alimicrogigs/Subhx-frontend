@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
+import Link from "next/link";
 
 interface SteponeProps {
   active: boolean;
@@ -41,7 +42,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     if (email == "") {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Please provide Your Email address "
         />,
         {
@@ -54,10 +55,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     // this validate that email is valid
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="this is not a valid email "
-        />,
+        <ToasterCustom type="error" message="this is not a valid email " />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -70,7 +68,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     if (!agreeTerms) {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Please Accept our Terms and Condition "
         />,
         {
@@ -83,10 +81,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     // this validate is password match or confirm password does not match ...
     if (password != retypePassword) {
       toast.custom(
-        <ToasterCustom
-          gif="/signup/tick.svg"
-          message="Password Does not match ! "
-        />,
+        <ToasterCustom type="error" message="Password Does not match ! " />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -98,7 +93,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     if (password == "" || retypePassword == "") {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Password or Confirm-Password should not be empty"
         />,
         {
@@ -113,7 +108,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     if (phoneNumber == "") {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Please provide Your Mobile no! "
         />,
         {
@@ -126,7 +121,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     if (phoneNumber.length < 10) {
       toast.custom(
         <ToasterCustom
-          gif="/signup/tick.svg"
+          type="error"
           message="Please provide 10 digit mobile no "
         />,
         {
@@ -157,13 +152,15 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
       {/* ............. heading ............. */}
 
       <div>
-        <h1 className="text-[2rem] font-poppinsSemibold">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
           Create Your Account
         </h1>
 
         <p className="text-[.8rem] text-center">
           Already have an account?
-          <span className="ml-[90px] text-[#00BFFF]">Login</span>
+          <Link href="/login">
+            <span className="ml-[90px] text-[#00BFFF]">Login</span>
+          </Link>
         </p>
       </div>
       {/* ............. heading end ............. */}

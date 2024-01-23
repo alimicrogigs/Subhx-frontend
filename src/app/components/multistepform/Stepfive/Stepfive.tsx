@@ -25,7 +25,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
     >
       {/* ............. heading ............. */}
       <div>
-        <h1 className="text-[1.6rem] font-poppinsSemibold">
+        <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
           KYC Documentation
         </h1>
         <p className="text-[.8rem] text-center">Record your 10 seconds video</p>
