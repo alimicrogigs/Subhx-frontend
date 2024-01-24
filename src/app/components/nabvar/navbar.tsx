@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function navbar() {
   return (
@@ -17,12 +18,14 @@ export default function navbar() {
           </li>
           <li className="flex items-center">Refer & Rewardss</li>
           <li className="flex items-center ">
-            <div
-              style={{ backgroundImage: "url(/landingpage/button.svg)" }}
-              className="px-[35px] py-[15px] bg-contain bg-no-repeat bg-center"
-            >
-              SIGN IN
-            </div>
+            <Link href="/login">
+              <div
+                style={{ backgroundImage: "url(/landingpage/button.svg)" }}
+                className="px-[35px] py-[15px] bg-contain bg-no-repeat bg-center"
+              >
+                SIGN IN
+              </div>
+            </Link>
           </li>
         </ul>
       </nav>

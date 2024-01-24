@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/nabvar/navbar";
+import toast, { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "BIT24HR",
@@ -16,8 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-primary">
       <body className="font-poppinsRegular">
-        <Navbar />
         {children}
+        <Toaster />
       </body>
     </html>
   );
