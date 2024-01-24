@@ -21,7 +21,7 @@ const config: Config = {
         textdull: "rgba(255, 255, 255, 0.60);",
       },
       fontSize: {
-        signupheading: "2rem",
+        signupheading: "1.8rem",
         signupheadingmobile: "1.6rem",
       },
     },
