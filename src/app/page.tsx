@@ -11,6 +11,11 @@ export default function page() {
       <Container isborder={true}>
         <Herolanding />
       </Container>
+      <Container isborder={true}>
+        <div className="pt-[50px]">
+          <div className="w-[100%] h-[80px] bg-[#111111]"></div>
+        </div>
+      </Container>
       <Footer />
     </>
   );
