@@ -19,6 +19,8 @@ const config: Config = {
         borderline: "rgba(0, 191, 255, 0.30);",
         copywright: "rgba(0, 22, 43, 0.50);",
         textdull: "rgba(255, 255, 255, 0.60);",
+        dashboardbg: "#00162B",
+        dashbgtrans: "rgba(0, 36, 71, 0.60)",
       },
       fontSize: {
         signupheading: "1.8rem",
