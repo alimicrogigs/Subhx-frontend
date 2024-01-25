@@ -6,7 +6,9 @@ export default function navbar() {
     <section className="w-[100vw] border-b border-borderline">
       <nav className="">
         <ul className="w-[95%] m-auto h-[70px] flex justify-between  text-white px-[5%]">
-          <li className="flex items-center">Exchange</li>
+          <Link href="/dashboard">
+            <li className="flex items-center h-[100%]">Exchange</li>
+          </Link>
           <li className="flex items-center">Funds</li>
           <li className="flex items-center">
             <div
