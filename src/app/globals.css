@@ -72,4 +72,7 @@
   .accordion-item {
     width: 90% !important;
   }
+  input::placeholder {
+    font-size: 0.7rem !important;
+  }
 }

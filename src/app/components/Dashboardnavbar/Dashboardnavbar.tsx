@@ -12,12 +12,14 @@ export default function () {
       <nav className="flex h-[100%] items-center justify-between">
         <ul className="flex gap-[50px] pl-[50px] h-[100%] ">
           <li className="flex items-center justify-center h-[100%] ">
-            <img
-              src="/landingpage/mainlogo.svg"
-              alt="logo"
-              width={100}
-              height={80}
-            />
+            <Link href="/">
+              <img
+                src="/landingpage/mainlogo.svg"
+                alt="logo"
+                width={100}
+                height={80}
+              />
+            </Link>
           </li>
           <Link href="/dashboard/exchange">
             <li className="relative h-[100%] flex items-center justify-center ">

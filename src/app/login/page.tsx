@@ -107,14 +107,14 @@ export default function page() {
         }}
         className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
       >
-        <Link href="/">
+        {/* <Link href="/">
           <div
             style={{
               backgroundImage: "url(/signup/crossbutton.svg)",
             }}
             className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:right-[50px] right-[25px]  bg-center bg-no-repeat crossarrow"
           ></div>
-        </Link>
+        </Link> */}
         <div
           className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
         >
@@ -186,7 +186,7 @@ export default function page() {
                 backgroundImage: "url(/signup/button.svg)",
               }}
               onClick={handleloginSubmit}
-              className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
+              className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
             >
               Login Account
             </div>
@@ -245,7 +245,7 @@ export default function page() {
                 backgroundImage: "url(/signup/button.svg)",
               }}
               onClick={handlevalidationsubmit}
-              className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
+              className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
             >
               Submit
             </div>

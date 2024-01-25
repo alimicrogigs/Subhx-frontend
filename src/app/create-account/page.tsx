@@ -28,14 +28,14 @@ export default function page() {
       }}
       className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
     >
-      <Link href="/">
+      {/* <Link href="/">
         <div
           style={{
             backgroundImage: "url(/signup/crossbutton.svg)",
           }}
           className="absolute sm:w-[50px] sm:h-[50px] h-[20px] w-[20px] sm:top-[50px] top-[5px] sm:right-[50px] right-[25px] bg-center bg-no-repeat crossarrow bg-contain"
         ></div>
-      </Link>
+      </Link> */}
       <div
         onClick={handlePrevStep}
         style={{

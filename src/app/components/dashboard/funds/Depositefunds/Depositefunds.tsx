@@ -9,21 +9,21 @@ export default function Depositefunds() {
   return (
     <div>
       {/* ........ */}
-      {/* <div className="mt-[50px]">
+      <div className="mt-[50px]">
         <DepositeCardone />
-      </div> */}
+      </div>
       {/* ........ */}
-      {/* <div className="mt-[20px]">
+      <div className="mt-[20px]">
         <DepositeCardtwo />
-      </div> */}
+      </div>
       {/* ........ */}
-      {/* <div className="mt-[20px]">
+      <div className="mt-[20px]">
         <DepositeCardthree />
-      </div> */}
+      </div>
       {/* ........ */}
-      {/* <div className="mt-[20px]">
+      <div className="mt-[20px]">
         <DepositeCardfour />
-      </div> */}
+      </div>
     </div>
   );
 }
