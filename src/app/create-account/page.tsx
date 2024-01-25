@@ -33,7 +33,7 @@ export default function page() {
           style={{
             backgroundImage: "url(/signup/crossbutton.svg)",
           }}
-          className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:right-[50px] right-[25px] bg-center bg-no-repeat crossarrow"
+          className="absolute sm:w-[50px] sm:h-[50px] h-[20px] w-[20px] sm:top-[50px] top-[5px] sm:right-[50px] right-[25px] bg-center bg-no-repeat crossarrow bg-contain"
         ></div>
       </Link>
       <div
@@ -45,7 +45,7 @@ export default function page() {
         className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:left-[50px] left-[25px] bg-center bg-no-repeat"
       ></div>
 
-      <div className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}>
+      <div className={`${styles.border_to_design} sm:w-[32%] w-[95%] h-[95%] `}>
         <Stepone
           onNextStep={handleNextStep}
           active={currentstep == 1 ? true : false}

@@ -7,13 +7,17 @@ import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
 
 export default function page() {
+  // form variable
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phonecode, setphonecode] = useState("");
-  const [emailcode, setemailcode] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [signmein, setSignmein] = useState(false);
 
+  // for validation
+  const [phonecode, setphonecode] = useState("");
+  const [emailcode, setemailcode] = useState("");
+
+  // for functionality front end
+  const [showPassword, setShowPassword] = useState(false);
   const [currentStep, setCurrentStep] = useState("login");
 
   const handleTogglePassword = () => {
@@ -24,15 +28,14 @@ export default function page() {
   };
   const handleresendmobilecode = (e: any) => {};
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log({
-      email,
-      password,
-    });
-  };
+  // all api and things logic goes in here
+
+  // login submit button
   const handleloginSubmit = (e: any) => {
     e.preventDefault();
+    // this function firstly have all front-ed validation to
+    //  implement yout backend logiv goes down to function
+    //...................
 
     // this validate that email is provided or not
     if (email == "") {
@@ -42,6 +45,7 @@ export default function page() {
           message="Please provide Your Email address "
         />,
         {
+          // this is custome changes you can do for toaster ,
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
         }
@@ -74,13 +78,25 @@ export default function page() {
       return;
     }
 
+    // this are all vatiable you have to handle with
+    // implement your login and so on logiv here
     console.log({
       email,
       password,
       signmein,
     });
 
+    // this will take us to code validation page
     setCurrentStep("validate");
+  };
+
+  // validation form submit button here
+  const handlevalidationsubmit = (e: any) => {
+    e.preventDefault();
+    console.log({
+      email,
+      password,
+    });
   };
 
   return (
@@ -100,7 +116,7 @@ export default function page() {
           ></div>
         </Link>
         <div
-          className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}
+          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
         >
           {/* ............................................................ */}
           {/* login form start from here  */}
@@ -115,10 +131,10 @@ export default function page() {
                 Login Your Account
               </h1>
 
-              <p className="text-[.8rem] text-center">
+              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[0px] pt-[10px]">
                 Don't have an account?{" "}
                 <Link href="/create-account">
-                  <span className="text-[#00BFFF] ml-[20px]">
+                  <span className="text-[#00BFFF] sm:ml-[20px] ml-[10px]">
                     Create Account
                   </span>
                 </Link>
@@ -147,17 +163,21 @@ export default function page() {
             {/* ..................................... */}
             {/* ..................................... */}
             <div className="w-[80%] flex gap-[10px] mt-[15px] pl-[5px] justify-between items-center">
-              <div className="flex gap-[10px]  pl-[5px] items-center">
+              <div className="flex gap-[10px]  sm:pl-[5px] pl-[0px] items-center">
                 <input
                   className="h-[100%] w-[20px]"
                   type="checkbox"
                   checked={signmein}
                   onChange={handlesignmein}
                 />
-                <p className="text-[.8rem]">Keep me signed in. </p>
+                <p className="sm:text-[.8rem] text-[.7rem]">
+                  Keep me signed in.{" "}
+                </p>
               </div>{" "}
               <Link href="/forget-password">
-                <div className="text-[.8rem]">Forget Password?</div>
+                <div className="sm:text-[.8rem] text-[.7rem]">
+                  Forget Password?
+                </div>
               </Link>
             </div>
             {/* ..................................... */}
@@ -224,7 +244,7 @@ export default function page() {
               style={{
                 backgroundImage: "url(/signup/button.svg)",
               }}
-              onClick={handleSubmit}
+              onClick={handlevalidationsubmit}
               className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
             >
               Submit

@@ -14,11 +14,14 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [retypePassword, setRetypePassword] = useState("");
-  const [showRetypePassword, setShowRetypePassword] = useState(false);
+  const [referalcode, setreferalcode] = useState("");
   const [referralOptional, setReferralOptional] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+
+  // this for togglig the password
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRetypePassword, setShowRetypePassword] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -159,7 +162,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         <p className="text-[.8rem] text-center">
           Already have an account?
           <Link href="/login">
-            <span className="ml-[90px] text-[#00BFFF]">Login</span>
+            <span className="sm:ml-[90px] ml-[20px] text-[#00BFFF]">Login</span>
           </Link>
         </p>
       </div>
@@ -226,15 +229,29 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         />
         <p className="text-[.8rem]">I agree to BIT24HR Term & Conditions </p>
       </div>
+      {/* .................................... */}
+      {referralOptional && (
+        <div className="w-[80%]  mt-[20px]">
+          <Inputfield
+            type="text"
+            value={referalcode}
+            onChange={(e) => setreferalcode(e.target.value)}
+            placeholder="Your Referal code "
+          />
+        </div>
+      )}
+
+      {/* ................................. */}
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
+        className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[20px]"
       >
         Create Account
       </div>
+      {/* .......................................... */}
     </form>
   );
 };

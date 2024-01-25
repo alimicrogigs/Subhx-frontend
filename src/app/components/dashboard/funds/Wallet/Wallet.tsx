@@ -21,7 +21,7 @@ const Wallet: React.FC<WalletProps> = ({ onAction, activebutton }) => {
   };
 
   return (
-    <div className="flex justify-between  py-[10px] ml-[5px] mr-[5px] border-b border-b-[2px] border-b-[#00BFFF] text-white ">
+    <div className="flex justify-between  py-[20px]  border-b border-b-[2px] border-b-[#00BFFF] text-white text-[1.5rem] ">
       {/* wallets balance  */}
       <div
         onClick={handleHome}

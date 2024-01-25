@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "bootstrap/dist/css/bootstrap.min.css";
 
 @font-face {
   font-family: "Poppins-Bold";
@@ -33,4 +34,42 @@
 }
 .poppins-medium {
   font-family: "Poppins-medium";
+}
+/* ............. */
+.accordion-button::after {
+  background-image: url(/dashboard/funds/accordianbutton.svg);
+  background-position: center;
+}
+.accordion-button:not(.collapsed)::after {
+  background-image: url(/dashboard/funds/accordianbutton.svg);
+  transform: rotate(180deg);
+  background-position: center;
+}
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+  transform-origin: bottom;
+}
+.accordion-button:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+.accordion-header button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+  font-family: "Poppins-semibold";
+  font-size: 1.6rem;
+  padding-left: 45%;
+}
+.accordion-body {
+  background-color: #00192f !important;
+  color: white;
+}
+/* .................. */
+@media only screen and (max-width: 500px) {
+  .accordion-item {
+    width: 90% !important;
+  }
 }

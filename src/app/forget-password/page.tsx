@@ -9,13 +9,15 @@ import Link from "next/link";
 export default function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
   const [emailcode, setemailcode] = useState("");
+
+  //  this is just for frond end toggle password
+  const [showRetypePassword, setShowRetypePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [showRetypePassword, setShowRetypePassword] = useState(false);
-
   // this ocntian confirm new passwor
-  const [retypePassword, setRetypePassword] = useState("");
+
   // to change the step
   const [currentStep, setCurrentStep] = useState("login");
 
@@ -141,7 +143,7 @@ export default function page() {
           ></div>
         </Link>
         <div
-          className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}
+          className={`${styles.border_to_design} sm:w-[32%] sm:w-[90%] sm:h-[90%] w-[95%] h-[100%]`}
         >
           {/* ............................................................ */}
           {/* login form start from here  */}
