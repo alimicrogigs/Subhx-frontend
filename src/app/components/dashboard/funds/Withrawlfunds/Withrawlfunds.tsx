@@ -9,14 +9,14 @@ export default function Withrawlfunds() {
   return (
     <>
       <section className="w-[100%]">
-        <div className="w-[45%] min-w-[600px] m-auto bg-[#041E27]  px-[30px] text-white pb-[80px]">
-          <h1 className="pt-[20px] text-white font-poppinsSemibold text-[1.6rem]">
+        <div className="sm:w-[45%] sm:min-w-[600px] w-[95%] min-w-[0px] m-auto bg-[#041E27]  px-[30px] text-white pb-[80px]">
+          <h1 className="pt-[20px] text-white font-poppinsSemibold sm:text-[1.6rem] text-[1rem]">
             Withdraw INR to Bank
           </h1>
           {/* ..... inr wallet balance ... */}
 
           {/* forst card start from here  */}
-          <div className="bg-[#07303F] mt-[30px] font-poppinsSemibold pt-[30px] px-[30px] text-[1.5rem] pb-[30px] rounded-[10px]">
+          <div className="bg-[#07303F] mt-[30px] font-poppinsSemibold pt-[30px] px-[30px] sm:text-[1.5rem] text-[1rem] pb-[30px] rounded-[10px]">
             <h1>
               {" "}
               <span className="mr-[20px] ">₹</span>INR Wallet Balance
@@ -59,7 +59,7 @@ export default function Withrawlfunds() {
           {/* end at here first card  */}
 
           {/* forst card start from here  */}
-          <div className="bg-[#07303F] mt-[30px] font-poppinsSemibold pt-[30px] px-[30px] text-[1.5rem] pb-[30px] rounded-[10px]">
+          <div className="bg-[#07303F] mt-[30px] font-poppinsSemibold pt-[30px] px-[30px] sm:text-[1.5rem] text-[1rem] pb-[30px] rounded-[10px]">
             <h1>
               {" "}
               <span className="mr-[20px] ">₹</span>Your bank accounts details :
@@ -101,9 +101,11 @@ export default function Withrawlfunds() {
           </div>
           {/* end at here first card  */}
           {/* ............. */}
-          <h1 className="mt-[20px] text-[1.5rem] pl-[30px]">Withdraw Amount</h1>
+          <h1 className="mt-[20px] sm:text-[1.5rem] text-[1rem] sm:pl-[30px] pl-[10px]">
+            Withdraw Amount
+          </h1>
           <input
-            className="focus:border-none focus:outline-none ml-[30px] py-[10px] pl-[20px] w-[90%] bg-[#0C4E66] rounded-[5px] mt-[20px]"
+            className="focus:border-none focus:outline-none sm:ml-[30px] ml-[10px] py-[10px] pl-[20px] w-[90%] bg-[#0C4E66] rounded-[5px] mt-[20px]"
             type="number"
             name="Amount"
             id="Amount"
@@ -117,7 +119,7 @@ export default function Withrawlfunds() {
             style={{
               backgroundImage: "url(/dashboard/funds/redbutton.svg)",
             }}
-            className="bg-center bg-contain bg-no-repeat text-center  ml-[30px] mr-[30px] mt-[50px] py-[20px]"
+            className="bg-center bg-contain bg-no-repeat text-center  sm:ml-[30px] ml-[0px] sm:mr-[30px] mr-[0px] sm:mt-[50px] mt-[10px] py-[20px]"
           >
             Withdraw
           </div>

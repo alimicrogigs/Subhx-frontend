@@ -5,7 +5,7 @@ import DepositeCardtwo from "./DepositeCardtwo/DepositeCardtwo";
 import DepositeCardthree from "./DepositeCardthree/DepositeCardthree";
 import DepositeCardfour from "./DepositeCardfour/DepositeCardfour";
 
-export default function xDepositefunds() {
+export default function Depositefunds() {
   return (
     <div>
       {/* ........ */}
