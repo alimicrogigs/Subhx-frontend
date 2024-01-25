@@ -22,6 +22,13 @@
   src: url("/fonts/Poppins-SemiBold.ttf");
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Poppins-thin";
+  src: url("/fonts/Poppins-Thin.ttf");
+  font-style: normal;
+}
+
 .poppins-bold {
   font-family: "Poppins-Bold" !important;
 }
@@ -33,4 +40,8 @@
 }
 .poppins-medium {
   font-family: "Poppins-medium";
+}
+
+.poppins-thin {
+  font-family: "Poppins-thin";
 }

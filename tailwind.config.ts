@@ -13,6 +13,7 @@ const config: Config = {
         poppinsRegular: "Poppins-regular",
         poppinsSemibold: "Poppins-semibold",
         poppinsMedium: "Poppins-medium",
+        poppinsThin: "Poppins-thin",
       },
       colors: {
         primary: "#00090C",
@@ -20,7 +21,11 @@ const config: Config = {
         copywright: "rgba(0, 22, 43, 0.50);",
         textdull: "rgba(255, 255, 255, 0.60);",
         dashboardbg: "#00162B",
-        dashbgtrans: "rgba(0, 36, 71, 0.60)",
+        dashbgtrans: "rgba(4, 30, 39, 1)",
+        priceGreen: "rgba(90, 215, 118, 1)",
+        priceRed: "rgba(255, 4, 4, 1)",
+        switchColor: "rgba(7, 48, 63, 1)",
+        inputBg: "rgba(232, 244, 255, 1)"
       },
       fontSize: {
         signupheading: "1.8rem",
