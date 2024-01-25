@@ -45,9 +45,11 @@
   transform: rotate(180deg);
   background-position: center;
 }
+
 .accordion-button:not(.collapsed) {
   background-color: transparent;
   transform-origin: bottom;
+  box-shadow: none !important;
 }
 .accordion-button:focus {
   border: none;
