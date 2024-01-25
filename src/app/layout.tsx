@@ -14,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-primary">
-      <body className="font-poppinsRegular">
+    <html lang="en" className="bg-maincolor">
+      <body className="font-poppinsRegular bg-maincolor">
         {children}
         <Toaster />
       </body>

@@ -21,17 +21,17 @@ const Wallet: React.FC<WalletProps> = ({ onAction, activebutton }) => {
   };
 
   return (
-    <div className="flex justify-between  py-[10px] ml-[5px] mr-[5px] border-b border-b-[2px] border-b-[#00BFFF] text-white ">
+    <div className="flex justify-between  py-[20px]  border-b border-b-[2px] border-b-[#00BFFF] text-white text-[1.5rem] sm:flex-row flex-col ">
       {/* wallets balance  */}
       <div
         onClick={handleHome}
-        className="flex gap-[20px]  items-center px-[20px]"
+        className="flex gap-[20px]  items-center sm:px-[20px] px-[0px] sm:justify-auto justify-center"
       >
         <p>Wallet Balance</p>
         <p>{user_balance}</p>
       </div>
       {/* withdrawl and deposite button  */}
-      <div className="flex gap-[20px]  items-center px-[20px] ">
+      <div className="flex sm:gap-[20px] gap-[10px]  items-center sm:px-[20px] px-[5px] ">
         <div
           onClick={handleWithdraw}
           style={{
