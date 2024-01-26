@@ -15,12 +15,18 @@ const config: Config = {
         poppinsMedium: "Poppins-medium",
       },
       colors: {
+        buttonborder: "#829CA5",
+        dashboardbgone: "#07303F",
+        activedashboardbutton: "#829CA5",
         primary: "#00090C",
+        maincolor: "#00090C",
         borderline: "rgba(0, 191, 255, 0.30);",
         copywright: "rgba(0, 22, 43, 0.50);",
         textdull: "rgba(255, 255, 255, 0.60);",
         dashboardbg: "#00162B",
         dashbgtrans: "rgba(0, 36, 71, 0.60)",
+        tableodd: "#002B50",
+        absolutetrans: "rgba(4, 30, 39, .8)",
       },
       fontSize: {
         signupheading: "1.8rem",

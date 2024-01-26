@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "bootstrap/dist/css/bootstrap.min.css";
 
 @font-face {
   font-family: "Poppins-Bold";
@@ -8,8 +9,8 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "Poppins-regular";
-  src: url("/fonts/Poppins-Regular.ttf");
+  font-family: "Poppins-medium";
+  src: url("/fonts/Poppins-Medium.ttf");
   font-style: normal;
 }
 @font-face {
@@ -22,6 +23,7 @@
   src: url("/fonts/Poppins-SemiBold.ttf");
   font-style: normal;
 }
+
 .poppins-bold {
   font-family: "Poppins-Bold" !important;
 }
@@ -33,4 +35,50 @@
 }
 .poppins-medium {
   font-family: "Poppins-medium";
+}
+/* ............. */
+.accordion-button::after {
+  background-image: url(/dashboard/funds/accordianbutton.svg);
+  background-position: center;
+}
+.accordion-button:not(.collapsed)::after {
+  background-image: url(/dashboard/funds/accordianbutton.svg);
+  transform: rotate(180deg);
+  background-position: center;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+  transform-origin: bottom;
+  box-shadow: none !important;
+}
+.accordion-button:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+.accordion-header button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+  font-family: "Poppins-semibold";
+  font-size: 1.6rem;
+  padding-left: 45%;
+}
+.accordion-body {
+  background-color: #041e27 !important;
+  color: white;
+}
+/* .................. */
+@media only screen and (max-width: 500px) {
+  .accordion-item {
+    width: 90% !important;
+  }
+  input::placeholder {
+    font-size: 0.7rem !important;
+  }
+  .accordion-header button {
+    padding-left: 43%;
+  }
 }
