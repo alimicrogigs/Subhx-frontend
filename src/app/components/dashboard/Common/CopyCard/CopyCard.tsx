@@ -29,8 +29,8 @@ const CopyCard: React.FC<copycardprops> = ({ heading, subheading }) => {
   return (
     <>
       {/* ............. */}
-      <div className="w-[45%]">
-        <div className="w-[100%]">{heading}</div>
+      <div className="sm:w-[45%] w-[100%]">
+        <div className="w-[100%] text-[1.2rem]">{heading}</div>
         <div className=" relative w-[100%] flex ">
           <div
             onClick={handleCopy}

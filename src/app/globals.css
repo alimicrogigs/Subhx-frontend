@@ -9,8 +9,8 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "Poppins-regular";
-  src: url("/fonts/Poppins-Regular.ttf");
+  font-family: "Poppins-medium";
+  src: url("/fonts/Poppins-Medium.ttf");
   font-style: normal;
 }
 @font-face {
@@ -23,6 +23,7 @@
   src: url("/fonts/Poppins-SemiBold.ttf");
   font-style: normal;
 }
+
 .poppins-bold {
   font-family: "Poppins-Bold" !important;
 }
@@ -66,7 +67,7 @@
   padding-left: 45%;
 }
 .accordion-body {
-  background-color: #00192f !important;
+  background-color: #041e27 !important;
   color: white;
 }
 /* .................. */
@@ -76,5 +77,8 @@
   }
   input::placeholder {
     font-size: 0.7rem !important;
+  }
+  .accordion-header button {
+    padding-left: 43%;
   }
 }

@@ -15,6 +15,9 @@ const config: Config = {
         poppinsMedium: "Poppins-medium",
       },
       colors: {
+        buttonborder: "#829CA5",
+        dashboardbgone: "#07303F",
+        activedashboardbutton: "#829CA5",
         primary: "#00090C",
         maincolor: "#00090C",
         borderline: "rgba(0, 191, 255, 0.30);",

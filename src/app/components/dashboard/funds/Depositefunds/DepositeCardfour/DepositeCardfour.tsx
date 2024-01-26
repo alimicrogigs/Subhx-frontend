@@ -35,7 +35,7 @@ export default function DepositeCardone() {
 
   return (
     <>
-      <DepositeCard eventKey="0" heading="UPI ID">
+      <DepositeCard eventKey="3" heading="UPI ID">
         <div className="w-[100%] flex justify-between px-[20px] py-[20px] border-[1px] rounded-[5px]">
           <p>{upi}</p>
           <div
