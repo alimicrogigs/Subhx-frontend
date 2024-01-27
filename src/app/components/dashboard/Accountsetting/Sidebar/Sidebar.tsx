@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onSectionChange }) => {
   };
 
   return (
-    <div className="w-[38%]  text-white">
+    <div className="sm:w-[38%] w-[90%] sm:m-none mx-auto text-white">
       <h1 className="pb-[50px] text-[1.5rem] font- poppinsMedium">
         Account Settings
       </h1>
@@ -31,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onSectionChange }) => {
         title="ACCOUNT SECURITY"
         logo="/dashboard/account-setting/sidebar/acountsetting.svg"
       />{" "}
-      {/* <Card
+      <Card
         action={() => handleCardClick("Currency-preference")}
         isActive={currentActiveButton == "Currency-preference" ? true : false}
         iconscale="1.1"
@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onSectionChange }) => {
         isActive={currentActiveButton == "Api-key-manager" ? true : false}
         title="API KEY MANAGER"
         logo="/dashboard/account-setting/sidebar/api.svg"
-      /> */}
+      />
       {/* ..... */}
     </div>
   );

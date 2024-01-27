@@ -101,7 +101,7 @@ export default function () {
                 >
                   {/* ....... first menu ........ */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -114,7 +114,7 @@ export default function () {
                   </Link>
                   {/* ..... second item ..... */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -127,7 +127,7 @@ export default function () {
                   </Link>
                   {/* ......... third item .......... */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -253,7 +253,7 @@ export default function () {
                   <Link href="/dashboard/account-setting">
                     <div
                       onClick={closeallmenu}
-                      className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]"
+                      className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] "
                     >
                       <div
                         style={{

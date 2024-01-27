@@ -23,7 +23,7 @@ const FundsPage: React.FC<FundsPageProps> = () => {
   };
 
   return (
-    <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-x-scroll rounded-[10px]">
+    <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
       {/* first popup  */}
       {currentpopupactive === "deposite" && (
         <div
