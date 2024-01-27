@@ -9,13 +9,15 @@ import Link from "next/link";
 export default function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
   const [emailcode, setemailcode] = useState("");
+
+  //  this is just for frond end toggle password
+  const [showRetypePassword, setShowRetypePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [showRetypePassword, setShowRetypePassword] = useState(false);
-
   // this ocntian confirm new passwor
-  const [retypePassword, setRetypePassword] = useState("");
+
   // to change the step
   const [currentStep, setCurrentStep] = useState("login");
 
@@ -132,16 +134,16 @@ export default function page() {
         }}
         className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
       >
-        <Link href="/">
+        {/* <Link href="/">
           <div
             style={{
               backgroundImage: "url(/signup/crossbutton.svg)",
             }}
             className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:right-[50px] right-[25px]  bg-center bg-no-repeat crossarrow"
           ></div>
-        </Link>
+        </Link> */}
         <div
-          className={`${styles.border_to_design} sm:w-[32%] w-[90%] h-[90%] `}
+          className={`${styles.border_to_design} sm:w-[32%]  sm:h-[90%] w-[95%] h-[100%]`}
         >
           {/* ............................................................ */}
           {/* login form start from here  */}
@@ -156,14 +158,14 @@ export default function page() {
                 Forgot Password?
               </h1>
 
-              <p className="text-[.8rem] text-center">
+              <p className="text-[.8rem] text-center mt-[10px]">
                 Please provide your registered email address. <br />
                 We'll send a verification code to the mobile <br />
                 number linked with your Aadhar.
               </p>
             </div>
             {/* ......................... */}
-            <div className="w-[80%]  mt-[50px]">
+            <div className="w-[80%] mt-[50px]">
               <Inputfield
                 type="text"
                 value={email}
@@ -177,7 +179,7 @@ export default function page() {
                 backgroundImage: "url(/signup/button.svg)",
               }}
               onClick={handlesendotp}
-              className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
+              className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
             >
               Send OTP
             </div>

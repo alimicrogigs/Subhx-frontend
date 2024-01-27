@@ -1,0 +1,3 @@
+.oddevencolor > div:nth-child(odd) {
+  background-color: #002b50;
+}
