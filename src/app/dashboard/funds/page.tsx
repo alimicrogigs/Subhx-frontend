@@ -18,6 +18,7 @@ const FundsPage: React.FC<FundsPageProps> = () => {
   return (
     <div className="w-[99%] h-[98%] max-h-[98%] bg-dashbgtrans overflow-x-scroll">
       <Wallet onAction={handleWalletAction} activebutton={currentfundsstep} />
+
       {/* three container goes here */}
       <div className="w-[100%] relative">
         {/* <Fundshome /> */}
