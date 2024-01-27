@@ -193,7 +193,7 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1.8rem]  border-b border-b-[.5px] "
+                className="w-[100%] py-[20px] pl-[20px] text-[1.2rem]  border-b border-b-[.5px] "
               >
                 Exchange
               </div>
@@ -206,17 +206,17 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1.8rem] bg-[#07303F] border-b border-b-[.5px]"
+                className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]"
               >
                 Funds
               </div>
             </Link>
-            <div className="w-[100%] py-[20px] pl-[20px] text-[1.8rem] bg-[#07303F] border-b border-b-[.5px]">
+            <div className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]">
               Refer & Rewards
             </div>
             <div
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-[100%] py-[20px] pl-[20px] text-[1.8rem] bg-[#07303F] border-b border-b-[.5px] flex gap-[20px] items-center"
+              className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px] flex gap-[20px] items-center"
             >
               <div
                 style={{
