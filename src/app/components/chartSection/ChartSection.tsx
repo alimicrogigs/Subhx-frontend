@@ -4,25 +4,25 @@ export default function ChartSection() {
   const timeframes = ["1M", "5M", "15M", "30M", "1H", "1D", "7D"];
 
   return (
-    <section className="flex sm:flex-col sm:w-[52vw] sm:mr-3 sm:rounded-lg   sm:h-[100%]">
-      <div className=" sm-w-[100%] flex sm:justify-between sm:flex-row bg-dashbgtrans sm:h-[18.57%] sm:border-b-2 border-borderline">
-        <div className="  flex sm:w-[27%] sm:flex-row sm:justify-evenly sm:items-center ">
+    <section className="flex flex-col sm:flex-col sm:w-[52vw] sm:mr-3 sm:rounded-lg   sm:h-[100%]">
+      <div className=" sm-w-[100%] flex sm:justify-between flex-col sm:flex-row bg-dashbgtrans sm:h-[18.57%] sm:border-b-2 border-borderline">
+        <div className="  flex sm:w-[27%] flex-row sm:flex-row sm:justify-evenly sm:items-center ">
           <img src="/dashboard/exchange/tron.svg" />
           <span className="font-poppinsRegular">TetherUS</span>
           <span className="font-poppins">Usdt</span>
         </div>
-        <div className="sm:w-[70%] sm:text-[0.55rem] flex sm:flex-row sm:justify-evenly">
-          <div className="flex sm:flex-col sm:justify-center sm:items-start">
+        <div className="sm:w-[70%] sm:text-[0.55rem] flex flex-row sm:flex-row sm:justify-evenly">
+          <div className="flex flex-col sm:flex-col sm:justify-center sm:items-start">
             <span>Last Price</span>
             <span className="font-poppinsSemibold sm:text-[0.6rem]">86.33</span>
           </div>
-          <div className="flex sm:flex-col sm:justify-center sm:items-start">
+          <div className="flex flex-col sm:flex-col sm:justify-center sm:items-start">
             <span>Volume</span>
             <span className="font-poppinsSemibold sm:text-[0.6rem]">
               20,000
             </span>
           </div>
-          <div className="flex sm:flex-col sm:justify-center sm:items-start">
+          <div className="flex flex-col sm:flex-col sm:justify-center sm:items-start">
             <span>Changes</span>
             <span className="font-poppinsSemibold sm:text-[0.6rem] text-priceRed">
               -9.65%

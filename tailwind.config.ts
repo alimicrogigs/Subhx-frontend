@@ -17,7 +17,7 @@ const config: Config = {
       },
       colors: {
         primary: "#00090C",
-        borderline: "rgba(0, 191, 255, 0.30);",
+        borderline: "rgba(130, 156, 165, 1);",
         copywright: "rgba(0, 22, 43, 0.50);",
         textdull: "rgba(255, 255, 255, 0.60);",
         dashboardbg: "#00162B",
@@ -25,7 +25,8 @@ const config: Config = {
         priceGreen: "rgba(90, 215, 118, 1)",
         priceRed: "rgba(255, 4, 4, 1)",
         switchColor: "rgba(7, 48, 63, 1)",
-        inputBg: "rgba(232, 244, 255, 1)"
+        inputBg: "rgba(232, 244, 255, 1)",
+        bordersBg: "rgba(130, 156, 165, 1)",
       },
       fontSize: {
         signupheading: "1.8rem",

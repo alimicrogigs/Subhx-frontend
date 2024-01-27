@@ -52,29 +52,65 @@ export default function OrderSection() {
         </span>
       </div>
       <div className="flex sm:flex-col ">
-        <span className="sm:ml-8 sm:text-[0.6rem] sm:py-1">Amount</span>
+        <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Amount</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-          <input className="sm:w-50% rounded text-black sm:h-[2rem] " />
-          <div className="sm:w-17% ">+</div>
-          <div className="sm:w-17%">-</div>
+          {/* <span
+            style={{ color: "#416384" }}
+            className="relative text-switchColor font-poppinsMedium text-[0.6rem] left-[13rem] "
+          >
+            USDT
+          </span> */}
+          <div className="flex sm:flex-row  sm:w-[60%]">
+            <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+            <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center  font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
+              USDT
+            </div>
+          </div>
+
+          <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-red-200">
+            +
+          </div>
+          <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-green-200">
+            -
+          </div>
         </div>
       </div>
 
       {selectLimit === "limit" && (
         <div className="flex sm:flex-col sm:mt-2  ">
-          <span className="sm:ml-8 sm:text-[0.6rem] sm:py-1">Price</span>
+          <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
           <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-            <input className="sm:w-50% rounded text-black sm:h-[2rem] " />
-            <div className="sm:w-17%">+</div>
-            <div className="sm:w-17%">-</div>
+            {/* <span
+              style={{ color: "#416384" }}
+              className="absolute text-switchColor font-poppinsMedium text-[0.6rem] right-[9.1rem] "
+            >
+              USDT
+            </span> */}
+            <div className="flex sm:flex-row  sm:w-[60%]">
+              <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+              <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
+                USDT
+              </div>
+            </div>
+            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-red-200">
+              +
+            </div>
+            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-green-200">
+              -
+            </div>
           </div>
         </div>
       )}
 
       <div className="flex sm:flex-col sm:mt-2 ">
-        <span className="sm:ml-8 sm:text-[0.6rem] sm:py-1">Total</span>
+        <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-          <input className="sm:w-[80%] rounded text-black sm:h-[2rem] " />
+          <div className="flex sm:flex-row  sm:w-[90%]">
+            <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+            <div className="sm:h-[2rem] sm:p-2 sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.65rem] text-dashbgtrans rounded-r">
+              INR
+            </div>
+          </div>
         </div>
       </div>
 
