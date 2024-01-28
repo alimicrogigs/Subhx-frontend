@@ -12,7 +12,7 @@ export default function MainContainer() {
 
   return (
     <>
-      <div className="w-[70%] mx-auto min-w-[900px]  flex mt-[50px] gap-[10px]">
+      <div className="relative sm:w-[70%] w-[100%] mx-auto sm:min-w-[900px] min-w-[0px]  flex mt-[50px] gap-[10px]">
         <Sidebar onSectionChange={handleSectionChange} />
         <DetailContainer currentSection={currentSection} />
       </div>
