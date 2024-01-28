@@ -1,0 +1,23 @@
+/* styles.css */
+
+/* For WebKit browsers (Chrome, Safari) */
+.customScrollbar {
+  scrollbar-width: thin; /* Set the width of the scrollbar for Firefox */
+  scrollbar-color: var(--your-scrollbar-thumb-color) var(--your-scrollbar-track-color); /* Set colors for Firefox */
+
+  /* Hide scrollbar in IE */
+  -ms-overflow-style: none;
+}
+
+.customScrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar for WebKit browsers */
+}
+
+.customScrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--your-scrollbar-thumb-color); /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Border radius of the thumb */
+}
+
+.customScrollbar::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent color of the scrollbar track for WebKit browsers */
+}
