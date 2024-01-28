@@ -44,6 +44,7 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
       adharno,
       adharotp,
     });
+    /// this function for next step
     onNextStep();
   };
 
