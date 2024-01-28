@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+import dotenv from 'dotenv';
+
+dotenv.config();
+const nextConfig = {
+    env: {
+        API_URL: 'http://192.168.1.6:8000/api/v1/',
+      },
+};
+
 
 export default nextConfig;
