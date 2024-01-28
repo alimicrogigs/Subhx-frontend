@@ -9,8 +9,8 @@ export default function Withrawlfunds() {
   return (
     <>
       <section className="w-[100%]">
-        <div className="sm:w-[45%] sm:min-w-[600px] w-[95%] min-w-[0px] m-auto bg-[#041E27]  px-[30px] text-white pb-[80px]">
-          <h1 className="pt-[20px] text-white font-poppinsSemibold sm:text-[1.6rem] text-[1rem]">
+        <div className="sm:w-[45%] sm:min-w-[600px] w-[95%] min-w-[0px] m-auto bg-[#041E27]  sm:px-[30px] px-[10px] text-white pb-[80px]">
+          <h1 className="pt-[20px] text-white font-poppinsSemibold sm:text-[1.6rem] text-[1rem] sm:mt-[0px] mt-[60px]">
             Withdraw INR to Bank
           </h1>
           {/* ..... inr wallet balance ... */}
