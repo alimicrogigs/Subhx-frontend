@@ -10,7 +10,14 @@ interface SteponeProps {
   active: boolean;
   onNextStep: () => void
 }
+const dotenv = require('dotenv');
+dotenv.config();
 const apiUrl = process.env.API_URL;
+console.log(apiUrl);
+console.log('dffd');
+
+// alert(apiUrl);
+
 const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -145,11 +152,13 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     });
 
     try{
-      const response = await axios.post(apiUrl+'register',{
+      const response = await axios.post(apiUrl+'register',
+      {
         email, phone:phoneNumber , password , confirm_password:retypePassword,
         register_type:'individual',referral_code:null
       })
-      console.log(response);
+
+      console.log(response)
 
       if (response.status === 200){
         console.log('154', response.data.data.token);
