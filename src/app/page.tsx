@@ -3,6 +3,7 @@ import Container from "./components/common/Container/Container";
 import Herolanding from "./components/Herolanding/Herolanding";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/nabvar/navbar";
+require('dotenv').config();
 
 export default function page() {
   return (
