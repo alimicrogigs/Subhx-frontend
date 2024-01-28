@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios"
+const apiUrl = process.env.API_URL;
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface SteptwoProps {
@@ -17,10 +19,9 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
     // add here logic for resend mobile code
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Log all form data to the console
-    // this validate that email is provided or not
+
     if (phonecode == "") {
       toast.custom(
         <ToasterCustom
@@ -53,7 +54,19 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
       phonecode,
       emailcode,
     });
-    onNextStep();
+    try{
+      const response = await axios.post(apiUrl+'verify-Registration/otp',{
+        reference_id:"telecom_1FmH36xper0Nq8xQf7ntl6c3s4nC3JLl", mobile_otp : phonecode,email_otp : emailcode
+      }) 
+      console.log(response);
+      if (response.status === 200) {
+        onNextStep();
+      }else {
+        console.log('OTP not valid:', response);
+      }
+    }catch(err){
+      console.log(err);
+    }
   };
 
   return (
@@ -105,7 +118,7 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
+        className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
       >
         Activate Account
       </div>

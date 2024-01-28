@@ -2,49 +2,127 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
+import axios from "axios"
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 
 interface StepthreeProps {
-  active: boolean;
-  onNextStep: () => void;
+  active: boolean,
+  onNextStep: () => void
 }
+
+const apiUrl = process.env.API_URL;
 
 const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
   const [adharno, setadharno] = useState("");
   const [adharotp, setadharotp] = useState("");
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Log all form data to the console
-    if (adharno == "") {
-      toast.custom(
-        <ToasterCustom type="error" message="Please provide adhar no " />,
-        {
-          position: "top-right", // Set the position (e.g., "top-center")
-          duration: 1000, // Set the duration in milliseconds
+  const handleAdharNoChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setadharno(value)
+
+    if (adharno.length === 11) {
+      try{
+        const token = localStorage.getItem("token")
+      // console.log("line__39" + token) 
+      // console.log("line__39" + apiUrl) 
+      const response = await axios.post(apiUrl+'aadhar-verification/sendOTP',{
+        aadhar_number:value       
+      },{ headers: { 'token': token,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer `+ token}})
+
+      console.log('requestId   :', (response.data.data.requestId));
+      if (response.status === 200) {
+        let requestId =response.data.data.requestId;
+        localStorage.setItem('requestId', (requestId));
+        console.log('Otp is valid', requestId)
+        if (response.status === 200) {
+          toast.custom(
+            <ToasterCustom
+              type="text"
+              message="OTP Send"
+            />,
+            {
+              position: "top-right", // Set the position (e.g., "top-center")
+              duration: 1000, // Set the duration in milliseconds
+            }
+          );
+          return;
         }
-      );
-      return;
+      }else {
+        console.log('OTP not valid:', response)
+        
+      }
+    }catch(err){
+      console.log(err);
+    }
+  } 
+    
+  }
+  
+  
+  
+  const handleAdharOTPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setadharotp(value)
+    // console.log(value + "__09")
+
+    console.log({
+      adharotp,
+    })
+// console.log("anshul")
+
+    if(adharotp.length === 5){
+      try{
+        const token = localStorage.getItem("token")
+        const requestID = localStorage.getItem("requestId")
+        
+        const response = await axios.post(apiUrl+'aadhar-verification/verifyOTP',{
+          requestId:requestID,
+          otp:adharotp ,       
+        },{ headers: { 'token': token,
+                       'Content-Type': 'application/json',
+                       'Authorization': `Bearer `+ token}})
+  
+        if (response.status === 200) {
+          // console.log('Otp is valid', response)
+          if (response.status === 200) {
+            toast.custom(
+              <ToasterCustom type="message" message="Otp is valid" />,
+              {
+                position: "top-right", // Set the position (e.g., "top-center")
+                duration: 1000, 
+              }
+            )
+            return;
+          }   
+        }else {
+          console.log('OTP not valid:', response)
+        }
+      }catch(err){
+        console.log(err);
+      }
     }
 
-    // Log all form data to the console
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     if (adharotp == "") {
       toast.custom(
         <ToasterCustom type="error" message="Please provide adhar OTP" />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
-          duration: 1000, // Set the duration in milliseconds
+          duration: 1000, 
         }
-      );
+      )
       return;
     }
-
     console.log({
       adharno,
       adharotp,
     });
-    /// this function for next step
     onNextStep();
   };
 
@@ -78,7 +156,7 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
         <Inputfield
           type="number"
           value={adharno}
-          onChange={(e) => setadharno(e.target.value)}
+          onChange={handleAdharNoChange}
           placeholder="Aadhar Card Number"
         />
       </div>
@@ -90,12 +168,14 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
           }}
           className="absolute top-[20%] right-[10px] w-[50px] h-[60%] z-[1] bg-contain bg-center bg-no-repeat"
         ></div>
+
         <Inputfield
           type="number"
           value={adharotp}
-          onChange={(e) => setadharotp(e.target.value)}
+          onChange={handleAdharOTPChange}
           placeholder="Aadhar OTP"
         />
+
       </div>
 
       <div className="w-[80%] mt-[20px] flex bg-white text-[#00090C] py-[20px] px-[20px] gap-[30px] rounded-[5px]">
@@ -123,11 +203,12 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
+        className="w-[80%] text-[1.6rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
       >
         Next
       </div>
     </form>
-  );
+  )
 };
+
 export default Stepthree;
