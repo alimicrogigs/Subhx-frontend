@@ -122,12 +122,11 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] text-[1.6rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
+        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
       >
         Next
       </div>
     </form>
   );
 };
-
 export default Stepthree;
