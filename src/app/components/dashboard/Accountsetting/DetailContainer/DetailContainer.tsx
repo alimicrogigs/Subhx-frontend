@@ -12,14 +12,14 @@ interface DetailContainerProps {
 
 const MainContainer: React.FC<DetailContainerProps> = ({ currentSection }) => {
   return (
-    <div className="flex-1 ">
-      {/* {currentSection == "Profile" && <Profile />}
+    <div className="sm:block flex-1  sm:relative absolute w-[100%] hidden">
+      {currentSection == "Profile" && <Profile />}
       {currentSection == "Account-security" && <Accountsecurity />}
       {currentSection == "Currency-preference" && <Currencypreferences />}
       {currentSection == "verify-kyc" && <VerifyKYC />}
       {currentSection == "referal" && <>referal</>}
       {currentSection == "payment-option" && <Paymentoption />}
-      {currentSection == "Api-key-manager" && <APIkeygeneration />} */}
+      {currentSection == "Api-key-manager" && <APIkeygeneration />}
     </div>
   );
 };

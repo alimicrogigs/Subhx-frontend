@@ -101,7 +101,7 @@ export default function () {
                 >
                   {/* ....... first menu ........ */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -114,7 +114,7 @@ export default function () {
                   </Link>
                   {/* ..... second item ..... */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -127,7 +127,7 @@ export default function () {
                   </Link>
                   {/* ......... third item .......... */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -193,7 +193,7 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1.8rem]  border-b border-b-[.5px] "
+                className="w-[100%] py-[20px] pl-[20px] text-[1.2rem]  border-b border-b-[.5px] "
               >
                 Exchange
               </div>
@@ -206,17 +206,17 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1.8rem] bg-[#07303F] border-b border-b-[.5px]"
+                className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]"
               >
                 Funds
               </div>
             </Link>
-            <div className="w-[100%] py-[20px] pl-[20px] text-[1.8rem] bg-[#07303F] border-b border-b-[.5px]">
+            <div className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]">
               Refer & Rewards
             </div>
             <div
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-[100%] py-[20px] pl-[20px] text-[1.8rem] bg-[#07303F] border-b border-b-[.5px] flex gap-[20px] items-center"
+              className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px] flex gap-[20px] items-center"
             >
               <div
                 style={{
@@ -225,7 +225,7 @@ export default function () {
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
                 }}
-                className="w-[30px] h-[40px]"
+                className="w-[25px] h-[30px]"
               ></div>
               <p> jason</p>
               <div
@@ -247,13 +247,13 @@ export default function () {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.1 }}
-                  className="  bg-[#07303F] rounded-bl-[10px] rounded-br-[10px]"
+                  className="  bg-[#07303F] rounded-bl-[10px] rounded-br-[10px] px-[30px]"
                 >
                   {/* ....... first menu ........ */}
                   <Link href="/dashboard/account-setting">
                     <div
                       onClick={closeallmenu}
-                      className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]"
+                      className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px] "
                     >
                       <div
                         style={{
@@ -267,7 +267,7 @@ export default function () {
                   </Link>
                   {/* ..... second item ..... */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
                       <div
                         style={{
                           backgroundImage:
@@ -280,7 +280,7 @@ export default function () {
                   </Link>
                   {/* ......... third item .......... */}
                   <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px]">
+                    <div className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
                       <div
                         style={{
                           backgroundImage:
