@@ -14,6 +14,8 @@ export default function page() {
   const isMobile = useWindowResize();
   const [currentLayout, setCurrentLayout] = useState("MARKETS");
 
+  console.log("ismobile===", isMobile);
+
   console.log("currentLayout===", currentLayout);
 
   const handleChangeLayout = (newLayout: any) => {
@@ -42,9 +44,11 @@ export default function page() {
         </div>
       ) : (
         <div className="w-[100%] h-[100vh]  flex justify-between flex-col  text-white sm:m-2">
-          <div className="w-[100%] bg-red-800 h-[90%]  ">
-            {/* <CurrencySection /> */}
-            <ChartSection />
+          <div className="w-[100%] h-[90%]  ">
+            {/* <CurrencySection />
+            <ChartSection /> */}
+            {/* <OrderBook/> */}
+            <OrderHistory />
           </div>
 
           <div className=" sticky bg-dashbgtrans h-[10%] w-full">

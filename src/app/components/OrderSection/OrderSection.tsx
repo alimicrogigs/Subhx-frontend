@@ -105,7 +105,7 @@ export default function OrderSection() {
       <div className="flex sm:flex-col sm:mt-2 ">
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-          <div className="flex sm:flex-row  sm:w-[90%]">
+          <div className="flex sm:flex-row  sm:w-[89%]">
             <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
             <div className="sm:h-[2rem] sm:p-2 sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.65rem] text-dashbgtrans rounded-r">
               INR
