@@ -129,5 +129,4 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
     </form>
   );
 };
-
 export default Stepthree;
