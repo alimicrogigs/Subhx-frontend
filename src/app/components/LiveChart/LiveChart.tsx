@@ -20,6 +20,10 @@ const LiveChart = () => {
   const chartRef = useRef<ReturnType<typeof createChart> | null>(null);
   const [selectedTimeframe, setSelectedTimeframe] = useState("1D");
 
+
+  
+
+
   const handleTimeframeChange = async (timeframe: string) => {
     setSelectedTimeframe(timeframe);
 

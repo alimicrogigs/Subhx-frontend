@@ -31,25 +31,51 @@ const tableData = [
   // Add more data as needed
 ];
 
+interface Order {
+  close: number;
+  high: number;
+  low: number;
+  open: number;
+  time: string;
+  volume: number;
+}
+
+interface OrderData {
+  buy?: Order[];
+  sell?: Order[];
+}
+
 export default function OrderBook() {
   const isMobile = useWindowResize();
 
   const [orderType, setOrderType] = useState("orderBook");
-
-  console.log("orderType===", orderType);
-
-  tableData.map((item) => {
-    if (item.buyPrice) {
-      console.log("buy", item.buyPrice);
-      console.log("volume", item.volume);
-    } else if (item.sellPrice) {
-      console.log("sell", item.sellPrice);
-      console.log("volume", item.volume);
-    }
+  const [orderBookData, setOrderBookData] = useState<OrderData>({
+    buy: [],
+    sell: [],
   });
 
-  const originalText = "37,50,978";
-  const slicedText = originalText.slice(0, 6);
+  console.log("orderBookData====", orderBookData);
+  console.log("orderBookData buy====", orderBookData.buy);
+  console.log("orderBookData sell====", orderBookData.sell);
+
+  const addVolumes = (orders: Order[] = []) => {
+    console.log("orders====", orders);
+    const result: { [key: number]: number } = {};
+    orders.forEach((order) => {
+      const openPrice = order.open;
+      if (!result[openPrice]) {
+        result[openPrice] = 0;
+      }
+      result[openPrice] += order.volume;
+    });
+    return result;
+  };
+
+  const buyVolumes = addVolumes(orderBookData.buy);
+  const sellVolumes = addVolumes(orderBookData.sell);
+
+  console.log("buyVolumes===", buyVolumes);
+  console.log("sellVolumes====", sellVolumes);
 
   useEffect(() => {
     const socket = new WebSocket("ws://stream.bit24hr.in:8765/usdt_order_book");
@@ -63,7 +89,8 @@ export default function OrderBook() {
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log("WebSocket data received:", data);
+      setOrderBookData(data);
+      // console.log("WebSocket data received:", data);
     };
 
     socket.onclose = (event) => {
@@ -75,13 +102,26 @@ export default function OrderBook() {
     };
   }, []);
 
+  // tableData.map((item) => {
+  //   if (item.buyPrice) {
+  //     console.log("buy", item.buyPrice);
+  //     console.log("volume", item.volume);
+  //   } else if (item.sellPrice) {
+  //     console.log("sell", item.sellPrice);
+  //     console.log("volume", item.volume);
+  //   }
+  // });
+
+  const originalText = "37,50,978";
+  const slicedText = originalText.slice(0, 6);
+
   return (
     <div className="flex flex-col   sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">
-      <div className="sm:h-[8vh] h-[10vh] w-[100%] bg-green-200  sm:border-b-2 border-borderline flex items-center sm:items-end">
+      <div className="sm:h-[8vh] h-[8vh] w-[100%]   sm:border-b-2 border-borderline flex justify-evenly sm:justify-start items-end sm:items-end">
         <span
-          className={` ${
-            orderType === "orderBook" ? "sm:border-b-4 border-b-4 " : ""
-          } font-poppinsRegular  border-borderline  sm:px-4 bg-red-200 py-2 sm:p-3 text-[0.5rem]`}
+          className={`${
+            orderType === "orderBook" ? "sm:border-b-4 border-b-4" : ""
+          } text-sm font-poppinsRegular w-[25%] sm:w-auto text-center   border-borderline   sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
           onClick={() => setOrderType("orderBook")}
         >
           Order Book
@@ -89,7 +129,7 @@ export default function OrderBook() {
         <span
           className={`${
             orderType === "marketTrades" ? "sm:border-b-4 border-b-4" : ""
-          } text-sm font-poppinsRegular  border-borderline bg-red-300  sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
+          } text-sm font-poppinsRegular w-[30%] sm:w-auto text-center  border-borderline   sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
           onClick={() => setOrderType("marketTrades")}
         >
           Market trades
@@ -97,7 +137,7 @@ export default function OrderBook() {
         <span
           className={`${
             orderType === "headlines" ? "sm:border-b-4 border-b-4" : ""
-          } text-sm font-poppinsRegular border-borderline bg-red-400  sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
+          } text-sm font-poppinsRegular w-[30%] sm:w-auto text-center  border-borderline  sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
           onClick={() => setOrderType("headlines")}
         >
           Headlines
@@ -107,7 +147,7 @@ export default function OrderBook() {
       {/*===== order book data =====*/}
 
       {orderType === "orderBook" && (
-        <div className="  flex  sm:h-[90%] h-auto flex-row  sm:flex-row justify-between sm:justify-between">
+        <div className="  flex mt-3  sm:h-[90%] h-auto flex-row  sm:flex-row justify-between sm:justify-between">
           {/* heading orderbook */}
 
           <div className="sm:w-[48%] w-[48%]   flex flex-col sm:flex-col ">
@@ -119,38 +159,20 @@ export default function OrderBook() {
                 BUY PRICE
               </div>
             </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
-              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
-                0.33344
+
+            {Object.entries(buyVolumes).map(([price, volume]) => (
+              <div
+                key={price}
+                className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row"
+              >
+                <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
+                  {volume}
+                </div>
+                <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
+                  {price}
+                </div>
               </div>
-              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
-                {!isMobile ? originalText : `${slicedText}...`}
-              </div>
-            </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
-              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
-                0.33344
-              </div>
-              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
-                {!isMobile ? originalText : `${slicedText}...`}
-              </div>
-            </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
-              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
-                0.33344
-              </div>
-              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
-                {!isMobile ? originalText : `${slicedText}...`}
-              </div>
-            </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
-              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
-                0.33344
-              </div>
-              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
-                {!isMobile ? originalText : `${slicedText}...`}
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="sm:w-[48%] w-[48%]  flex flex-col sm:flex-col ">
@@ -162,30 +184,20 @@ export default function OrderBook() {
                 VOLUME
               </div>
             </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row">
-              <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
-                {!isMobile ? originalText : `${slicedText}...`}
+
+            {Object.entries(sellVolumes).map(([price, volume]) => (
+              <div
+                key={price}
+                className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row"
+              >
+                <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
+                  {price}
+                </div>
+                <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
+                  {volume}
+                </div>
               </div>
-              <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
-                0.33344
-              </div>
-            </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row">
-              <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
-                {!isMobile ? originalText : `${slicedText}...`}
-              </div>
-              <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
-                0.33344
-              </div>
-            </div>
-            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row">
-              <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
-                {!isMobile ? originalText : `${slicedText}...`}
-              </div>
-              <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
-                0.33344
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       )}
