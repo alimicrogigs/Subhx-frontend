@@ -121,8 +121,6 @@ export default function page() {
         emailcode,
         phonecode
       };     
-
-
       const response = await postRequestAPIHelper(apiUrl+'verify-otp', null, requestData);
       console.log(response);
       if (response.status === 200){             

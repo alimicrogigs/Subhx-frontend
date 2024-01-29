@@ -16,12 +16,6 @@ interface SteponeProps {
   onNextStep: () => void
 }
 
-const dotenv = require('dotenv');
-dotenv.config();
-const apiUrl = process.env.API_URL;
-console.log(apiUrl);
-console.log('dffd');
-
 // alert(apiUrl);
 
 const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
