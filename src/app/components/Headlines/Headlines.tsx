@@ -40,7 +40,7 @@ export default function HeadLines() {
 
       {headlineData.map((item) => (
         <div
-          key={item.id}
+          key={item.id} 
           className=" border-[0.1rem] sm:mb-2 sm:border-switchColor hover:bg-switchColor hover:cursor-pointer sm:w-[98%] sm:p-1 sm:rounded flex sm:flex-col sm:items-center "
         >
           <h3 className="sm:text-[0.8rem] sm:p-[0.5rem] sm:text-inputBg ">
