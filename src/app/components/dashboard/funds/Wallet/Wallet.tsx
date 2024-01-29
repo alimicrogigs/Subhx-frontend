@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import axios from "axios";
-import { checkAuthorization } from "../../../../utils/auth";
+// import { checkAuthorization } from "../../../../utils/auth";
 
 interface WalletProps {
   onAction: (action: string) => void;
@@ -58,11 +58,15 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
-  useEffect(() => {
-    // Simulate getting token from localStorage or cookie
-    const token = localStorage.getItem('token');
-    checkAuthorization(token);
-  }, []);
+  
+  
+  // useEffect(() => {
+  //   // Simulate getting token from localStorage or cookie
+  //   const token = localStorage.getItem('token');
+  //   checkAuthorization(token);
+  // }, []);
+
+
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
