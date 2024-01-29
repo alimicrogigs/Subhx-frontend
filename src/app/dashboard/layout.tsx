@@ -13,7 +13,7 @@ const DashboardLayout: React.FC<DashboardProps> = ({ children }) => {
       }}
       className="w-[100vw] h-[100vh]"
     >
-      {/* <Dashboardnavbar /> */}
+      <Dashboardnavbar />
       <div
         style={{ height: "100%" }}
         className="w-[100%]  flex"

@@ -21,9 +21,10 @@ const FundsPage: React.FC<FundsPageProps> = () => {
 
 
   return (
+    <>
     <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
       {/* first popup  */}
-      {currentpopupactive === "deposite"  && (
+      {currentpopupactive === "deposite" && (
         <div
           style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
           className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
@@ -37,41 +38,6 @@ const FundsPage: React.FC<FundsPageProps> = () => {
             onClick={() => setCurrentpopupactive("")}
           ></div>
           {/* this is back button */}
-
-          <Depositefunds/>
-        
-        </div>
-      )}
-
-      {/* second popup  */}
-      {currentpopupactive === "withdraw" && (
-        <div
-          style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
-          className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
-        >
-          {/* this is back button */}
-          <div
-            style={{
-              backgroundImage: "url(/signup/backarrow.svg)",
-            }}
-            className="fixed top-[100px] sm:left-[100px] left-[20px] w-[50px] h-[50px] bg-center bg-no-repeat bg-contain"
-            onClick={() => setCurrentpopupactive("")}
-          ></div>
-          {/* this is back button */}
-          <Withrawlfunds />
-        </div>
-      )}
-      {/* wallet start form here  */}
-      <Wallet
-        onAction={handleWalletAction}
-        popupactive={handlepopupactive}
-        activebutton={currentfundsstep}
-      />
-
-      <div className="w-[100%] relative overflow-scroll">
-        {currentfundsstep === "Portfolio" && <Fundshome />}
-        {currentfundsstep === "transferhistory" && <Transferhistory />}
-
 
           <Depositefunds />
         </div>
@@ -104,20 +70,15 @@ const FundsPage: React.FC<FundsPageProps> = () => {
       <div className="w-[100%] relative overflow-scroll">
         {currentfundsstep === "Portfolio" && <Fundshome />}
         {currentfundsstep === "transferhistory" && <Transferhistory />}
-    <div className="w-[99%] h-[98%] max-h-[98%] bg-dashbgtrans overflow-x-scroll">
-      <Wallet onAction={handleWalletAction} activebutton={currentfundsstep} />
-
-      {/* three container goes here */}
-      <div className="w-[100%] relative">
-        {/* <Fundshome /> */}
-        {/* <div className="w-[100%] top-0 absolute bg-absolutetrans min-h-[100vh]"> */}
-        {currentfundsstep === "home" && <Fundshome />}
-        {currentfundsstep === "deposite" && <Depositefunds />}
-        {currentfundsstep === "withdrawl" && <Withrawlfunds />}
-        {/* </div> */}
-
       </div>
     </div>
+    {/* <div
+      onClick={() => setCurrentpopupactive("withdraw")}
+      className="sticky bottom-0 w-[100%] py-[20px] bg-white sm:hidden block"
+    >
+      Saad
+    </div> */}
+  </>
   );
 };
 
