@@ -16,12 +16,6 @@ interface SteponeProps {
   onNextStep: () => void
 }
 
-const dotenv = require('dotenv');
-dotenv.config();
-const apiUrl = process.env.API_URL;
-console.log(apiUrl);
-console.log('dffd');
-
 // alert(apiUrl);
 
 const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
@@ -157,44 +151,52 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
       agreeTerms,
     });
 
-    try{
-      const response = await axios.post(apiUrl+'register',
-      {
-        email, phone:phoneNumber , password , confirm_password:retypePassword,
-        register_type:'individual',referral_code:null
-      })
 
-      console.log(response)
+    try {
 
-      if (response.status === 200){
-        console.log('154', response.data.data.token);
-        console.log(JSON.stringify(response.data.data.token))
-        const token = (response.data.data.token)
+        const requestData: {
+          email: string;
+          phone: string;
+          password: string;
+          confirm_password: string;
+          register_type: string;
+          referral_code?: null | undefined;
+        } = {
+          email,
+          phone: phoneNumber,
+          password,
+          confirm_password: retypePassword,
+          register_type: 'individual',
+          referral_code: null, // or undefined, depending on your requirements
+        };
+        console.log('API URL:', apiUrl);
 
-        // Check if the token is present
-        if (token) {
-          console.log('Token:', JSON.stringify(token))
-          localStorage.setItem('token', (token));
-          onNextStep()
+        const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
+        console.log(response);
+        if (response.status === 200){
+          const token = (response.data.token)
 
-        } else {
-          console.log('Token not found in response:', response.data);
-        }
-      // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
-       onNextStep();
+          // Check if the token is present
+          if (token) {
+            localStorage.setItem('token', JSON.stringify(response.data.token));
+            onNextStep();
+          } else {
+            console.log('Token not found in response:', response.data);
+          }
+        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
+        onNextStep();
         
-      } else {
-        console.log('Registration failed:', response.data);
-      }
-    }
-    catch(error){
-      // console.log(error.message);
-      console.log(error);
+        } else {
+          console.log('Registration failed:', response.data);
+        }
+    } catch (error) {
+      // Handle API error in your controller
+      console.error('Controller Error:', error);
     }
   };
 
   return (
-    <form 
+    <form  
       action=""
       style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
