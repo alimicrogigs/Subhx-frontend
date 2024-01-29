@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import React from "react";
 import Dashboardnavbar from "../components/Dashboardnavbar/Dashboardnavbar";
 
@@ -6,6 +8,7 @@ interface DashboardProps {
 }
 
 const DashboardLayout: React.FC<DashboardProps> = ({ children }) => {
+ 
   return (
     <section
       style={{
@@ -13,6 +16,7 @@ const DashboardLayout: React.FC<DashboardProps> = ({ children }) => {
       }}
       className="w-[100vw] h-[100vh]"
     >
+
       <Dashboardnavbar />
       <div
         style={{ height: "100%" }}

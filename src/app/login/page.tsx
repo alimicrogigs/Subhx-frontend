@@ -101,13 +101,22 @@ export default function page() {
         password,
         signmein,// or undefined, depending on your requirements
       };
-      console.log('API URL:', apiUrl);
 
       const response = await postRequestAPIHelper(apiUrl+'login', null, requestData);
       console.log(response);
       if (response.status === 200){
         const token = (response.data.token)
-
+        // add toster here
+        toast.custom(
+          <ToasterCustom
+            type="success"
+            message="Login Successfully"
+          />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
         // Check if the token is present
         if (token) {
           localStorage.setItem('token', JSON.stringify(response.data.token));
@@ -119,6 +128,17 @@ export default function page() {
       setCurrentStep("validate");
       
       } else {
+        //add toster here
+        toast.custom(
+          <ToasterCustom
+            type="error"
+            message="Login Failed"
+          />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
         console.log('Registration failed:', response.data);
       }
   } catch (error) {

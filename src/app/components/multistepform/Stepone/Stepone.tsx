@@ -169,8 +169,6 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           register_type: 'individual',
           referral_code: null, // or undefined, depending on your requirements
         };
-        console.log('API URL:', apiUrl);
-
         const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
         console.log(response);
         if (response.status === 200){
@@ -178,7 +176,17 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
 
           // Check if the token is present
           if (token) {
-            localStorage.setItem('token', JSON.stringify(response.data.token));
+            localStorage.setItem('token', response.data.token);
+            toast.custom(
+              <ToasterCustom
+                type="success"
+                message="Account Created Successfully"
+              />,
+              {
+                position: "top-right", // Set the position (e.g., "top-center")
+                duration: 1000, // Set the duration in milliseconds
+              }
+            );
             onNextStep();
           } else {
             console.log('Token not found in response:', response.data);
@@ -187,6 +195,16 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         onNextStep();
         
         } else {
+          toast.custom(
+            <ToasterCustom
+              type="error"
+              message="Account Creation Failed"
+            />,
+            {
+              position: "top-right", // Set the position (e.g., "top-center")
+              duration: 1000, // Set the duration in milliseconds
+            }
+          );
           console.log('Registration failed:', response.data);
         }
     } catch (error) {
