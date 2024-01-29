@@ -1,5 +1,5 @@
-const axios = require("axios");
-const UAParser = require("ua-parser-js");
+const axios = require('axios');
+const UAParser = require('ua-parser-js');
 
 const getUserAgentInfo = () => {
   const userAgent = window.navigator.userAgent;
@@ -14,22 +14,22 @@ const getUserAgentInfo = () => {
 
   // Create a custom user agent string
   const customUserAgent = `${browserName} ${browserVersion}; ${osName} ${osVersion}`;
-
+  
   return customUserAgent;
 };
 
 exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
   try {
     const config = {
-      method: "post",
+      method: 'post',
       maxBodyLength: Infinity,
       url: url,
       headers: {
-        "Content-Type": "application/json",
-        Authorization: authorizationToken,
-        "User-Agent": getUserAgentInfo(),
+        'Content-Type': 'application/json',
+        'Authorization': authorizationToken,
+        'User-Agent': getUserAgentInfo(),
       },
-      data: JSON.stringify(requestData),
+      data: JSON.stringify(requestData)
     };
 
     const response = await axios.request(config);
@@ -39,22 +39,25 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
   }
 };
 
+
 exports.getRequestAPIHelper = async (url, authorizationToken) => {
   const userAgentInfo = getUserAgentInfo();
-  try {
-    const config = {
-      method: "get",
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: authorizationToken,
-        "User-Agent": JSON.stringify(userAgentInfo),
-      },
-    };
-
-    const response = await axios.request(config);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+    try {
+      const config = {
+        method: 'get',
+        url: url,
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': authorizationToken,
+          'User-Agent': JSON.stringify(userAgentInfo),
+        }
+      };
+  
+      const response = await axios.request(config);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
 };
+
+

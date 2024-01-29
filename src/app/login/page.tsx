@@ -5,8 +5,8 @@ import Inputfield from "../components/multistepform/common/Inputfield/Inputfield
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
-import { postRequestAPIHelper } from "../utils/lib/requestHelpers";
-const dotenv = require("dotenv");
+import {postRequestAPIHelper} from "../utils/lib/requestHelpers"
+const dotenv = require('dotenv');
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
@@ -90,48 +90,45 @@ export default function page() {
       password,
       signmein,
     });
-    // upadted code of massom bhai
     try {
+
       const requestData: {
         email: string;
         password: string;
         signmein: any;
+
       } = {
         email,
         password,
-        signmein, // or undefined, depending on your requirements
+        signmein,// or undefined, depending on your requirements
       };
-      console.log("API URL:", apiUrl);
+      console.log('API URL:', apiUrl);
 
-      const response = await postRequestAPIHelper(
-        apiUrl + "login",
-        null,
-        requestData
-      );
+      const response = await postRequestAPIHelper(apiUrl+'login', null, requestData);
       console.log(response);
-      if (response.status === 200) {
-        const token = response.data.token;
+      if (response.status === 200){
+        const token = (response.data.token)
 
         // Check if the token is present
         if (token) {
-          localStorage.setItem("token", JSON.stringify(response.data.token));
+          localStorage.setItem('token', JSON.stringify(response.data.token));
           setCurrentStep("validate");
         } else {
-          console.log("Token not found in response:", response.data);
+          console.log('Token not found in response:', response.data);
         }
-        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) )
-        setCurrentStep("validate");
+      // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
+      setCurrentStep("validate");
+      
       } else {
-        console.log("Registration failed:", response.data);
+        console.log('Registration failed:', response.data);
       }
-    } catch (error) {
-      // Handle API error in your controller
-      console.error("Controller Error:", error);
-    }
+  } catch (error) {
+    // Handle API error in your controller
+    console.error('Controller Error:', error);
+  }
 
-    /// end here
     // this will take us to code validation page
-    setCurrentStep("validate");
+  
   };
 
   // validation form submit button here
@@ -141,6 +138,7 @@ export default function page() {
       email,
       password,
     });
+
   };
 
   return (
