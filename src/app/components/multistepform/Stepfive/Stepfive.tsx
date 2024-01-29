@@ -11,6 +11,8 @@ interface StepsixProps {
 const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
   const [video, setvideo] = useState("");
 
+  const handlerecord = () => {};
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Log all form data to the console
@@ -42,15 +44,16 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
       </div>
       <div className="progressbar w-[40%] h-[5px] bg-white mt-[10px]"></div>
       <div className="controller flex gap-[10px] mt-[30px]">
-        <div
+        {/* <div
           style={{
             backgroundImage: "url(/signup/recordbutton.svg)",
           }}
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Preview
-        </div>
+        </div> */}
         <div
+          onClick={handlerecord}
           style={{
             backgroundImage: "url(/signup/recordfillbg.svg)",
           }}
@@ -58,14 +61,14 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
         >
           Record
         </div>
-        <div
+        {/* <div
           style={{
             backgroundImage: "url(/signup/recordbutton.svg)",
           }}
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Retake
-        </div>
+        </div> */}
       </div>
       <div
         style={{

@@ -4,18 +4,23 @@ import Card from "./Card/Card";
 
 interface SidebarProps {
   onSectionChange: (section: string) => void;
+  ismobilecontainer: (section: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onSectionChange }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  onSectionChange,
+  ismobilecontainer,
+}) => {
   const [currentActiveButton, setCurrentActiveButton] = useState("Profile");
 
   const handleCardClick = (title: string) => {
     setCurrentActiveButton(title);
     onSectionChange(title);
+    ismobilecontainer(true);
   };
 
   return (
-    <div className="sm:w-[38%] w-[90%] sm:m-none mx-auto text-white">
+    <div className="sm:w-[38%] w-[90%]  sm:m-none mx-auto text-white">
       <h1 className="pb-[50px] text-[1.5rem] font- poppinsMedium">
         Account Settings
       </h1>
@@ -61,6 +66,19 @@ const Sidebar: React.FC<SidebarProps> = ({ onSectionChange }) => {
         action={() => handleCardClick("Api-key-manager")}
         isActive={currentActiveButton == "Api-key-manager" ? true : false}
         title="API KEY MANAGER"
+        logo="/dashboard/account-setting/sidebar/api.svg"
+      />
+      {/* ... add two button not in admin ...... */}
+      <Card
+        action={() => handleCardClick("change-password")}
+        isActive={currentActiveButton == "change-password" ? true : false}
+        title="CHANGE PASSWORD"
+        logo="/dashboard/account-setting/sidebar/paymentopt.svg"
+      />{" "}
+      <Card
+        action={() => handleCardClick("")}
+        isActive={currentActiveButton == "logout" ? true : false}
+        title="LOGOUT"
         logo="/dashboard/account-setting/sidebar/api.svg"
       />
       {/* ..... */}

@@ -1,11 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+//  ....
+import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
+const dotenv = require("dotenv");
+dotenv.config();
+const apiUrl = process.env.API_URL;
 
 export default function () {
+  // //.............................
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const storedToken = localStorage.getItem("token");
+
+  //     // Check if storedToken is not null before using it
+  //     const token = storedToken ? JSON.parse(storedToken) : null;
+  //     console.log(apiUrl + "user");
+  //     console.log(token);
+  //     try {
+  //       //...................
+  //       const response = await getRequestAPIHelper(apiUrl + "user", token);
+  //       console.log({ response });
+
+  //       // Assuming the response.data contains an array of objects with properties: email, date, reward
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       // Handle the error, e.g., show an error message to the user
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+  //...............................
   const [mobilemenuopen, setMobilemenuopen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   let pathname = usePathname();
@@ -15,6 +44,7 @@ export default function () {
     setDropdownOpen(false);
     setMobilemenuopen(false);
   };
+
   console.log(pathname);
   return (
     <div className="w-[100%] h-[80px] bg-dashboardbgone text-white">
@@ -32,7 +62,7 @@ export default function () {
           </li>
           <Link href="/dashboard/exchange">
             <li className="relative h-[100%] flex items-center justify-center ">
-              Exchange
+              EXCHANGE
               {/* this is active bar  */}
               <div
                 style={{
@@ -48,7 +78,7 @@ export default function () {
           </Link>
           <Link href="/dashboard/funds">
             <li className="relative h-[100%] flex items-center justify-center">
-              Fund
+              FUNDS
               {/* this is active bar  */}
               <div
                 style={{
@@ -57,7 +87,7 @@ export default function () {
                 }}
                 className="active absolute   h-[6px] bottom-[0px] bg-activedashboardbutton"
               ></div>
-              {/* this is active bar  end here  */}s
+              {/* this is active bar  end here  */}
             </li>
           </Link>
         </ul>
@@ -78,7 +108,7 @@ export default function () {
               }}
               className="w-[20px] h-[30px]"
             ></div>
-            jason
+            JASON
             <div
               style={{
                 transform: `${
@@ -109,7 +139,7 @@ export default function () {
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>Account Settings</p>
+                      <p>ACCOUNT SETTING</p>
                     </div>
                   </Link>
                   {/* ..... second item ..... */}
@@ -122,7 +152,7 @@ export default function () {
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>refer & rewards</p>
+                      <p>REFER AND REWARDS</p>
                     </div>
                   </Link>
                   {/* ......... third item .......... */}
@@ -135,7 +165,7 @@ export default function () {
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>logout</p>
+                      <p>LOGOUT</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -195,7 +225,7 @@ export default function () {
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
                 className="w-[100%] py-[20px] pl-[20px] text-[1.2rem]  border-b border-b-[.5px] "
               >
-                Exchange
+                EXCHANGE
               </div>
             </Link>
             <Link href="/dashboard/funds">
@@ -208,7 +238,7 @@ export default function () {
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
                 className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]"
               >
-                Funds
+                FUNDS
               </div>
             </Link>
             <div className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]">

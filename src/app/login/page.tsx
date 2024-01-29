@@ -5,6 +5,10 @@ import Inputfield from "../components/multistepform/common/Inputfield/Inputfield
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
+import { postRequestAPIHelper } from "../utils/lib/requestHelpers";
+const dotenv = require("dotenv");
+dotenv.config();
+const apiUrl = process.env.API_URL;
 
 export default function page() {
   // form variable
@@ -31,7 +35,7 @@ export default function page() {
   // all api and things logic goes in here
 
   // login submit button
-  const handleloginSubmit = (e: any) => {
+  const handleloginSubmit = async (e: any) => {
     e.preventDefault();
     // this function firstly have all front-ed validation to
     //  implement yout backend logiv goes down to function
@@ -52,6 +56,7 @@ export default function page() {
       );
       return;
     }
+
     // this validate that email is valid
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.custom(
@@ -85,7 +90,46 @@ export default function page() {
       password,
       signmein,
     });
+    // upadted code of massom bhai
+    try {
+      const requestData: {
+        email: string;
+        password: string;
+        signmein: any;
+      } = {
+        email,
+        password,
+        signmein, // or undefined, depending on your requirements
+      };
+      console.log("API URL:", apiUrl);
 
+      const response = await postRequestAPIHelper(
+        apiUrl + "login",
+        null,
+        requestData
+      );
+      console.log(response);
+      if (response.status === 200) {
+        const token = response.data.token;
+
+        // Check if the token is present
+        if (token) {
+          localStorage.setItem("token", JSON.stringify(response.data.token));
+          setCurrentStep("validate");
+        } else {
+          console.log("Token not found in response:", response.data);
+        }
+        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) )
+        setCurrentStep("validate");
+      } else {
+        console.log("Registration failed:", response.data);
+      }
+    } catch (error) {
+      // Handle API error in your controller
+      console.error("Controller Error:", error);
+    }
+
+    /// end here
     // this will take us to code validation page
     setCurrentStep("validate");
   };
@@ -107,14 +151,14 @@ export default function page() {
         }}
         className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
       >
-        {/* <Link href="/">
+        <Link href="/">
           <div
             style={{
               backgroundImage: "url(/signup/crossbutton.svg)",
             }}
             className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:right-[50px] right-[25px]  bg-center bg-no-repeat crossarrow"
           ></div>
-        </Link> */}
+        </Link>
         <div
           className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
         >
