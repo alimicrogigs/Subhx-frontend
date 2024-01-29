@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import BottomBar from "@/app/components/BottomBar/BottomBar";
+
 
 const Page = () => {
   const router = useRouter();

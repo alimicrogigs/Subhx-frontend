@@ -30,10 +30,23 @@ export default function page() {
 
   const handleresendmobilecode = (e: any) => {};
 
-  const handleresetpassword = (e: any) => {
+  const handleresetpassword = async (e: any) => {
     e.preventDefault();
 
     if (emailcode == "") {
+      toast.custom(
+        <ToasterCustom
+          type="error"
+          message="Please provide Email Verifictaion code  "
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+    if (phonecode == "") {
       toast.custom(
         <ToasterCustom
           type="error"
@@ -59,7 +72,7 @@ export default function page() {
       );
       return;
     }
-    if (retypePassword == "") {
+    if (confirmation == "") {
       toast.custom(
         <ToasterCustom
           type="error"
@@ -73,7 +86,7 @@ export default function page() {
       return;
     }
 
-    if (password != retypePassword) {
+    if (password != confirmation) {
       toast.custom(
         <ToasterCustom type="error" message="Password does not match  " />,
         {
@@ -88,8 +101,37 @@ export default function page() {
       email,
       password,
     });
+    
+    try {
+      const requestData: {
+        email: string;       
+        emailcode: string;
+        phonecode: string;
+        password: string;
+        password_confirmation: string;
+      } = {
+        email,
+        password,
+        password_confirmation: confirmation,
+        emailcode,
+        phonecode
+      };     
+
+
+      const response = await postRequestAPIHelper(apiUrl+'verify-otp', null, requestData);
+      console.log(response);
+      if (response.status === 200){             
+        setCurrentStep("validate");
+      
+      } else {
+        console.log('Registration failed:', response.data);
+      }
+    } catch (error) {
+      // Handle API error in your controller
+      console.error('Controller Error:', error);
+    }
   };
-  const handlesendotp = (e: any) => {
+  const handlesendotp = async (e: any) => {
     e.preventDefault();
 
     // this validate that email is provided or not
@@ -122,8 +164,37 @@ export default function page() {
       email,
       password,
     });
+    try {
+      const requestData: {
+        email: string;       
+      } = {
+        email     
+      };
+      console.log('API URL:', apiUrl);
 
-    setCurrentStep("validate");
+      const response = await postRequestAPIHelper(apiUrl+'send-otp', null, requestData);
+      console.log(response);
+      if (response.status === 200){
+        const token = (response.data.token)
+
+        // Check if the token is present
+        if (token) {
+          localStorage.setItem('token', JSON.stringify(response.data.token));
+          setCurrentStep("validate");
+        } else {
+          console.log('Token not found in response:', response.data);
+        }
+      // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
+      setCurrentStep("validate");
+      
+      } else {
+        console.log('Registration failed:', response.data);
+      }
+    } catch (error) {
+      // Handle API error in your controller
+      console.error('Controller Error:', error);
+    }
+   
   };
 
   return (
@@ -212,6 +283,14 @@ export default function page() {
                 placeholder="Email Verification Code"
               />
             </div>
+            <div className="w-[80%] mt-[20px]">
+              <Inputfield
+                type="number"
+                value={phonecode}
+                onChange={(e) => setphonecode(e.target.value)}
+                placeholder="Phone Verification Code"
+              />
+            </div>
             {/* ........................... */}
 
             <div className="w-[80%] mt-[20px]">
@@ -228,8 +307,8 @@ export default function page() {
             <div className="w-[80%]  mt-[20px]">
               <Inputfield
                 type={showRetypePassword ? "text" : "password"}
-                value={retypePassword}
-                onChange={(e) => setRetypePassword(e.target.value)}
+                value={confirmation}
+                onChange={(e) => setconfirmation(e.target.value)}
                 placeholder="Confirm Password"
                 showToggle={true}
                 onToggle={handleToggleRetypePassword}
