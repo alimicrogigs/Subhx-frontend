@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
+import useWindowResize from "@/app/Hooks/useWindowResize";
 
 interface ChartData {
   areaData: { time: string; value: number }[];
@@ -14,6 +15,7 @@ interface ChartData {
 }
 
 const LiveChart = () => {
+  const isMobile = useWindowResize();
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<ReturnType<typeof createChart> | null>(null);
   const [selectedTimeframe, setSelectedTimeframe] = useState("1D");
@@ -66,6 +68,7 @@ const LiveChart = () => {
       wickDownColor: "#ef5350",
     });
     candlestickSeries.setData(newData?.candlestickData || []);
+
     newChart.timeScale().fitContent();
 
     // Save the new chart reference
@@ -180,16 +183,14 @@ const LiveChart = () => {
   }, [selectedTimeframe]);
 
   return (
-    <div>
-      <div
-        ref={chartContainerRef}
-        style={{
-          height: "40vh",
-          width: "50vw",
-        }}
-      />
-     
-    </div>
+    <div
+      className=""
+      ref={chartContainerRef}
+      style={{
+        height: isMobile ? "60vh" : "40vh",
+        width: isMobile ? "100vw" : "50vw",
+      }}
+    ></div>
   );
 };
 

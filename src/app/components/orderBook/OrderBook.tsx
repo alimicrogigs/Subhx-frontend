@@ -44,6 +44,35 @@ const tableData = [
     date: "2020-07-12 15:00:00.000",
     quantity: 4.0,
   },
+  {
+    id: 2,
+    type: "Sell",
+    price: 320.26,
+    currency: "USDT",
+    status: "Success",
+    date: "2020-07-18 15:00:00.000",
+    quantity: 4.0,
+  },
+  {
+    id: 3,
+    type: "Buy",
+    price: 320.26,
+    currency: "USDT",
+    status: "Success",
+    date: "2020-07-10 15:00:00.000",
+    quantity: 4.0,
+  },
+  {
+    id: 4,
+    type: "Buy",
+    price: 320.26,
+    currency: "USDT",
+    status: "Success",
+    date: "2020-07-12 15:00:00.000",
+    quantity: 4.0,
+  },
+ 
+ 
   // Add more data as needed
 ];
 
@@ -113,13 +142,13 @@ export default function OrderBook() {
   });
 
   return (
-    <div className="flex sm:flex-col bg-dashbgtrans sm:mr-3 sm:w-[48vw] sm:rounded-lg">
-      <div className="sm:h-[8vh] sm:border-b-2 border-borderline flex sm:items-end">
-        <span className="border-b-4 text-sm font-poppinsRegular border-borderline sm:px-4 sm:p-2">
+    <div className="flex flex-col  sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">
+      <div className="sm:h-[8vh] h-[10vh]  sm:border-b-2 border-borderline flex items-center sm:items-end">
+        <span className="border-b-4 text-sm font-poppinsRegular border-borderline px-7 sm:px-4  p-2 sm:p-2">
           Order Book
         </span>
       </div>
-      <table className="">
+      <table className=" ">
         <thead className=" ">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
@@ -128,7 +157,7 @@ export default function OrderBook() {
             >
               {headerGroup.headers.map((header) => (
                 <th
-                  className="  sm:text-[0.8rem] font-normal sm:px-4 sm:py-2 sm:items-center"
+                  className=" text-[0.65rem] sm:text-[0.8rem] font-normal px-4 sm:px-4 py-2 sm:py-2 items-center sm:items-center"
                   key={header.id}
                 >
                   {flexRender(
@@ -140,7 +169,7 @@ export default function OrderBook() {
             </tr>
           ))}
         </thead>
-        <tbody className="">
+        <tbody className=" h-[60%] ">
           {table.getRowModel().rows.map((row) => (
             <tr
               style={{
@@ -149,12 +178,12 @@ export default function OrderBook() {
                     ? "rgba(90, 215, 118, 0.15)"
                     : "rgba(230, 86, 97, 0.15)",
               }}
-              className="sm:text-[0.8rem] sm:items-center"
+              className=" text-[0.6rem] sm:text-[0.8rem] items-center sm:items-center"
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className=" sm:text-center sm:px-4 sm:py-2 sm:text-[0.6rem] font-normal "
+                  className=" text-center sm:text-center px-4 sm:px-4 py-2 sm:py-2 text-[0.6rem] sm:text-[0.6rem] font-normal "
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
