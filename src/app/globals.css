@@ -44,10 +44,9 @@
   font-family: "Poppins-medium";
 }
 
-/* 
 .poppins-thin {
-  font-family: "Poppins-thin"; */
-
+  font-family: "Poppins-thin";
+}
 /* ............. */
 .accordion-button::after {
   background-image: url(/dashboard/funds/accordianbutton.svg);

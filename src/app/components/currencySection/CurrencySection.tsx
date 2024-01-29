@@ -80,7 +80,7 @@ export default function CurrencySection() {
         <div className="sm:w-[60%] w-[73%] bg-switchColor h-[65%] sm:h-[40%] rounded-md sm:rounded-md text-[0.8rem] sm:text-[0.7rem] border border-borderline flex gap-x-1 sm:gap-x-1 font-poppinsRegular items-center sm:items-center p-1 sm:p-1">
           <img
             src="/dashboard/exchange/searchIcon.svg"
-            className="sm:p-1"
+            className="sm:px-2 p-2"
             alt="Search Icon"
           />
           <input
@@ -90,11 +90,11 @@ export default function CurrencySection() {
           />
         </div>
       </div>
-      <div className="flex sm:flex-row bg-switchColor sm:border-b-2 border-borderline sm:text-[0.5rem] sm:p-1 justify-between items-start">
-        <span className="sm:ml-4">Fav</span>
-        <span className="sm:-ml-5">Pair</span>
-        <span className="">Changes</span>
-        <span className="sm:mr-3">Price</span>
+      <div className="flex sm:flex-row bg-switchColor font-poppinsRegular text-[0.6rem] sm:border-b-2 border-borderline sm:text-[0.5rem] p-1 sm:p-1 justify-between items-start">
+        <span className=" ml-7 sm:ml-4">Fav</span>
+        <span className="  sm:-ml-5">PAIR</span>
+        <span className="">CHANGES</span>
+        <span className="sm:mr-3 mr-10">PRICE</span>
       </div>
       <div className={`flex flex-col`}>
         {currenciesData.map((currency) => (
@@ -124,7 +124,7 @@ export default function CurrencySection() {
             >
               {currency.changePercentage}
             </span>
-            <span className="sm:text-[0.45rem] text-[0.7rem]">
+            <span className="sm:text-[0.45rem] sm:ml-0  text-[0.7rem]">
               {currency.price}
             </span>
           </div>
