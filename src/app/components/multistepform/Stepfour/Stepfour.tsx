@@ -12,6 +12,7 @@ import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 interface StepfourProps {
   active: boolean;
   onNextStep: () => void;
+
 }
 
 const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {

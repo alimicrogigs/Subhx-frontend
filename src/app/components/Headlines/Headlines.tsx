@@ -53,8 +53,7 @@ export default function HeadLines() {
             {item.description.length > 120 && (
               <span
                 className="sm:text-inputBg cursor-pointer"
-                onClick={() => toggleShowMore(item.id)}
-              >
+                onClick={() => toggleShowMore(item.id)}>
                 {expandedDescriptions[item.id] ? " Show less" : " Show more"}
               </span>
             )}
