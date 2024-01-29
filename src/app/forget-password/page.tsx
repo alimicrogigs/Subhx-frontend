@@ -4,7 +4,6 @@ import styles from "./page.module.css";
 import Inputfield from "../components/multistepform/common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
-import Link from "next/link"
 import {postRequestAPIHelper} from "../utils/lib/requestHelpers"
 const dotenv = require('dotenv');
 dotenv.config();
@@ -127,7 +126,7 @@ export default function page() {
         setCurrentStep("validate");
       
       } else {
-        console.log('Registration failed:', response.data);
+        console.log('Verify OTP failed:', response.data);
       }
     } catch (error) {
       // Handle API error in your controller
@@ -179,19 +178,17 @@ export default function page() {
       console.log(response);
       if (response.status === 200){
         const token = (response.data.token)
-
-        // Check if the token is present
-        if (token) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
-          setCurrentStep("validate");
-        } else {
-          console.log('Token not found in response:', response.data);
-        }
-      // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
-      setCurrentStep("validate");
-      
+        toast.custom(
+          <ToasterCustom type="success" message="The OTP has been sent successfully." />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
+        return;
+        setCurrentStep("validate");      
       } else {
-        console.log('Registration failed:', response.data);
+        console.log('OTP send failed:', response.data);
       }
     } catch (error) {
       // Handle API error in your controller
