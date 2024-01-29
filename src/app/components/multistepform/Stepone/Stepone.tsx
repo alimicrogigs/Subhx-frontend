@@ -10,6 +10,7 @@ interface SteponeProps {
   active: boolean;
   onNextStep: () => void
 }
+
 const dotenv = require('dotenv');
 dotenv.config();
 const apiUrl = process.env.API_URL;
@@ -256,7 +257,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         <input
           className="h-[100%] w-[20px]"
           type="checkbox"
-          checked={referralOptional}
+          checked={referralOptional || undefined}
           onChange={handleReferralOptionalChange}
         />
         <p className="text-[.8rem]">I have Referral Optional </p>

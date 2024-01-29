@@ -7,6 +7,9 @@ import DepositeCardfour from "./DepositeCardfour/DepositeCardfour";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function Depositefunds() {
+
+  
+
   return (
     <div>
       {/* ........ */}
@@ -24,7 +27,7 @@ export default function Depositefunds() {
         </div>
         {/* ........ */}
         <div className="mt-[20px]">
-          <DepositeCardfour />
+          <DepositeCardfour UPIid="saad" />
         </div>
       </Accordion>
     </div>
