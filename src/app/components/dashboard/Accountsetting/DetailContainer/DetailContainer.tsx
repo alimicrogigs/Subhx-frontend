@@ -10,6 +10,7 @@ interface DetailContainerProps {
   currentSection: string;
 }
 
+
 const MainContainer: React.FC<DetailContainerProps> = ({ currentSection }) => {
   return (
     <div className="sm:block flex-1  sm:relative absolute w-[100%] hidden">
@@ -21,6 +22,6 @@ const MainContainer: React.FC<DetailContainerProps> = ({ currentSection }) => {
       {currentSection == "payment-option" && <Paymentoption />}
       {currentSection == "Api-key-manager" && <APIkeygeneration />}
     </div>
-  );
+  )
 };
 export default MainContainer;

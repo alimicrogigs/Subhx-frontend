@@ -10,22 +10,20 @@ interface FundsPageProps {}
 
 const FundsPage: React.FC<FundsPageProps> = () => {
   const [currentfundsstep, setCurrentfundsstep] = useState<string>("Portfolio");
-
   const [currentpopupactive, setCurrentpopupactive] = useState("");
-
   const handleWalletAction = (action: string): void => {
     // Update the currentfundsstep based on the action
     setCurrentfundsstep(action);
-  };
-
+  }
   const handlepopupactive = (action: string): void => {
     setCurrentpopupactive(action);
-  };
+  }
+
 
   return (
     <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
       {/* first popup  */}
-      {currentpopupactive === "deposite" && (
+      {currentpopupactive === "deposite"  && (
         <div
           style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
           className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
@@ -40,9 +38,11 @@ const FundsPage: React.FC<FundsPageProps> = () => {
           ></div>
           {/* this is back button */}
 
-          <Depositefunds />
+          <Depositefunds/>
+        
         </div>
       )}
+
       {/* second popup  */}
       {currentpopupactive === "withdraw" && (
         <div

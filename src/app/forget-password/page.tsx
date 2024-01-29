@@ -4,17 +4,17 @@ import styles from "./page.module.css";
 import Inputfield from "../components/multistepform/common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
-import Link from "next/link";
+import Link from "next/link"
 import {postRequestAPIHelper} from "../utils/lib/requestHelpers"
 const dotenv = require('dotenv');
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
 export default function page() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmation, setconfirmation ] = useState("");
-  const [emailcode, setemailcode] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmation, setconfirmation ] = useState("")
+  const [emailcode, setemailcode] = useState("")
   const [phonecode, setphonecode] = useState("");
   
   //  this is just for frond end toggle password

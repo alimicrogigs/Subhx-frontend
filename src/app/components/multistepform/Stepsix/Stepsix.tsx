@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
-
+import axios from "axios"
+const apiUrl = process.env.API_URL;
 interface StepsixProps {
   active: boolean;
   onNextStep: () => void;
@@ -17,7 +18,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
   const handleifscfind = () => {
     // add logic to find ifsc code here
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Log all form data to the console
     if (bankaccount == "") {
@@ -71,7 +72,34 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
       confirmbankaccount,
       ifsc,
     });
-    onNextStep();
+
+    try{
+      const token = localStorage.getItem("token")
+      // console.log('80', 'bankaccount',bankaccount);
+      // console.log('81', 'confirmbankaccount', confirmbankaccount);
+      // console.log('82', 'ifsc',ifsc);
+      const response = await axios.post(apiUrl + 'bank-verification',{
+        account_number:bankaccount,
+        confirmed_account_number: confirmbankaccount, ifsc_code :ifsc  
+      },{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
+
+      if (response.status === 200){
+        console.log('account no. done', response)
+        toast.custom(
+          <ToasterCustom type="message" message="Bank verified successfully..." />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
+        onNextStep();
+      }else {
+        console.log('account no. not done', response)
+      }
+    }catch(err){
+      console.log(err);
+    }
+    // onNextStep();
   };
 
   return (

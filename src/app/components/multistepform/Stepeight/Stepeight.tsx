@@ -16,7 +16,6 @@ const Stepeight: React.FC<stepeightprops> = ({ active, onNextStep }) => {
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
     >
       {/* ............. heading ............. */}
-
       <div
         style={{
           backgroundImage: "url(/signup/tick.svg)",

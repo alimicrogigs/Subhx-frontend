@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios"
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
 import {postRequestAPIHelper} from "../../../utils/lib/requestHelpers"
@@ -12,8 +13,16 @@ const apiUrl = process.env.API_URL;
 
 interface SteponeProps {
   active: boolean;
-  onNextStep: () => void;
+  onNextStep: () => void
 }
+
+const dotenv = require('dotenv');
+dotenv.config();
+const apiUrl = process.env.API_URL;
+console.log(apiUrl);
+console.log('dffd');
+
+// alert(apiUrl);
 
 const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [email, setEmail] = useState("");
@@ -35,6 +44,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const handleReferralOptionalChange = (e:any) => {
     console.log(e.target.value)
 
+    // setReferralOptional((prevReferralOptional) => !prevReferralOptional);
   };
 
   const handleAgreeTermsChange = () => {
@@ -192,7 +202,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   };
 
   return (
-    <form 
+    <form  
       action=""
       style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
@@ -260,7 +270,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         <input
           className="h-[100%] w-[20px]"
           type="checkbox"
-          // checked={referralOptional}
+          checked={referralOptional || undefined}
           onChange={handleReferralOptionalChange}
         />
         <p className="text-[.8rem]">I have Referral Optional </p>
