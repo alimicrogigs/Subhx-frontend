@@ -74,6 +74,27 @@ export default function Fundshome() {
       status: "Failed",
       time: "27.10.2023 13:40:22",
     },
+    {
+      asset: "Stellar (XLM)",
+      type: "Withdraw",
+      volume: "25",
+      status: "Completed",
+      time: "26.10.2023 16:20:30",
+    },
+    {
+      asset: "VeChain (VET)",
+      type: "Deposit",
+      volume: "500",
+      status: "Completed",
+      time: "27.10.2023 11:10:15",
+    },
+    {
+      asset: "Bitcoin Cash (BCH)",
+      type: "Withdraw",
+      volume: "5",
+      status: "Failed",
+      time: "27.10.2023 13:40:22",
+    },
     // Add more data objects as needed
   ];
 

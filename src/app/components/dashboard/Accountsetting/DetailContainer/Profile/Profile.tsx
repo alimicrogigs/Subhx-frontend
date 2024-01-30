@@ -17,6 +17,26 @@ export default function Profile() {
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
 
+  // nominee edit form
+  const [nomineeEditopen, setNomineeEditopen] = useState(false);
+  // nominee form data
+  const [nomineeFormData, setNomineeFormData] = useState({
+    name: "",
+    mobileNumber: "",
+    adharNumber: "",
+    panNumber: "",
+    emailAddress: "",
+  });
+  const handleNewNominee = () => {
+    console.log(nomineeFormData);
+  };
+  const handleNomineeFormDataChange = (e: any) => {
+    const { name, value } = e.target;
+    setNomineeFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   const handleGSTIN = () => {
     console.log({ GSTno });
     setGSTno("");
@@ -38,13 +58,7 @@ export default function Profile() {
     name: "John Doe",
     mail: "john.doe@example.com",
     contactno: 9876543210,
-    nominee: [
-      { name: "Alice Johnson", relation: "Spouse" },
-      { name: "Bob Williams", relation: "Friend" },
-      { name: "Charlie Brown", relation: "Colleague" },
-      { name: "Diana Smith", relation: "Family" },
-      { name: "Eva Miller", relation: "Friend" },
-    ],
+    nominee: [{ name: "Alice Johnson", relation: "Spouse" }],
   };
   return (
     <>
@@ -76,9 +90,7 @@ export default function Profile() {
 
             {user.mail}
           </h1>
-          <div className="mr-[20px] text-[#F5CD8E]">
-            <FaPen />
-          </div>
+          <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
         {/* ........ */}
         {/* ........ */}
@@ -91,9 +103,7 @@ export default function Profile() {
             +91 &nbsp;
             {user.contactno}
           </h1>
-          <div className="mr-[20px] text-[#F5CD8E]">
-            <FaPen />
-          </div>
+          <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
         {/* ........ */}
         {/* ........ */}
@@ -131,13 +141,79 @@ export default function Profile() {
                   {" "}
                   <GoDotFill />
                 </div>
-                {nominee.name}
-                <span className="ml-[30px]">{nominee.relation}</span>
+                {nominee.name} :
+                <span className="ml-[5px]">{nominee.relation}</span>
               </h1>
-              <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPlay /> */}</div>
+              <div
+                onClick={() => setNomineeEditopen(!nomineeEditopen)}
+                style={{ display: `${!nomineeEditopen ? "block" : "none"}` }}
+                className="mr-[20px] text-[#F5CD8E]"
+              >
+                <FaPen />
+              </div>
             </div>
           ))}
+          {/* { edit form for nominee} */}
+          {nomineeEditopen && (
+            <div className="w-[100%]  sm:px-[100px] px-[30px] flex flex-col gap-[20px] mt-[20px]">
+              <h1>Add Your New Nominee Detail below :</h1>
+              <input
+                value={nomineeFormData.name}
+                onChange={handleNomineeFormDataChange}
+                type="text"
+                name="name"
+                id="name"
+                className="pl-[30px] py-[10px] focus:border-none focus:outline-none text-black rounded"
+                placeholder="New Nominee Name"
+              />
+              <input
+                value={nomineeFormData.mobileNumber}
+                onChange={handleNomineeFormDataChange}
+                type="number"
+                name="mobileNumber"
+                id="mobileNumber"
+                className="pl-[30px] py-[10px] focus:border-none focus:outline-none text-black rounded"
+                placeholder="Nominee Mobile number"
+              />
+              <input
+                value={nomineeFormData.adharNumber}
+                onChange={handleNomineeFormDataChange}
+                type="number"
+                name="adharNumber"
+                id="adharNumber"
+                className="pl-[30px] py-[10px] focus:border-none focus:outline-none text-black rounded"
+                placeholder="Nominee Adhar number"
+              />
+              <input
+                value={nomineeFormData.panNumber}
+                onChange={handleNomineeFormDataChange}
+                type="number"
+                name="panNumber"
+                id="panNumber"
+                className="pl-[30px] py-[10px] focus:border-none focus:outline-none text-black rounded"
+                placeholder="Nominee PAN number"
+              />
+              <input
+                value={nomineeFormData.emailAddress}
+                onChange={handleNomineeFormDataChange}
+                type="email"
+                name="emailAddress"
+                id="emailAddress"
+                className="pl-[30px] py-[10px] focus:border-none focus:outline-none text-black rounded"
+                placeholder="Nominee Email Address"
+              />
+
+              <button
+                onClick={handleNewNominee}
+                className="bg-[#F5CD8E] mb-[30px] py-[10px] rounded-[10px] w-auto"
+              >
+                {" "}
+                Save Changes
+              </button>
+            </div>
+          )}
         </div>
+
         {/* nominee list goes here ... */}
 
         {/* ........ */}

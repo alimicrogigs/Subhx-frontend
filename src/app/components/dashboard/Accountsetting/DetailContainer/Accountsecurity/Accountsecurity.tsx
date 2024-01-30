@@ -7,6 +7,26 @@ import { FaPlay } from "react-icons/fa";
 
 export default function Profile() {
   // data
+  const activityData = [
+    {
+      date: "2024-01-30",
+      activity: "Login",
+      ipAddress: "192.168.1.1",
+      country: "United States",
+      city: "New York",
+      latitude: "40.7128",
+      longitude: "-74.0060",
+    },
+    {
+      date: "2024-01-30",
+      activity: "Login",
+      ipAddress: "192.168.1.1",
+      country: "United States",
+      city: "New York",
+      latitude: "40.7128",
+      longitude: "-74.0060",
+    },
+  ];
 
   const [twofacteropen, settwofacteropen] = useState(false);
   const [Activitylogopen, setActivitylogopen] = useState(false);
@@ -75,7 +95,44 @@ export default function Profile() {
         </div>
         {/* ........ */}
         {Activitylogopen && (
-          <div className="flex gap-[20px] w-[100%] ">goes here</div>
+          <div className="flex gap-[20px] w-[100%] ">
+            <table className="text-[.65rem] w-[100%]">
+              <thead className="bg-[#032835]">
+                <tr className="text-center">
+                  <th className="py-[5px]">Date</th>
+                  <th>Activity</th>
+                  <th>IP Address</th>
+                  <th>Country</th>
+                  <th>City</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* <tr className="text-center">
+                  <td className="py-[5px]">2024-01-30</td>
+                  <td>Login</td>
+                  <td>192.168.1.1</td>
+                  <td>United States</td>
+                  <td>New York</td>
+                  <td>40.7128</td>
+                  <td>-74.0060</td>
+                </tr>
+                 */}
+                {activityData.map((data, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="py-[5px]">{data.date}</td>
+                    <td>{data.activity}</td>
+                    <td>{data.ipAddress}</td>
+                    <td>{data.country}</td>
+                    <td>{data.city}</td>
+                    <td>{data.latitude}</td>
+                    <td>{data.longitude}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </>

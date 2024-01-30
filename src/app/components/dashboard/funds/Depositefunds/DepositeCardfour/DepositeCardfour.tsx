@@ -11,6 +11,11 @@ interface props {
   UPIid: string;
 }
 
+interface props {
+  UPIid: string;
+}
+
+const DepositeCardone: React.FC<props> = ({ UPIid }) => {
 const DepositeCardone: React.FC<props> = ({ UPIid }) => {
   const upi = "Payments.bit24hr@upi";
 
@@ -67,6 +72,7 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
     <>
       <DepositeCard eventKey="3" heading="UPI ID" >
         <div className="w-[100%] flex justify-between px-[20px] py-[20px] border-[1px] rounded-[5px]">
+          <p>{UPIid}</p>
           <p>{UPIid}</p>
           <div
             onClick={handlecopyupi}

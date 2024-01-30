@@ -59,14 +59,15 @@ export default function DepositeCardone() {
             "
           >
             <h1>Account Type</h1>
-            <select
+            <p className="">Current </p>
+            {/* <select
               className="bg-[#002B50] py-[3px] mt-[5px] px-[5px] w-[100%] focus:border-none focus:outline-none "
               name=""
               id=""
             >
               <option value="">Saving </option>
               <option value="">Current</option>
-            </select>
+            </select> */}
           </div>
           <CopyCard heading="Account Number" subheading="ZANM1754665623" />
         </div>

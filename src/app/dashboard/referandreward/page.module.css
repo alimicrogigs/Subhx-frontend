@@ -1,0 +1,12 @@
+.photo {
+  transform: translateX(-100px);
+}
+
+@media only screen and (max-width: 500px) {
+  .photo {
+    transform: translateY(0px);
+  }
+  .texttobealign {
+    text-align: center;
+  }
+}

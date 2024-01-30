@@ -28,14 +28,15 @@ export default function page() {
       }}
       className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
     >
-      {/* <Link href="/">
+      <Link href="/">
         <div
           style={{
             backgroundImage: "url(/signup/crossbutton.svg)",
+            display: `${currentstep == 1 ? "block" : "none"}`,
           }}
           className="absolute sm:w-[50px] sm:h-[50px] h-[20px] w-[20px] sm:top-[50px] top-[5px] sm:right-[50px] right-[25px] bg-center bg-no-repeat crossarrow bg-contain"
         ></div>
-      </Link> */}
+      </Link>
       <div
         onClick={handlePrevStep}
         style={{
@@ -62,15 +63,24 @@ export default function page() {
           onNextStep={handleNextStep}
           active={currentstep == 4 ? true : false}
         />
-        <Stepfive
+        {/* i chnge this step five on curent step to 7 bcz 
+        we need to have video step in very last thats why below may 
+        have diiferent nam eand current step */}
+
+        {/* <Stepfive
+          onNextStep={handleNextStep}
+          active={currentstep == 5 ? true : false}
+        /> */}
+
+        <Stepsix
           onNextStep={handleNextStep}
           active={currentstep == 5 ? true : false}
         />
-        <Stepsix
+        <Stepseven
           onNextStep={handleNextStep}
           active={currentstep == 6 ? true : false}
         />
-        <Stepseven
+        <Stepfive
           onNextStep={handleNextStep}
           active={currentstep == 7 ? true : false}
         />

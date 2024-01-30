@@ -56,6 +56,7 @@ export default function page() {
       );
       return;
     }
+
     // this validate that email is valid
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.custom(
@@ -148,14 +149,14 @@ export default function page() {
         }}
         className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
       >
-        {/* <Link href="/">
+        <Link href="/">
           <div
             style={{
               backgroundImage: "url(/signup/crossbutton.svg)",
             }}
             className="absolute w-[50px] h-[50px]  sm:top-[50px] top-[25px] sm:right-[50px] right-[25px]  bg-center bg-no-repeat crossarrow"
           ></div>
-        </Link> */}
+        </Link>
         <div
           className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
         >

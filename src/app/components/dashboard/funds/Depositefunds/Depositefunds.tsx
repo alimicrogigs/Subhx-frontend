@@ -7,8 +7,31 @@ import DepositeCardfour from "./DepositeCardfour/DepositeCardfour";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function Depositefunds() {
+  // const handleDeposit = async () => {
+  //   // Trigger deposit action
 
-  
+  //   try {
+  //     const token =
+  //       "25|$2y$10$fE/BJ4YpArv.P.lX0.2Lfe5ynp6fYe.vn/nu6X0yST2tvKgce8x42f4dbd8a1";
+  //     // console.log(userPANresponse );
+  //     const response = await axios.get(apiUrl + "upi-address", {
+  //       headers: {
+  //         token: token,
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ` + token,
+  //       },
+  //     });
+
+  //     if (response.status === 200) {
+  //       popupactive("deposite");
+  //       var upiID = response.data.data[0].upi_id;
+  //       console.log(upiID);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error UPI not generated:", error);
+  //     // toast.error("Error fetching PAN details");
+  //   }
+  // };
 
   return (
     <div>
