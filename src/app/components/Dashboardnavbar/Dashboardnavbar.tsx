@@ -190,7 +190,7 @@ export default function () {
                     </div>
                   </Link>
                   {/* ..... second item ..... */}
-                  <Link href="/dashboard/account-setting">
+                  <Link href="/dashboard/referandreward">
                     <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
@@ -221,7 +221,10 @@ export default function () {
             {/* ............. */}
           </li>
           {/* ...... */}
-          <li className="flex items-center justify-center ">Refer & Rewards</li>
+
+          <li className="flex items-center justify-center ">
+            <Link href="/dashboard/referandreward">Refer & Rewards</Link>
+          </li>
         </ul>
       </nav>
       {/* ...... responsive navbar ,........ */}
