@@ -6,7 +6,15 @@ interface props {
   UPIid: string;
 }
 
+<<<<<<< HEAD
 const DepositeCardone: React.FC<props> = ({ UPIid })=> {
+=======
+interface props {
+  UPIid: string;
+}
+
+const DepositeCardone: React.FC<props> = ({ UPIid }) => {
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
   const upi = "Payments.bit24hr@upi";
 
   const [UPIrrnnumber, setUPIrrnnumber] = useState("");
@@ -75,7 +83,12 @@ const DepositeCardone: React.FC<props> = ({ UPIid })=> {
       </DepositeCard>
     </>
   );
+<<<<<<< HEAD
 }
 
 
 export default DepositeCardone;
+=======
+};
+export default DepositeCardone;
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174

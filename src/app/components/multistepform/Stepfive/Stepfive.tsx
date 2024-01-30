@@ -19,7 +19,13 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
 const [video, setvideo] = useState("");
 const [loading, setLoading] = useState(false);
 
+<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
+=======
+  const handlerecord = () => {};
+
+  const handleSubmit = (e: React.FormEvent) => {
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
@@ -65,16 +71,22 @@ const [loading, setLoading] = useState(false);
         <div className="hidden absolute w-[100%] h-[100%] bg-red-500 top-0 right-0 videoelement"></div>
       </div>
       <div className="progressbar w-[40%] h-[5px] bg-white mt-[10px]"></div>
+<<<<<<< HEAD
       {/* <div className="controller flex gap-[10px] mt-[30px]">
         <div
+=======
+      <div className="controller flex gap-[10px] mt-[30px]">
+        {/* <div
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
           style={{
             backgroundImage: "url(/signup/recordbutton.svg)",
           }}
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Preview
-        </div>
+        </div> */}
         <div
+          onClick={handlerecord}
           style={{
             backgroundImage: "url(/signup/recordfillbg.svg)",
           }}
@@ -82,16 +94,21 @@ const [loading, setLoading] = useState(false);
         >
           Record
         </div>
-        <div
+        {/* <div
           style={{
             backgroundImage: "url(/signup/recordbutton.svg)",
           }}
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Retake
+<<<<<<< HEAD
         </div>
       </div> */}
       <h5 className="mt-[20px] gap-[10px]">Please Proceed to complete Video KYC</h5>
+=======
+        </div> */}
+      </div>
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",

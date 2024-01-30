@@ -28,6 +28,20 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
       );
       return;
     }
+    if (!VPAaddress.includes("@")) {
+      toast.custom(
+        <ToasterCustom
+          type="error"
+          message="Please provide valid VPA address"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+    }
+
     console.log({
       VPAaddress,
     })

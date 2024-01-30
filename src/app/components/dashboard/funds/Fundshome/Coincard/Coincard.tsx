@@ -51,7 +51,7 @@ const Coincard: React.FC<coincardsprops> = ({
             <>
               <div
                 style={{
-                  backgroundImage: "url(/dashboard/funds/subbutton.svg)",
+                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
                 }}
                 className="flex justify-center items-center px-[20px] bg-contain bg-center bg-no-repeat"
               >
@@ -59,7 +59,7 @@ const Coincard: React.FC<coincardsprops> = ({
               </div>
               <div
                 style={{
-                  backgroundImage: "url(/dashboard/funds/subbutton.svg)",
+                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
                 }}
                 className="flex justify-center items-center px-[30px] bg-contain bg-center bg-no-repeat"
               >

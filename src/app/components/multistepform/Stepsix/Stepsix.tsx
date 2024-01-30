@@ -138,7 +138,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
       </div>
 
       <div className="relative w-[80%] mt-[20px] flex">
-        <div
+        {/* <div
           onClick={handleifscfind}
           className="absolute h-[100%] top-0 right-0 z-[1] 
         text-white flex justify-center items-center bg-black
@@ -146,7 +146,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
          rounded-b-[10px] rounded-t-[10px]"
         >
           Find IFSC
-        </div>
+        </div> */}
         <Inputfield
           type="text"
           value={ifsc}
