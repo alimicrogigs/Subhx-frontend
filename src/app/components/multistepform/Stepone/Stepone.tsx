@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
+import InputField_colorfull from "../common/Inputfield/InputField_colorfull";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios"
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
 import {postRequestAPIHelper} from "../../../utils/lib/requestHelpers"
@@ -16,7 +16,6 @@ interface SteponeProps {
   onNextStep: () => void
 }
 
-// alert(apiUrl);
 
 const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [email, setEmail] = useState("");
@@ -25,7 +24,9 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [retypePassword, setRetypePassword] = useState("");
   const [showRetypePassword, setShowRetypePassword] = useState(false);
-  const [referralOptional, setReferralOptional] = useState(null);
+  const [referalcode, setreferalcode] = useState("");
+  const [referralOptional, setReferralOptional] = useState<boolean | undefined>(undefined);
+  const [inputBorderColor, setInputBorderColor] = useState('gray');
   const [agreeTerms, setAgreeTerms] = useState(false);
 
   const handleTogglePassword = () => {
@@ -35,19 +36,38 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const handleToggleRetypePassword = () => {
     setShowRetypePassword((prevShowRetypePassword) => !prevShowRetypePassword);
   };
-  const handleReferralOptionalChange = (e:any) => {
-    console.log(e.target.value)
-
-    // setReferralOptional((prevReferralOptional) => !prevReferralOptional);
+  const handleReferralOptionalChange = () => {
+    
+    setReferralOptional((prevValue) => !prevValue);
   };
 
   const handleAgreeTermsChange = () => {
     setAgreeTerms((prevAgreeTerms) => !prevAgreeTerms);
-  };
+  }
+  const Handlesetreferalcode = async (e: any)=>{
+    setreferalcode(e.target.value)
+    if(referalcode.length >= 6){
+      const requestData: { referral_code: string} = { referral_code :e.target.value};
+      try{
+        const response = await postRequestAPIHelper(apiUrl+'check-referral-code', null, requestData);
+        if(response.success === true) {
+          console.log("referal code correct !!!")
+
+          setInputBorderColor('green');
+        }else {
+          console.log("referal code is invalid !!!")
+
+          setInputBorderColor('rose');
+        }
+      }catch(err){
+        console.log(err);
+      }
+    } 
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    
     // this validate that email is provided or not
     if (email == "") {
       toast.custom(
@@ -169,7 +189,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           register_type: 'individual',
           referral_code: null, // or undefined, depending on your requirements
         };
-        console.log('API URL:', apiUrl);
+        console.log('API URL:', apiUrl)
 
         const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
         console.log(response);
@@ -178,7 +198,8 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
 
           // Check if the token is present
           if (token) {
-            localStorage.setItem('token', JSON.stringify(response.data.token));
+            localStorage.setItem('token', response.data.token); 
+            console.log(referralOptional)
             onNextStep();
           } else {
             console.log('Token not found in response:', response.data);
@@ -191,7 +212,8 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         }
     } catch (error) {
       // Handle API error in your controller
-      console.error('Controller Error:', error);
+      console.error('Controller Error:', error)
+      
     }
   };
 
@@ -264,7 +286,8 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         <input
           className="h-[100%] w-[20px]"
           type="checkbox"
-          checked={referralOptional || undefined}
+          checked={referralOptional || false}
+          
           onChange={handleReferralOptionalChange}
         />
         <p className="text-[.8rem]">I have Referral Optional </p>
@@ -278,6 +301,20 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         />
         <p className="text-[.8rem]">I agree to BIT24HR Term & Conditions </p>
       </div>
+            {/* .................................... */}
+      {referralOptional && (
+        <div className="w-[80%]  mt-[20px]">
+          <InputField_colorfull
+            type="text"
+            value={referalcode}
+            onChange={Handlesetreferalcode}
+            placeholder="Your Referal code "
+            bgColor={inputBorderColor} 
+          />
+        </div>
+      )}
+
+      {/* ................................. */}
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",

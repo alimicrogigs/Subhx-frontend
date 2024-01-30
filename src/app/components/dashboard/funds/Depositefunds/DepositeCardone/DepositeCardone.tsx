@@ -2,6 +2,17 @@
 import React, { useState, ChangeEvent } from "react";
 import DepositeCard from "../DepositeCard/DepositeCard";
 import CopyCard from "../../../Common/CopyCard/CopyCard";
+import ToasterCustom from "@/app/components/common/ToasterCustom/ToasterCustom";
+import { postRequestAPIHelper } from "../../../../../utils/lib/requestHelpers"
+const dotenv = require('dotenv');
+dotenv.config();
+const apiUrl = process.env.API_URL;
+
+import toast from "react-hot-toast";
+interface props {
+  UPIid: string;
+}
+
 
 export default function DepositeCardone() {
   const [IMPSrrnNumber, setIMPSrrnNumber] = useState("");
@@ -10,9 +21,31 @@ export default function DepositeCardone() {
     setIMPSrrnNumber(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Add your logic to handle the submission with rrnNumber
     console.log({ IMPSrrnNumber });
+    try {
+      const token = localStorage.getItem("token")
+      console.log(token);
+      console.log(IMPSrrnNumber)
+      const IMPSresponse = await postRequestAPIHelper(apiUrl + 'create-deposit-request', token, {
+        deposit_reference_id: IMPSrrnNumber
+      })
+      if (IMPSresponse.status === 200) {
+        toast.custom(
+          <ToasterCustom type="success" message={IMPSresponse.status === 200 ? "Please wait for 5 min and check again" : "Loading"} />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
+      }else if(IMPSresponse.status ===200) {
+
+      }
+    } catch (error) {
+      console.error('Error UPI not generated:', error);
+      // toast.error("Error fetching PAN details");
+    }
   };
   return (
     <>

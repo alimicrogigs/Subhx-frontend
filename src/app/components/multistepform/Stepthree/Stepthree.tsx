@@ -62,7 +62,6 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
   }
   
   
-  
   const handleAdharOTPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setadharotp(value)

@@ -26,10 +26,10 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
       url: url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': authorizationToken,
-        'User-Agent': getUserAgentInfo(),
+        'Authorization': 'Bearer '+authorizationToken,
+        // 'User-Agent': getUserAgentInfo(),
       },
-      data: JSON.stringify(requestData)
+      data: (requestData)
     };
 
     const response = await axios.request(config);
@@ -37,23 +37,23 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
   } catch (error) {
     return error;
   }
-};
+}
 
 
 exports.getRequestAPIHelper = async (url, authorizationToken) => {
-  const userAgentInfo = getUserAgentInfo();
+  // const userAgentInfo = getUserAgentInfo();                                                                                                                                                                                                                                                                                                                                    )
     try {
       const config = {
         method: 'get',
         url: url,
         headers: { 
-          'Content-Type': 'application/json', 
-          'Authorization': authorizationToken,
-          'User-Agent': JSON.stringify(userAgentInfo),
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+authorizationToken, 
+          // 'User-Agent': JSON.stringify(userAgentInfo),
         }
       };
   
-      const response = await axios.request(config);
+      const response = await axios.request(config)
       return response.data;
     } catch (error) {
       throw error;

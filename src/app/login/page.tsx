@@ -110,7 +110,7 @@ export default function page() {
 
         // Check if the token is present
         if (token) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
+          localStorage.setItem('token', response.data.token);
           setCurrentStep("validate");
         } else {
           console.log('Token not found in response:', response.data);

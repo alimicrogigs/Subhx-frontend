@@ -32,11 +32,12 @@ const Input: React.FC<InputProps> = ({
       )}
       
       <input
-        className="w-[100%] py-[15px] text-black pl-[20px] border-red-600 rounded-[10px]  focus:outline-none"
+        className={`w-[100%] py-[15px] border-5 border-${bgColor}-500 text-black pl-[20px]  rounded-[10px]  focus:outline-none`}
         type={type}
         value={value}
         onChange={onChange}
-        // style={bgColor}
+        
+        // style={{ borderColor: inputBorderColor }} 
         placeholder={placeholder}
       />
     </div>

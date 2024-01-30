@@ -60,7 +60,7 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
     
     try {
       const token = localStorage.getItem("token")
-      console.log(userPANresponse );
+      console.log(userPANresponse )
       const response = await axios.post(apiUrl + 'save-pan-response',{
       pan_number : PANno , pan_response : userPANresponse 
     },{ headers: { 'token': token,
@@ -70,6 +70,7 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
       if(response.status ===200){
         onNextStep();
       }
+      
     } catch (error) {
       console.error('Error fetching PAN details:', error);
       toast.error("Error fetching PAN details");
