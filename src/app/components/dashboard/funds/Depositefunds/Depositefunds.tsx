@@ -7,6 +7,10 @@ import DepositeCardfour from "./DepositeCardfour/DepositeCardfour";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function Depositefunds() {
+<<<<<<< HEAD
+
+  
+=======
   // const handleDeposit = async () => {
   //   // Trigger deposit action
 
@@ -32,6 +36,7 @@ export default function Depositefunds() {
   //     // toast.error("Error fetching PAN details");
   //   }
   // };
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
 
   return (
     <div>

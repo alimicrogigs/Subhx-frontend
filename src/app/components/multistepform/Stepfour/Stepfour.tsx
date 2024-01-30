@@ -1,9 +1,13 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios"
+const apiUrl = process.env.API_URL;
 import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
+
+
 
 interface StepfourProps {
   active: boolean;
@@ -12,29 +16,65 @@ interface StepfourProps {
 
 const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
   const [PANno, setPANno] = useState("");
+  // const [PANdetails, setPANdetails] = useState<any>(null);
+  const [userName, setUserName] = useState("Your Name");
+  const [userPANresponse, setUserPANresponse] = useState({});
 
-  const handleifscfind = () => {
-    // add logic to find ifsc code here
-  };
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Log all form data to the console
-    // Log all form data to the console
-    if (PANno == "") {
+  const handlePANChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPANno(value);
+    if (PANno == "") { 
       toast.custom(
         <ToasterCustom type="error" message="Please provide Pan no " />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
         }
-      );
-      return;
+      )
+      return
+    }
+   
+    if (value.length ==  10 ) { // Assuming PAN number has 10 characters
+      try {
+        const token = localStorage.getItem("token")
+       
+        const response = await axios.post(apiUrl + 'pan-verification',{
+        pan_number : value,
+      },{ headers: { 'token': token,
+                     'Content-Type': 'application/json',
+                     'Authorization': `Bearer `+ token}
+        }); 
+        console.log('response---------48', response);
+        setUserName(response.data.data.name);
+        setUserPANresponse(response.data.data)
+      } catch (error) {
+        console.error('Error fetching PAN details:', error);
+        toast.error("Error fetching PAN details");
+      }
+    }
+  };
+
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+        const token = localStorage.getItem("token")
+        console.log(userPANresponse );
+        const response = await axios.post(apiUrl + 'save-pan-response',{
+        pan_number : PANno , pan_response : userPANresponse 
+      },{ headers: { 'token': token,
+                   'Content-Type': 'application/json',
+                   'Authorization': `Bearer `+ token}
+      })
+      if(response.status ===200){
+        onNextStep();
+      }
+    } catch (error) {
+      console.error('Error fetching PAN details:', error);
+      toast.error("Error fetching PAN details");
     }
 
-    console.log({
-      PANno,
-    });
-    onNextStep();
+    
   };
 
   return (
@@ -65,15 +105,15 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
           className="absolute top-[20%] right-[10px] w-[50px] h-[60%] z-[1] bg-contain bg-center bg-no-repeat"
         ></div>
         <Inputfield
-          type="number"
+          type="text"
           value={PANno}
-          onChange={(e) => setPANno(e.target.value)}
+          onChange={handlePANChange}
           placeholder="PAN Card Number"
         />
       </div>
 
       <div className="relative w-[80%] mt-[20px] bg-white text-black rounded-[10px]">
-        <h1 className="pl-[20px] py-[20px]">Random Jones</h1>
+        <h1 className="pl-[20px] py-[20px]">{userName}</h1>
       </div>
 
       <div
@@ -81,7 +121,7 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
+        className="w-[80%] text-[1.6rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
       >
         Next
       </div>

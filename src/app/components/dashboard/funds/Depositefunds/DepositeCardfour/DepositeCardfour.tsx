@@ -2,21 +2,29 @@ import React, { useState, ChangeEvent } from "react";
 import DepositeCard from "../DepositeCard/DepositeCard";
 import ToasterCustom from "@/app/components/common/ToasterCustom/ToasterCustom";
 import toast from "react-hot-toast";
+interface props {
+  UPIid: string;
+}
 
+<<<<<<< HEAD
+const DepositeCardone: React.FC<props> = ({ UPIid })=> {
+=======
 interface props {
   UPIid: string;
 }
 
 const DepositeCardone: React.FC<props> = ({ UPIid }) => {
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
   const upi = "Payments.bit24hr@upi";
 
   const [UPIrrnnumber, setUPIrrnnumber] = useState("");
 
   const handleupisubmit = () => {
-    console.log({ UPIrrnnumber });
+    console.log({ UPIrrnnumber })
   };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUPIrrnnumber(e.target.value);
+
   };
   const handlecopyupi = async () => {
     try {
@@ -39,7 +47,7 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
 
   return (
     <>
-      <DepositeCard eventKey="3" heading="UPI ID">
+      <DepositeCard eventKey="3" heading="UPI ID" >
         <div className="w-[100%] flex justify-between px-[20px] py-[20px] border-[1px] rounded-[5px]">
           <p>{UPIid}</p>
           <div
@@ -75,5 +83,12 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
       </DepositeCard>
     </>
   );
+<<<<<<< HEAD
+}
+
+
+export default DepositeCardone;
+=======
 };
 export default DepositeCardone;
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174

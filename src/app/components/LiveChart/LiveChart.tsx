@@ -1,6 +1,6 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
+import useWindowResize from "@/app/Hooks/useWindowResize";
 
 interface ChartData {
   areaData: { time: string; value: number }[];
@@ -14,6 +14,7 @@ interface ChartData {
 }
 
 const LiveChart = () => {
+  const isMobile = useWindowResize();
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<ReturnType<typeof createChart> | null>(null);
   const [selectedTimeframe, setSelectedTimeframe] = useState("1D");
@@ -66,6 +67,7 @@ const LiveChart = () => {
       wickDownColor: "#ef5350",
     });
     candlestickSeries.setData(newData?.candlestickData || []);
+
     newChart.timeScale().fitContent();
 
     // Save the new chart reference
@@ -172,24 +174,38 @@ const LiveChart = () => {
     script.async = true;
     document.body.appendChild(script);
 
-    script.onload = createTradingViewChart;
+    script.onload = () => {
+      createTradingViewChart();
 
-    return () => {
-      document.body.removeChild(script);
+      // Add event listener for window resize
+      window.addEventListener("resize", handleWindowResize);
+
+      // Cleanup function to remove event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleWindowResize);
+        document.body.removeChild(script);
+      };
+    };
+
+    const handleWindowResize = () => {
+      if (chartRef.current) {
+        chartRef.current.resize(
+          chartContainerRef.current!.clientWidth,
+          chartContainerRef.current!.clientHeight
+        );
+      }
     };
   }, [selectedTimeframe]);
 
   return (
-    <div>
-      <div
-        ref={chartContainerRef}
-        style={{
-          height: "40vh",
-          width: "50vw",
-        }}
-      />
-     
-    </div>
+    <div
+      className=" sm:bg-cover "
+      style={{
+        height: isMobile ? "60vh" : "40vh",
+        width: "100%",
+      }}
+      ref={chartContainerRef}
+    ></div>
   );
 };
 

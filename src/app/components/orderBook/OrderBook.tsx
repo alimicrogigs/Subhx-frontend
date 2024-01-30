@@ -1,169 +1,204 @@
 "use client";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-} from "@tanstack/react-table";
-import { useMemo } from "react";
-import moment from "moment";
+import { useState, useEffect } from "react";
+
+import useWindowResize from "@/app/Hooks/useWindowResize";
+import MarketTrades from "../MarketTrades/MarketTrades";
+import HeadLines from "../Headlines/Headlines";
 
 const tableData = [
   {
     id: 1,
-    type: "Buy",
-    price: 320.26,
-    currency: "USDT",
-    status: "Success",
-    date: "2020-07-10 15:00:00.000",
-    quantity: 4.0,
+    buyPrice: 320.26,
+    volume: 0.002,
   },
+
   {
     id: 2,
-    type: "Sell",
-    price: 320.26,
-    currency: "USDT",
-    status: "Success",
-    date: "2020-07-18 15:00:00.000",
-    quantity: 4.0,
+    sellPrice: 222,
+    volume: 11111,
   },
   {
     id: 3,
-    type: "Buy",
-    price: 320.26,
-    currency: "USDT",
-    status: "Success",
-    date: "2020-07-10 15:00:00.000",
-    quantity: 4.0,
+    buyPrice: 320.26,
+    volume: 0.002,
   },
   {
     id: 4,
-    type: "Buy",
-    price: 320.26,
-    currency: "USDT",
-    status: "Success",
-    date: "2020-07-12 15:00:00.000",
-    quantity: 4.0,
+    sellPrice: 320.26,
+    volume: 0.002,
   },
+
   // Add more data as needed
 ];
 
-interface CellInfo {
-  value: any;
-  column: {
-    columnDef: {
-      cell: (info: CellInfo) => React.ReactNode;
-    };
-  };
-}
-
-interface CustomColumnDef {
-  header: string;
-  accessorKey: string;
-  cell?: (info: CellInfo) => React.ReactNode;
-}
-
 export default function OrderBook() {
-  const data = useMemo(() => {
-    return tableData.map((item) => ({
-      ...item,
-      formattedDateTime: moment(item.date).format("YYYY-MM-DD HH:mm:ss"),
-      typeAndPrice: `${item.type} ${item.price}`,
-    }));
-  }, []);
+  const isMobile = useWindowResize();
 
-  const columns: CustomColumnDef[] = [
-    {
-      header: "Total",
-      accessorKey: "typeAndPrice",
-      cell: (info: CellInfo) => (
-        <div>
-          {info.row.original.type} <br />
-          {info.row.original.price}
-        </div>
-      ),
-    },
-    {
-      header: "Price",
-      accessorKey: "currency",
-    },
-    {
-      header: "Status",
-      accessorKey: "status",
-    },
-    {
-      header: "Date",
-      accessorKey: "formattedDateTime",
-      cell: (info: CellInfo) => (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <span>{moment(info.row.original.date).format("YYYY-MM-DD")}</span>
-          <span>{moment(info.row.original.date).format("HH:mm:ss")}</span>
-        </div>
-      ),
-    },
-    {
-      header: "Quantity",
-      accessorKey: "quantity",
-    },
-  ];
+  const [orderType, setOrderType] = useState("orderBook");
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
+  console.log("orderType===", orderType);
+
+  tableData.map((item) => {
+    if (item.buyPrice) {
+      console.log("buy", item.buyPrice);
+      console.log("volume", item.volume);
+    } else if (item.sellPrice) {
+      console.log("sell", item.sellPrice);
+      console.log("volume", item.volume);
+    }
   });
 
+  const originalText = "37,50,978";
+  const slicedText = originalText.slice(0, 6);
+
+  // useEffect(() => {
+  //   const socket = new WebSocket("ws://stream.bit24hr.in:8765/usdt_order_book");
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connection opened");
+  //   };
+
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connection opened");
+  //   };
+
+  //   socket.onmessage = (event) => {
+  //     const data = JSON.parse(event.data);
+  //     console.log("WebSocket data received:", data);
+  //   };
+
+  //   socket.onclose = (event) => {
+  //     console.log("WebSocket connection closed:", event);
+  //   };
+
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
+
   return (
-    <div className="flex sm:flex-col bg-dashbgtrans sm:mr-3 sm:w-[48vw] sm:rounded-lg">
-      <div className="sm:h-[8vh] sm:border-b-2 border-borderline flex sm:items-end">
-        <span className="border-b-4 text-sm font-poppinsRegular border-borderline sm:px-4 sm:p-2">
+    <div className="flex flex-col   sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">
+      <div className="sm:h-[8vh] h-[10vh] w-[100%] bg-green-200  sm:border-b-2 border-borderline flex items-center sm:items-end">
+        <span
+          className={` ${
+            orderType === "orderBook" ? "sm:border-b-4 border-b-4 " : ""
+          } font-poppinsRegular  border-borderline  sm:px-4 bg-red-200 py-2 sm:p-3 text-[0.5rem]`}
+          onClick={() => setOrderType("orderBook")}
+        >
           Order Book
         </span>
+        <span
+          className={`${
+            orderType === "marketTrades" ? "sm:border-b-4 border-b-4" : ""
+          } text-sm font-poppinsRegular  border-borderline bg-red-300  sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
+          onClick={() => setOrderType("marketTrades")}
+        >
+          Market trades
+        </span>
+        <span
+          className={`${
+            orderType === "headlines" ? "sm:border-b-4 border-b-4" : ""
+          } text-sm font-poppinsRegular border-borderline bg-red-400  sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
+          onClick={() => setOrderType("headlines")}
+        >
+          Headlines
+        </span>
       </div>
-      <table className="">
-        <thead className=" ">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr
-              className="sm:border-b-[1.6px] border-borderline "
-              key={headerGroup.id}
-            >
-              {headerGroup.headers.map((header) => (
-                <th
-                  className="  sm:text-[0.8rem] font-normal sm:px-4 sm:py-2 sm:items-center"
-                  key={header.id}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="">
-          {table.getRowModel().rows.map((row) => (
-            <tr
-              style={{
-                backgroundColor:
-                  row.original.type === "Buy"
-                    ? "rgba(90, 215, 118, 0.15)"
-                    : "rgba(230, 86, 97, 0.15)",
-              }}
-              className="sm:text-[0.8rem] sm:items-center"
-              key={row.id}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  className=" sm:text-center sm:px-4 sm:py-2 sm:text-[0.6rem] font-normal "
-                  key={cell.id}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      {/*===== order book data =====*/}
+
+      {orderType === "orderBook" && (
+        <div className="  flex  sm:h-[90%] h-auto flex-row  sm:flex-row justify-between sm:justify-between">
+          {/* heading orderbook */}
+
+          <div className="sm:w-[48%] w-[48%]   flex flex-col sm:flex-col ">
+            <div className="flex sm:text-[0.5rem] text-[0.55rem] flex-row sm:flex-row">
+              <div className="sm:w-[60%] w-[60%] text-[0.65rem] text-end sm:text-end ">
+                VOLUME
+              </div>
+              <div className="sm:w-[40%] w-[40%] text-[0.65rem] text-end sm:text-end ">
+                BUY PRICE
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
+              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
+                0.33344
+              </div>
+              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
+              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
+                0.33344
+              </div>
+              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
+              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
+                0.33344
+              </div>
+              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] items-center sm:items-center sm:h-[6%] py-1 flex-row">
+              <div className="sm:w-[60%] w-[60%] sm:font-poppinsMedium sm:text-end text-end ">
+                0.33344
+              </div>
+              <div className="sm:w-[40%] w-[40%]  sm:text-end text-end sm:font-poppinsSemibold text-green-400">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+            </div>
+          </div>
+
+          <div className="sm:w-[48%] w-[48%]  flex flex-col sm:flex-col ">
+            <div className="flex sm:text-[0.5rem] text-[0.65rem] flex-row sm:flex-row">
+              <div className="sm:w-[40%] text-[0.65rem] w-[40%] text-start sm:text-start ">
+                SELL PRICE
+              </div>
+              <div className="sm:w-[60%] text-[0.65rem] w-[60%] text-start sm:text-start ">
+                VOLUME
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row">
+              <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+              <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
+                0.33344
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row">
+              <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+              <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
+                0.33344
+              </div>
+            </div>
+            <div className="flex sm:mt-1 sm:text-[0.7rem] text-[0.9rem] sm:font-poppinsSemibold sm:items-center py-1  sm:h-[6%] flex-row">
+              <div className="sm:w-[40%] w-[40%] text-start sm:text-start text-red-500 ">
+                {!isMobile ? originalText : `${slicedText}...`}
+              </div>
+              <div className="sm:w-[60%] w-[60%] text-start sm:text-start sm:font-poppinsMedium ">
+                0.33344
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {orderType === "marketTrades" && (
+        <div className=" sm:h-[90%]">
+          <MarketTrades />
+        </div>
+      )}
+      {orderType === "headlines" && (
+        <div className=" sm:h-[90%]">
+          <HeadLines />
+        </div>
+      )}
     </div>
   );
 }

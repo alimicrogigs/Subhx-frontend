@@ -1,11 +1,12 @@
-"use client";
 import { useEffect, useState } from "react";
 
+let resizeTimer:any;
+
 const useWindowResize = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth < 640); // You can adjust the breakpoint as needed
+    setIsMobile(window.innerWidth < 640);
   };
 
   useEffect(() => {
@@ -13,11 +14,18 @@ const useWindowResize = () => {
     handleResize();
 
     // Listen for window resize events
-    window.addEventListener("resize", handleResize);
+    const handleResizeThrottled = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        handleResize();
+      }, 250);
+    };
+
+    window.addEventListener("resize", handleResizeThrottled);
 
     // Cleanup the event listener on component unmount
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResizeThrottled);
     };
   }, []);
 

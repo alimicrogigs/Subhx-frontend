@@ -158,35 +158,35 @@ export default function OrderHistory() {
   });
 
   return (
-    <section className="flex sm:flex-col bg-dashbgtrans sm:w-[30.2vw]  sm:rounded-lg">
-      <div className="sm:h-[8vh] sm:border-b-2 border-borderline  flex sm:items-end">
+    <section className="flex flex-col sm:flex-col bg-dashbgtrans w-[100%] sm:w-[30.2vw]  sm:rounded-lg">
+      <div className="sm:h-[8vh] h-[8vh] sm:border-b-2 border-borderline items-end text-center sm:justify-start justify-evenly flex sm:items-end">
         <span
           onClick={() => setOrderType("open")}
           className={` ${
-            orderType === "open" ? "border-b-4" : ""
-          }  sm:w-[35%] text-sm font-poppinsRegular border-borderline  sm:px-4 sm:p-2`}
+            orderType === "open" ? "sm:border-b-4 border-b-4" : ""
+          }  sm:w-[35%] w-[50%] text-md sm:text-sm sm:border-b border-b font-poppinsRegular border-borderline px-4 py-2 sm:px-4 sm:p-2 `}
         >
           Open Order
         </span>
         <span
           onClick={() => setOrderType("complete")}
           className={`${
-            orderType === "complete" ? "border-b-4" : ""
-          } sm:w-[40%] text-sm font-poppinsRegular border-borderline sm:px-4 sm:p-2`}
+            orderType === "complete" ? "sm:border-b-4 border-b-4" : ""
+          } sm:w-[45%] w-[50%]  text-m sm:text-sm sm:border-b border-b font-poppinsRegular border-borderline px-4 sm:px-4 py-2 sm:p-2`}
         >
           Complete Order
         </span>
       </div>
       <table className="">
-        <thead className=" ">
+        <thead className="bg-switchColor ">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
-              className=" sm:border-b-[1.6px] border-borderline"
+              className=" border-b-[1.6px] sm:border-b-[1.6px] border-borderline"
               key={headerGroup.id}
             >
               {headerGroup.headers.map((header) => (
                 <th
-                  className="  sm:text-[0.8rem] font-normal sm:px-4 sm:py-2 sm:items-center"
+                  className=" text-[0.65rem] sm:text-[0.8rem] font-thin sm:font-normal px-3 py-2 sm:p-0 sm:px-4 sm:py-2 sm:items-center"
                   key={header.id}
                 >
                   {flexRender(
@@ -201,12 +201,12 @@ export default function OrderHistory() {
         <tbody className="">
           {table.getRowModel().rows.map((row) => (
             <tr
-              className="sm:text-[0.8rem] sm:border-b-[1px] border-borderline sm:items-center"
+              className="sm:text-[0.8rem] text-[0.8rem] border-b-[1px] sm:border-b-[1px] border-borderline items-center sm:items-center"
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className=" sm:text-center sm:px-4 sm:py-2 sm:text-[0.6rem] font-normal "
+                  className=" text-center sm:text-center px-3 sm:px-4 py-2 sm:py-2 text-[0.6rem] sm:text-[0.6rem] font-normal "
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

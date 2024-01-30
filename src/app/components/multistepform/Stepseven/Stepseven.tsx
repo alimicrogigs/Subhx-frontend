@@ -1,8 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios"
+const apiUrl = process.env.API_URL;
 import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
+// import { postRequestAPIHelper } from "../../../utils/lib/requestHelpers";
 
 interface StepsevenProps {
   active: boolean;
@@ -12,16 +15,15 @@ interface StepsevenProps {
 const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
   const [VPAaddress, setVPAaddress] = useState("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Log all form data to the console
-    // Log all form data to the console
+
     if (VPAaddress == "") {
       toast.custom(
         <ToasterCustom type="error" message="Please provide VPA address" />,
         {
-          position: "top-right", // Set the position (e.g., "top-center")
-          duration: 1000, // Set the duration in milliseconds
+          position: "top-right",
+          duration: 1000, 
         }
       );
       return;
@@ -42,7 +44,21 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
 
     console.log({
       VPAaddress,
-    });
+    })
+
+      try {
+        const token = localStorage.getItem("token")
+
+        const response = await axios.post(apiUrl + 'upi-verification',{
+          vpa : VPAaddress , vpa_name : null 
+        },{ headers: { 'token': token,'Content-Type': 'application/json','Authorization': `Bearer `+ token}
+          })
+      }
+      catch (error) {
+        console.error('upi not found:', error);
+        toast.error("upi not found");
+      }
+    
     onNextStep();
   };
 
@@ -80,7 +96,7 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
+        className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[50px]"
       >
         Submit
       </div>

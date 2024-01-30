@@ -26,7 +26,7 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
       url: url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': authorizationToken,
+        'Authorization': 'Bearer ' + authorizationToken,
         'User-Agent': getUserAgentInfo(),
       },
       data: JSON.stringify(requestData)
@@ -41,15 +41,15 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
 
 
 exports.getRequestAPIHelper = async (url, authorizationToken) => {
-  const userAgentInfo = getUserAgentInfo();
+ 
     try {
       const config = {
         method: 'get',
         url: url,
         headers: { 
           'Content-Type': 'application/json', 
-          'Authorization': authorizationToken,
-          'User-Agent': JSON.stringify(userAgentInfo),
+          'Authorization': 'Bearer ' + authorizationToken,
+          'User-Agent': getUserAgentInfo(),
         }
       };
   

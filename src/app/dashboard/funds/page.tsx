@@ -10,23 +10,32 @@ interface FundsPageProps {}
 
 const FundsPage: React.FC<FundsPageProps> = () => {
   const [currentfundsstep, setCurrentfundsstep] = useState<string>("Portfolio");
-
   const [currentpopupactive, setCurrentpopupactive] = useState("");
-
   const handleWalletAction = (action: string): void => {
     // Update the currentfundsstep based on the action
     setCurrentfundsstep(action);
-  };
-
+  }
   const handlepopupactive = (action: string): void => {
     setCurrentpopupactive(action);
-  };
+  }
+
 
   return (
     <>
+<<<<<<< HEAD
+    <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
+      {/* first popup  */}
+      {currentpopupactive === "deposite" && (
+        <div
+          style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
+          className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
+        >
+          {/* this is back button */}
+=======
       <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
         {/* first popup  */}
         {currentpopupactive === "deposite" && (
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
           <div
             style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
             className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
@@ -73,6 +82,28 @@ const FundsPage: React.FC<FundsPageProps> = () => {
           {currentfundsstep === "Portfolio" && <Fundshome />}
           {currentfundsstep === "transferhistory" && <Transferhistory />}
         </div>
+<<<<<<< HEAD
+      )}
+      {/* wallet start form here  */}
+      <Wallet
+        onAction={handleWalletAction}
+        popupactive={handlepopupactive}
+        activebutton={currentfundsstep}
+      />
+
+      <div className="w-[100%] relative overflow-scroll">
+        {currentfundsstep === "Portfolio" && <Fundshome />}
+        {currentfundsstep === "transferhistory" && <Transferhistory />}
+      </div>
+    </div>
+    {/* <div
+      onClick={() => setCurrentpopupactive("withdraw")}
+      className="sticky bottom-0 w-[100%] py-[20px] bg-white sm:hidden block"
+    >
+      Saad
+    </div> */}
+  </>
+=======
       </div>
       {/* <div
         onClick={() => setCurrentpopupactive("withdraw")}
@@ -81,6 +112,7 @@ const FundsPage: React.FC<FundsPageProps> = () => {
         Saad
       </div> */}
     </>
+>>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
   );
 };
 

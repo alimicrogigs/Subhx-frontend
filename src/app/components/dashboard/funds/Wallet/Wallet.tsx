@@ -1,10 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect ,useState } from "react";
+import axios from "axios"
+// import { checkAuthorization } from '../../../../utils/auth';
+
 interface WalletProps {
   onAction: (action: string) => void;
   popupactive: (action: string) => void;
   activebutton: string;
 }
+
+
+const dotenv = require('dotenv')
+dotenv.config();
+const apiUrl = process.env.API_URL;
+
 
 const Wallet: React.FC<WalletProps> = ({
   onAction,
@@ -17,18 +26,44 @@ const Wallet: React.FC<WalletProps> = ({
     // Trigger withdraw action
     popupactive("withdraw");
   };
-
-  const handleDeposit = () => {
+  
+  const handleDeposit =async () => {
     // Trigger deposit action
-    popupactive("deposite");
-  };
+
+    try {
+      const token = localStorage.getItem("token")
+      // console.log(userPANresponse );
+      const response1 = await axios.get(apiUrl + 'upi-address',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
+      const response2= await axios.get(apiUrl + 'manul-account',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
+      const response3= await axios.get(apiUrl + 'get-user-van',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
+
+      if(response1.status === 200 && response2.status === 200 && response3.status === 200){
+        popupactive("deposite");
+        var upiID = response1.data.data[0].upi_id;
+        console.log(upiID)
+        console.log(response2.data.data)
+        console.log(response3.data.data)
+      }
+    }
+
+    
+    catch (error) {
+      console.error('Error UPI not generated:', error);
+      // toast.error("Error fetching PAN details");
+    }
+  }
+
   const handleHome = () => {
     onAction("Portfolio");
-  };
+  }
   const handletransferhostory = () => {
     onAction("transferhistory");
-  };
-
+  }
+  // useEffect(() => {
+  //   // Simulate getting token from localStorage or cookie
+  //   const token = localStorage.getItem('token');
+  //   checkAuthorization(token);
+  // }, []);
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
@@ -42,9 +77,8 @@ const Wallet: React.FC<WalletProps> = ({
           <div
             style={{
               cursor: "pointer",
-              backgroundColor: `${
-                activebutton == "Portfolio" ? "#07303F" : ""
-              }`,
+              backgroundColor: `${activebutton == "Portfolio" ? "#07303F" : ""
+                }`,
             }}
             onClick={handleHome}
             className="sm:min-w-[200px] min-w-[150px] text-[1rem] text-center py-[5px]  rounded-[5px] sm:border-[2px] sm:border-buttonborder"
@@ -55,9 +89,8 @@ const Wallet: React.FC<WalletProps> = ({
           <div
             style={{
               cursor: "pointer",
-              backgroundColor: `${
-                activebutton == "transferhistory" ? "#07303F" : ""
-              }`,
+              backgroundColor: `${activebutton == "transferhistory" ? "#07303F" : ""
+                }`,
             }}
             onClick={handletransferhostory}
             className="sm:min-w-[200px] min-w-[180px] text-[1rem] text-center py-[5px] px-[15px] rounded-[5px] sm:border-[2px] sm:border-buttonborder"

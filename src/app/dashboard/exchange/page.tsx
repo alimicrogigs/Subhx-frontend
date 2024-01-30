@@ -14,6 +14,8 @@ export default function page() {
   const isMobile = useWindowResize();
   const [currentLayout, setCurrentLayout] = useState("MARKETS");
 
+  console.log("ismobile===", isMobile);
+
   console.log("currentLayout===", currentLayout);
 
   const handleChangeLayout = (newLayout: any) => {
@@ -42,9 +44,12 @@ export default function page() {
         </div>
       ) : (
         <div className="w-[100%] h-[100vh]  flex justify-between flex-col  text-white sm:m-2">
-          <div className="w-[100%] bg-red-800 h-[90%]  ">
-            {/* <CurrencySection /> */}
-            <ChartSection />
+          <div className="w-[100%] h-[90%]  ">
+            {currentLayout === "MARKETS" && <CurrencySection />}
+            {currentLayout === "CHARTS" && <ChartSection />}
+            {currentLayout === "MYORDER" && <OrderHistory />}
+
+            {currentLayout === "ORDERBOOK" && <OrderBook />}
           </div>
 
           <div className=" sticky bg-dashbgtrans h-[10%] w-full">
@@ -54,4 +59,23 @@ export default function page() {
       )}
     </>
   );
+}
+
+{
+  /* values of order book start here*/
+}
+{
+  /* <div className=" sm:w-[100%] flex sm:text-[0.8rem] bg-red-200 sm:justify-between">
+          <div className="sm:w-[47%] flex sm:flex-row bg-blue-200">
+            <div className="sm:w-[60%] sm:text-end bg-green-200">buyprice</div>
+            <div className="sm:w-[40%] sm:text-end bg-red-400">volume</div>
+          </div>
+          <div className="sm:w-[47%] flex sm:flex-row bg-blue-200">
+            <div className="sm:w-[40%] sm:text-start bg-red-400">sellprice</div>
+            <div className="sm:w-[60%] sm:text-start bg-green-200">volume</div>
+          </div>
+        </div> */
+}
+{
+  /* values of order book end here */
 }

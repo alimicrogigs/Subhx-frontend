@@ -12,8 +12,8 @@ const bottomBarData = [
     label: "CHARTS",
     color: "#5AD776",
   },
-  { id: 3, icon: "/dashboard/exchange/orderBook.svg", label: "ORDER BOOK" },
-  { id: 4, icon: "/dashboard/exchange/myOrder.svg", label: "MY ORDER" },
+  { id: 3, icon: "/dashboard/exchange/orderBook.svg", label: "ORDERBOOK" },
+  { id: 4, icon: "/dashboard/exchange/myOrder.svg", label: "MYORDER" },
 ];
 
 export default function BottomBar({ onChangeLayout }: BottomBarProps) {
@@ -29,13 +29,13 @@ export default function BottomBar({ onChangeLayout }: BottomBarProps) {
         console.log("Charts-clicked");
 
         break;
-      case "ORDER BOOK":
+      case "ORDERBOOK":
         // Task for ORDER BOOK
-        onChangeLayout("ORDER BOOK");
+        onChangeLayout("ORDERBOOK");
         break;
-      case "MY ORDER":
+      case "MYORDER":
         // Task for MY ORDER
-        onChangeLayout("MY ORDER");
+        onChangeLayout("MYORDER");
         break;
       default:
         // Default case
