@@ -1,6 +1,11 @@
 import React from "react";
 
 export default function Referfriend() {
+  const userData = [
+    { email: "user1@example.com", date: "2022-02-01" },
+    { email: "user2@example.com", date: "2022-02-05" },
+    // Add more data as needed
+  ];
   return (
     <>
       <div className="w-[100%]">
@@ -12,14 +17,14 @@ export default function Referfriend() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="py-[20px]">user1@example.com</td>
-              <td className="py-[20px]">2022-02-01</td>
-            </tr>
-            <tr>
-              <td className="py-[20px]">user2@example.com</td>
-              <td className="py-[20px]">2022-02-05</td>
-            </tr>
+            {userData.map((user, index) => {
+              return (
+                <tr key={index} className="border-b border-b-[#032835]">
+                  <td className="py-[20px]">{user.email}</td>
+                  <td className="py-[20px]">{user.date}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
