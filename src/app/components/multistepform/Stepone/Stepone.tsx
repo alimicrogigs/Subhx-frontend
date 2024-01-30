@@ -4,6 +4,11 @@ import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
+import {postRequestAPIHelper} from "../../../utils/lib/requestHelpers"
+const dotenv = require('dotenv');
+dotenv.config();
+const apiUrl = process.env.API_URL;
+
 
 interface SteponeProps {
   active: boolean;
@@ -14,14 +19,11 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
-  const [referalcode, setreferalcode] = useState("");
-  const [referralOptional, setReferralOptional] = useState(false);
-  const [agreeTerms, setAgreeTerms] = useState(false);
-
-  // this for togglig the password
   const [showPassword, setShowPassword] = useState(false);
+  const [retypePassword, setRetypePassword] = useState("");
   const [showRetypePassword, setShowRetypePassword] = useState(false);
+  const [referralOptional, setReferralOptional] = useState(null);
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -30,15 +32,16 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const handleToggleRetypePassword = () => {
     setShowRetypePassword((prevShowRetypePassword) => !prevShowRetypePassword);
   };
-  const handleReferralOptionalChange = () => {
-    setReferralOptional((prevReferralOptional) => !prevReferralOptional);
+  const handleReferralOptionalChange = (e:any) => {
+    console.log(e.target.value)
+
   };
 
   const handleAgreeTermsChange = () => {
     setAgreeTerms((prevAgreeTerms) => !prevAgreeTerms);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // this validate that email is provided or not
@@ -118,7 +121,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
         }
-      );
+      )
       return;
     }
     if (phoneNumber.length < 10) {
@@ -143,16 +146,58 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
       referralOptional,
       agreeTerms,
     });
-    onNextStep();
+
+
+    try {
+
+        const requestData: {
+          email: string;
+          phone: string;
+          password: string;
+          confirm_password: string;
+          register_type: string;
+          referral_code?: null | undefined;
+        } = {
+          email,
+          phone: phoneNumber,
+          password,
+          confirm_password: retypePassword,
+          register_type: 'individual',
+          referral_code: null, // or undefined, depending on your requirements
+        };
+        console.log('API URL:', apiUrl);
+
+        const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
+        console.log(response);
+        if (response.status === 200){
+          const token = (response.data.token)
+
+          // Check if the token is present
+          if (token) {
+            localStorage.setItem('token', JSON.stringify(response.data.token));
+            onNextStep();
+          } else {
+            console.log('Token not found in response:', response.data);
+          }
+        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
+        onNextStep();
+        
+        } else {
+          console.log('Registration failed:', response.data);
+        }
+    } catch (error) {
+      // Handle API error in your controller
+      console.error('Controller Error:', error);
+    }
   };
 
   return (
-    <form
+    <form 
       action=""
       style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
     >
-      {/* ............. heading ............. */}
+      {/* .............heading ............. */}
 
       <div>
         <h1 className="sm:text-signupheading text-signupheadingmobile font-poppinsSemibold">
@@ -162,7 +207,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         <p className="text-[.8rem] text-center">
           Already have an account?
           <Link href="/login">
-            <span className="sm:ml-[90px] ml-[20px] text-[#00BFFF]">Login</span>
+            <span className="ml-[90px] text-[#00BFFF]">Login</span>
           </Link>
         </p>
       </div>
@@ -215,7 +260,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         <input
           className="h-[100%] w-[20px]"
           type="checkbox"
-          checked={referralOptional}
+          // checked={referralOptional}
           onChange={handleReferralOptionalChange}
         />
         <p className="text-[.8rem]">I have Referral Optional </p>
@@ -229,29 +274,15 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         />
         <p className="text-[.8rem]">I agree to BIT24HR Term & Conditions </p>
       </div>
-      {/* .................................... */}
-      {referralOptional && (
-        <div className="w-[80%]  mt-[20px]">
-          <Inputfield
-            type="text"
-            value={referalcode}
-            onChange={(e) => setreferalcode(e.target.value)}
-            placeholder="Your Referal code "
-          />
-        </div>
-      )}
-
-      {/* ................................. */}
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[20px]"
+        className="w-[80%] text-[2rem] py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[30px]"
       >
         Create Account
       </div>
-      {/* .......................................... */}
     </form>
   );
 };

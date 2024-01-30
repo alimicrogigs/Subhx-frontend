@@ -35,21 +35,23 @@ const Coincard: React.FC<coincardsprops> = ({
           style={{
             color: `${profit ? "#5AD776" : "#E65661"}`,
           }}
-          className="flex-1 items-center flex"
+          className="flex-1 items-center flex text-center"
         >
           {profitlosspercentage}
         </div>
-        <div className="flex-1 justify-center flex flex-col">
+        {/* ........ */}
+        <div className="flex-1 justify-center flex  flex-col ">
           ₹ {currentportfolio}
           <br />
           <span className="text-[.7rem] opacity-50"> Live : ₹{liveprice} </span>
         </div>
+        {/* ........ */}
         <div className="flex-1 flex gap-[20px] justify-evenly ">
           {isbutton && (
             <>
               <div
                 style={{
-                  backgroundImage: "url(/dashboard/funds/subbutton.svg)",
+                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
                 }}
                 className="flex justify-center items-center px-[20px] bg-contain bg-center bg-no-repeat"
               >
@@ -57,7 +59,7 @@ const Coincard: React.FC<coincardsprops> = ({
               </div>
               <div
                 style={{
-                  backgroundImage: "url(/dashboard/funds/subbutton.svg)",
+                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
                 }}
                 className="flex justify-center items-center px-[30px] bg-contain bg-center bg-no-repeat"
               >

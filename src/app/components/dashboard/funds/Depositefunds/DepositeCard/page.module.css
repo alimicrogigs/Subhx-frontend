@@ -1,0 +1,9 @@
+.makeitresponsive {
+  min-width: 550px;
+}
+
+@media (max-width: 580px) {
+  .makeitresponsive {
+    min-width: 0px;
+  }
+}

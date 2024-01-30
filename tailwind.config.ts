@@ -16,6 +16,9 @@ const config: Config = {
         poppinsThin: "Poppins-thin",
       },
       colors: {
+        buttonborder: "#829CA5",
+        dashboardbgone: "#07303F",
+        activedashboardbutton: "#829CA5",
         primary: "#00090C",
 
         borderline: "rgba(130, 156, 165, 1);",

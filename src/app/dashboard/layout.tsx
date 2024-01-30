@@ -9,14 +9,14 @@ const DashboardLayout: React.FC<DashboardProps> = ({ children }) => {
   return (
     <section
       style={{
-        backgroundImage: "url(/dashboard/bg.svg)",
+        background: "black",
       }}
-      className="w-[100vw] h-[100vh] bg-center bg-cover bg-no-repeat"
+      className="w-[100vw] h-[100vh]"
     >
-      {/* <Dashboardnavbar /> */}
+      <Dashboardnavbar />
       <div
-        style={{ height: "100%" }}
-        className="w-[100%]  flex"
+        style={{ height: "calc(100vh - 80px )" }}
+        className="w-[100%] flex items-center justify-center sm:flex-row flex-col"
       >
         {children}
       </div>

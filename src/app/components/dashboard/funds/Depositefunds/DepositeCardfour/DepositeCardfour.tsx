@@ -3,7 +3,11 @@ import DepositeCard from "../DepositeCard/DepositeCard";
 import ToasterCustom from "@/app/components/common/ToasterCustom/ToasterCustom";
 import toast from "react-hot-toast";
 
-export default function DepositeCardone() {
+interface props {
+  UPIid: string;
+}
+
+const DepositeCardone: React.FC<props> = ({ UPIid }) => {
   const upi = "Payments.bit24hr@upi";
 
   const [UPIrrnnumber, setUPIrrnnumber] = useState("");
@@ -35,9 +39,9 @@ export default function DepositeCardone() {
 
   return (
     <>
-      <DepositeCard eventKey="0" heading="UPI ID">
+      <DepositeCard eventKey="3" heading="UPI ID">
         <div className="w-[100%] flex justify-between px-[20px] py-[20px] border-[1px] rounded-[5px]">
-          <p>{upi}</p>
+          <p>{UPIid}</p>
           <div
             onClick={handlecopyupi}
             style={{
@@ -71,4 +75,5 @@ export default function DepositeCardone() {
       </DepositeCard>
     </>
   );
-}
+};
+export default DepositeCardone;
