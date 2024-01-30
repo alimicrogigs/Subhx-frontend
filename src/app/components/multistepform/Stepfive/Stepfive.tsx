@@ -25,11 +25,9 @@ const [loading, setLoading] = useState(false);
       const token = localStorage.getItem("token");
       const response = await getRequestAPIHelper(apiUrl + 'get-user-video-kyc-link', token);
       if (response.status === 200) {
-        console.log('response---------48', response);
-        // Redirect the user to the received URL
-        window.location.href = response.data;  // Adjust the actual property name based on your response structure
+        console.log('response---------48', response);        
+        window.location.href = response.data;  
       } else {
-        // Handle other status codes if needed
         console.error('Unexpected status code:', response.status);
         toast.error("Unexpected status code");
       } 

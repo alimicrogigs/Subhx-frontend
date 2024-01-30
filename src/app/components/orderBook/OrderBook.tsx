@@ -51,29 +51,29 @@ export default function OrderBook() {
   const originalText = "37,50,978";
   const slicedText = originalText.slice(0, 6);
 
-  useEffect(() => {
-    const socket = new WebSocket("ws://stream.bit24hr.in:8765/usdt_order_book");
-    socket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
+  // useEffect(() => {
+  //   const socket = new WebSocket("ws://stream.bit24hr.in:8765/usdt_order_book");
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connection opened");
+  //   };
 
-    socket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connection opened");
+  //   };
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log("WebSocket data received:", data);
-    };
+  //   socket.onmessage = (event) => {
+  //     const data = JSON.parse(event.data);
+  //     console.log("WebSocket data received:", data);
+  //   };
 
-    socket.onclose = (event) => {
-      console.log("WebSocket connection closed:", event);
-    };
+  //   socket.onclose = (event) => {
+  //     console.log("WebSocket connection closed:", event);
+  //   };
 
-    return () => {
-      socket.close();
-    };
-  }, []);
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
 
   return (
     <div className="flex flex-col   sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">

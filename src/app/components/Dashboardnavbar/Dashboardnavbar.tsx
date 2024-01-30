@@ -4,6 +4,13 @@ import { usePathname } from "next/navigation";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { postRequestAPIHelper } from "@/app/utils/lib/requestHelpers";
+const dotenv = require("dotenv");
+dotenv.config();
+const apiUrl = process.env.API_URL;
+import { toast } from "react-hot-toast";
+import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
+
 
 export default function () {
   const [mobilemenuopen, setMobilemenuopen] = useState(false);
@@ -11,6 +18,49 @@ export default function () {
   let pathname = usePathname();
   // let active = href == pathname;
 
+  const handleLogout = async () => {
+    try {
+      // You should replace 'YOUR_LOGOUT_API_URL' with the actual URL of your logout API
+      let token = localStorage.getItem("token");
+      const response = await postRequestAPIHelper(apiUrl+'logout', token, null);
+      console.log('Logout Response', response);
+      if (response.status === 200) {
+        toast.custom(
+          <ToasterCustom
+            type="success"
+            message={response.data.message || "Logout successful"}
+          />,
+          {
+            position: "top-right", 
+            duration: 1000, 
+          }
+        );
+        // Remove the token from the storage
+        localStorage.removeItem("token");
+        const mainUrl = window.location.origin;
+        console.log('mainUrl', mainUrl);  
+        setTimeout(() => {
+          // redirect to hero page
+          window.location.href = mainUrl;
+          // window.location.href = "/login";
+        }, 2000);
+      } else {
+        toast.custom(
+          <ToasterCustom
+            type="error"
+            message={response.data.message || "Logout failed"}
+          />,
+          {
+            position: "top-right", 
+            duration: 1000, 
+          }
+        );
+      }
+    } catch (error) {
+      // Handle any unexpected errors
+      console.error('Error during logout:', error);
+    }
+  };
   const closeallmenu = () => {
     setDropdownOpen(false);
     setMobilemenuopen(false);
@@ -122,12 +172,12 @@ export default function () {
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>refer & rewards</p>
+                      <p>Refer & Rewards</p>
                     </div>
                   </Link>
                   {/* ......... third item .......... */}
-                  <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
+                  <Link href={{}}>
+                    <div onClick={() => { handleLogout(); }} className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -135,7 +185,7 @@ export default function () {
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>logout</p>
+                      <p>Logout</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -279,8 +329,8 @@ export default function () {
                     </div>
                   </Link>
                   {/* ......... third item .......... */}
-                  <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
+                  <Link href={""} >
+                    <div  onClick={() => { handleLogout(); }} className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
                       <div
                         style={{
                           backgroundImage:

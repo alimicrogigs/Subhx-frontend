@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-let resizeTimer;
+let resizeTimer:any;
 
 const useWindowResize = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);

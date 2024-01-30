@@ -75,9 +75,6 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
 
     try{
       const token = localStorage.getItem("token")
-      // console.log('80', 'bankaccount',bankaccount);
-      // console.log('81', 'confirmbankaccount', confirmbankaccount);
-      // console.log('82', 'ifsc',ifsc);
       const response = await axios.post(apiUrl + 'bank-verification',{
         account_number:bankaccount,
         confirmed_account_number: confirmbankaccount, ifsc_code :ifsc  
