@@ -23,7 +23,6 @@ const FundsPage: React.FC<FundsPageProps> = () => {
   };
 
   const handledepositeinsdiecoin = () => {};
-
   return (
     <>
       <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
@@ -41,8 +40,8 @@ const FundsPage: React.FC<FundsPageProps> = () => {
               className="fixed top-[100px] sm:left-[100px] left-[20px] w-[50px] h-[50px] bg-center bg-no-repeat bg-contain"
               onClick={() => setCurrentpopupactive("")}
             ></div>
-            {/* this is back button */}
 
+            {/* this is back button  ........*/}
             <Depositefunds />
           </div>
         )}
