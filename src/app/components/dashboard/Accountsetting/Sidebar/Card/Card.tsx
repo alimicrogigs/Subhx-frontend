@@ -24,7 +24,7 @@ const Card: React.FC<cardprops> = ({
         className="relative rounded-[3px] text-[1.2rem] flex items-center py-[18px] bg-[#07303F] pl-[25px] gap-[25px] font-poppinsMedium overflow-hidden mb-[2px]"
       >
         <div
-          style={{
+          style= {{
             backgroundImage: `url(${logo})`,
             transform: `scale(${iconscale ? iconscale : 1})`,
           }}
@@ -36,7 +36,7 @@ const Card: React.FC<cardprops> = ({
           <div className="absolute h-[100%] w-[7px] bg-[#F5CD8E] top-0 left-0"></div>
         )}
       </div>
-      {/* ...... */}
+
     </>
   );
 };

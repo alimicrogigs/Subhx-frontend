@@ -7,7 +7,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getUpiAddressRequest, getUpiAddressSuccess, getUpiAddressFailure, getManualAccountFailure, getManualAccountRequest, getManualAccountSuccess, getUserVanFailure, getUserVanRequest, getUserVanSuccess } from "../../../../actions/depositeFundActions"
 import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
-import CardSkeleton from "@/app/components/common/skeleton/depositSkeleton";
+// import CardSkeleton from "@/app/components/common/skeleton/depositSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 
@@ -83,7 +83,7 @@ const Wallet: React.FC<WalletProps> = ({
       dispatch(getManualAccountFailure(error));
     }
   }
-
+  
   const getVanUser = async () => {
     const token = localStorage.getItem("token");
     try {

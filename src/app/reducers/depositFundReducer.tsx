@@ -8,6 +8,9 @@ import {
   GET_USE_VAN_REQUEST,
   GET_USE_VAN_SUCCESS,
   GET_USE_VAN_FAILURE,
+  GET_USER_DETAILS_REQUEST,
+  GET_USER_DETAILS_SUCCESS,
+  GET_USER_DETAILS_FAILURE,
 } from "../constants/depositeFundConstants";
 
 const initialState = {
@@ -15,6 +18,7 @@ const initialState = {
   upiAddress: [],
   manualAccount :[],
   vanAccount:[],
+  getUserAllDetails:[],
   error: null,
 };
 
@@ -95,6 +99,31 @@ export const depositFundReducer = (state = initialState, action: any) => {
         vanAccount: [],
         error: action.payload,
       };
+
+      //GET USER DETAILS 
+    case GET_USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+
+    case GET_USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        getUserAllDetails: action.payload,
+        error: null,
+      };
+
+    case GET_USER_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        getUserAllDetails: [],
+        error: action.payload,
+      };
+
 
     default:
       return state;

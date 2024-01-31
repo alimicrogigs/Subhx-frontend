@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import HeadContainer from "../Common/HeadContainer/HeadContainer";
 import { SiSpringsecurity } from "react-icons/si";
 import { RxActivityLog } from "react-icons/rx";
+import ReactPaginate from 'react-paginate';
+import { getRequestAPIHelper } from "../../../../../utils/lib/requestHelpers"
 import { FaPlay } from "react-icons/fa";
+
+const dotenv = require('dotenv')
+dotenv.config();
+const apiUrl = process.env.API_URL;
+
 
 export default function Profile() {
   // data
@@ -30,6 +37,33 @@ export default function Profile() {
 
   const [twofacteropen, settwofacteropen] = useState(false);
   const [Activitylogopen, setActivitylogopen] = useState(false);
+  const [ActivitylogResult, setActivitylogResult] = useState([]);
+  const [formattedTime, setformattedTime] = useState("");
+
+  const handleActivityLog =async ()=>{
+    const token = localStorage.getItem("token");
+
+    try {
+
+      const activityLogsResponse = await getRequestAPIHelper(apiUrl + 'activity-logs', token);
+      if (activityLogsResponse.success === true) {
+        setActivitylogResult(activityLogsResponse.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching Activity Log', error);
+    }
+  }
+  function convertTo12HourFormat(timestamp :any) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const period = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    const formatTime = `${formattedHours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds} ${period}`;
+    console.log(formatTime);
+    return formatTime;
+}
 
   return (
     <>
@@ -65,16 +99,17 @@ export default function Profile() {
         {/* ........ */}
         {/* nominee list goes here ... */}
         <div style={{ display: `${twofacteropen ? "block" : "none"}` }}>
-          <p>goes here </p>
+          <p>goes here</p>
         </div>
         {/* nominee list goes here ... */}
 
         {/* ........ */}
         <div
-          onClick={() => setActivitylogopen(!Activitylogopen)}
+          onClick={() => setActivitylogopen(!Activitylogopen) }
           className="w=[100%] py-[10px] border-t border-t-[#041E27] flex justify-between"
+          // onChange={handleActivityLog}
         >
-          <h1 className="flex gap-[20px]">
+          <h1 className="flex gap-[20px]" >
             <div className="text-[#F5CD8E]">
               {" "}
               <RxActivityLog />
@@ -84,13 +119,12 @@ export default function Profile() {
           <div
             style={{
               transition: ".1s all ease-in-out",
-              transform: `${
-                Activitylogopen ? "rotate(90deg)" : "rotate(0deg)"
-              }`,
+              transform: `${Activitylogopen ? "rotate(90deg)" : "rotate(0deg)"
+                }`,
             }}
             className="mr-[20px] text-[#F5CD8E]"
           >
-            <FaPlay />
+            <div className="" onClick={handleActivityLog}><FaPlay  /></div>
           </div>
         </div>
         {/* ........ */}
@@ -119,11 +153,11 @@ export default function Profile() {
                   <td>-74.0060</td>
                 </tr>
                  */}
-                {activityData.map((data, index) => (
+                {ActivitylogResult.map((data, index) => (
                   <tr key={index} className="text-center">
-                    <td className="py-[5px]">{data.date}</td>
-                    <td>{data.activity}</td>
-                    <td>{data.ipAddress}</td>
+                    <td className="py-[5px]">{convertTo12HourFormat(data.created_at)}</td>
+                    <td>NA</td>
+                    <td>{data.ip_address}</td>
                     <td>{data.country}</td>
                     <td>{data.city}</td>
                     <td>{data.latitude}</td>

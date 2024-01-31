@@ -9,6 +9,9 @@ import {
     GET_USE_VAN_REQUEST,
     GET_USE_VAN_SUCCESS,
     GET_USE_VAN_FAILURE,
+    GET_USER_DETAILS_REQUEST,
+    GET_USER_DETAILS_SUCCESS,
+    GET_USER_DETAILS_FAILURE,
   } from "../constants/depositeFundConstants";
   
   export const getUpiAddressRequest = () => ({
@@ -47,5 +50,19 @@ import {
   
   export const getUserVanFailure = (error:any) => ({
     type: GET_USE_VAN_FAILURE,
+    payload: error,
+  })
+
+
+  export const getUserDataRequest = () => ({
+    type: GET_USER_DETAILS_REQUEST,
+  })
+  export const getUserDataSuccess = (vanAccount: any) => ({
+    type: GET_USER_DETAILS_SUCCESS,
+    payload: vanAccount,
+  })
+  
+  export const getUserDataFailure = (error:any) => ({
+    type: GET_USER_DETAILS_FAILURE,
     payload: error,
   })

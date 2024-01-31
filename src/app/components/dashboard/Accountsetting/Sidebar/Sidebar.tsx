@@ -17,10 +17,11 @@ const Sidebar: React.FC<SidebarProps> = ({
     setCurrentActiveButton(title);
     onSectionChange(title);
     ismobilecontainer(true);
-  };
+  }
+
 
   return (
-    <div className="sm:w-[38%] w-[90%]  sm:m-none mx-auto text-white">
+    <div className="sm:w-[38%] w-[90%]   sm:m-none mx-auto text-white">
       <h1 className="pb-[50px] text-[1.5rem] font- poppinsMedium">
         Account Settings
       </h1>
@@ -49,6 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         title="VERIFY KYC"
         logo="/dashboard/account-setting/sidebar/verifykyc.svg"
       />{" "}
+
       <Card
         action={() => handleCardClick("referal")}
         isActive={currentActiveButton == "referal" ? true : false}
@@ -62,6 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         title="PAYMENT OPTIONS"
         logo="/dashboard/account-setting/sidebar/paymentopt.svg"
       />{" "}
+
       <Card
         action={() => handleCardClick("Api-key-manager")}
         isActive={currentActiveButton == "Api-key-manager" ? true : false}
@@ -75,14 +78,15 @@ const Sidebar: React.FC<SidebarProps> = ({
         title="CHANGE PASSWORD"
         logo="/dashboard/account-setting/sidebar/paymentopt.svg"
       />{" "}
+
       <Card
         action={() => handleCardClick("")}
         isActive={currentActiveButton == "logout" ? true : false}
         title="LOGOUT"
         logo="/dashboard/account-setting/sidebar/api.svg"
       />
-      {/* ..... */}
+      
     </div>
   );
-};
+}
 export default Sidebar;

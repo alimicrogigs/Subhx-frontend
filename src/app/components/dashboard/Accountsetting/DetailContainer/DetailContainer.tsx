@@ -14,6 +14,7 @@ interface DetailContainerProps {
 const MainContainer: React.FC<DetailContainerProps> = ({
   currentSection,
   isdetailcontainer,
+
 }) => {
   return (
     <div
@@ -31,5 +32,5 @@ const MainContainer: React.FC<DetailContainerProps> = ({
       {currentSection == "change-password" && <Changepassword />}
     </div>
   )
-};
+} 
 export default MainContainer;
