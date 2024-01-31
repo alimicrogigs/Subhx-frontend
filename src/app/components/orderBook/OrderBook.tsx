@@ -80,9 +80,6 @@ export default function OrderBook() {
 
   // table code start from here =====================
 
-
-
-
   return (
     <div className="flex flex-col   sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">
       <div className="sm:h-[8vh]  h-[8vh] w-[100%]   sm:border-b-2 border-borderline flex justify-evenly sm:justify-start items-end sm:items-end">

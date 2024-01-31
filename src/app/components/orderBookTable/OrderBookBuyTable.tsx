@@ -68,10 +68,9 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
 
   useEffect(() => {
-    // Update state with the latest 6 entries or fill with previous data
     setData((prevData) => {
-      const newData = [...buyData.slice(0, 6)];
-      const previousData = prevData.slice(0, 6 - newData.length);
+      const newData = [...buyData.slice(0, 10)];
+      const previousData = prevData.slice(0, 10 - newData.length);
 
       return [...newData, ...previousData];
     });
@@ -141,7 +140,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
                   : row.original.type === "rate"
                   ? "bg-green"
                   : ""
-              } sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
+              } sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
