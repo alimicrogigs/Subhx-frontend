@@ -8,7 +8,7 @@ export default function Fundshome() {
       style={{}}
       className={`${styles.oddevencolor} min-w-[900px] w-[100%] `}
     >
-      <div className="w-[100%]  flex justify-between bg-tableodd py-[5px] text-white text-[.8rem] px-[20px]">
+      <div className="w-[100%]  flex justify-between bg-[#07303f] py-[5px] text-white text-[.8rem] px-[20px]">
         <div className="flex-1">Assets</div>
         <div className="flex-1">Total Balance</div>
         <div className="flex-1 text-left ">Today’s Gains</div>
@@ -24,6 +24,7 @@ export default function Fundshome() {
         liveprice="30,00,000.00"
         isbutton={true}
         profit={true}
+        // backgroundcolor="#07303f"
       />
       <Coincard
         coinname="BTC"
@@ -33,6 +34,7 @@ export default function Fundshome() {
         liveprice="30,00,000.00"
         isbutton={true}
         profit={false}
+        backgroundcolor="#07303f"
       />
       <Coincard
         coinname="BTC"
@@ -51,6 +53,7 @@ export default function Fundshome() {
         liveprice="30,00,000.00"
         isbutton={true}
         profit={false}
+        backgroundcolor="#07303f"
       />
       <Coincard
         coinname="BTC"
