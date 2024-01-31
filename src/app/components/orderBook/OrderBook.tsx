@@ -34,20 +34,24 @@ export default function OrderBook() {
   console.log("orderBookData buy====", orderBookData.buy);
   console.log("orderBookData sell====", orderBookData.sell);
 
-  console.log("orderType===", orderType);
+  // const addVolumes = (orders: Order[] = []) => {
+  //   console.log("orders====", orders);
+  //   const result: { [key: number]: number } = {};
+  //   orders.forEach((order) => {
+  //     const Price = order?.rate;
+  //     if (!result[Price]) {
+  //       result[Price] = 0;
+  //     }
+  //     result[Price] += order.volume;
+  //   });
+  //   return result;
+  // };
 
-  tableData.map((item) => {
-    if (item.buyPrice) {
-      console.log("buy", item.buyPrice);
-      console.log("volume", item.volume);
-    } else if (item.sellPrice) {
-      console.log("sell", item.sellPrice);
-      console.log("volume", item.volume);
-    }
-  });
+  // const buyVolumes = addVolumes(orderBookData.buy);
+  // const sellVolumes = addVolumes(orderBookData.sell);
 
-  const originalText = "37,50,978";
-  const slicedText = originalText.slice(0, 6);
+  // console.log("buyVolumes===", buyVolumes);
+  // console.log("sellVolumes====", sellVolumes);
 
   useEffect(() => {
     const socket = new WebSocket("ws://stream.bit24hr.in:8765/usdt_order_book");
@@ -55,18 +59,19 @@ export default function OrderBook() {
       console.log("WebSocket connection opened");
     };
 
-  //   socket.onopen = () => {
-  //     console.log("WebSocket connection opened");
-  //   };
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      setOrderBookData(data);
       console.log("WebSocket data received:", data);
     };
 
-  //   socket.onclose = (event) => {
-  //     console.log("WebSocket connection closed:", event);
-  //   };
+    socket.onclose = (event) => {
+      console.log("WebSocket connection closed:", event);
+    };
 
     return () => {
       socket.close();
