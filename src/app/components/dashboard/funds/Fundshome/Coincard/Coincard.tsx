@@ -13,6 +13,10 @@ interface coincardsprops {
   isbutton: boolean;
   profit: boolean;
   backgroundcolor?: string;
+  onAction: (depositeBTCdetail: {
+    amount: string | null;
+    remark: string;
+  }) => void;
 }
 
 const Coincard: React.FC<coincardsprops> = ({
@@ -24,9 +28,14 @@ const Coincard: React.FC<coincardsprops> = ({
   isbutton,
   profit,
   backgroundcolor,
+  onAction,
 }) => {
   const [iswithdrawopen, setiswithdrawopen] = useState(false);
   const [isdepositewopen, setisdepositewopen] = useState(false);
+  const [depositeBTCdetail, setdepositeBTCdetail] = useState({
+    amount: null as string | null,
+    remark: "",
+  });
 
   return (
     <>
@@ -34,7 +43,7 @@ const Coincard: React.FC<coincardsprops> = ({
         style={{
           background: `${backgroundcolor ? backgroundcolor : "transparent"}`,
         }}
-        className="w-[100%] flex justify-between py-[15px] text-white text-[1rem] px-[20px] py-[10px]"
+        className="w-[100%] flex justify-between py-[15px] text-white sm:text-[1rem] text-[.6rem] sm:px-[20px] px-[5px] py-[10px]"
       >
         <div className="flex-1 items-center flex">
           {" "}
@@ -59,7 +68,7 @@ const Coincard: React.FC<coincardsprops> = ({
           <span className="text-[.7rem] opacity-50"> Live : ₹{liveprice} </span>
         </div>
         {/* ........ */}
-        <div className="flex-1 flex gap-[20px] justify-evenly ">
+        <div className="flex-1  sm:gap-[20px] gap-[5px] justify-evenly  flex">
           {isbutton && (
             <>
               <motion.div
@@ -107,7 +116,7 @@ const Coincard: React.FC<coincardsprops> = ({
             exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <div className="w-[55%] mx-auto pt-[70px] pb-[10px]">
+            <div className="sm:w-[55%] w-[90%] mx-auto pt-[70px] pb-[10px]">
               <h1 className=" border-b border-b-[#07303F] border-b-[2px] pb-[10px] text-[.9rem]">
                 Move BTC from your BIT24HR Wallet to another.
               </h1>
@@ -132,6 +141,13 @@ const Coincard: React.FC<coincardsprops> = ({
                     id=""
                     className="py-[15px] bg-[#0C4E66] px-[30px] rounded-[5px] w-[100%]"
                     placeholder="0.00000254"
+                    value={depositeBTCdetail.amount || ""}
+                    onChange={(e) =>
+                      setdepositeBTCdetail((prev) => ({
+                        ...prev,
+                        amount: e.target.value,
+                      }))
+                    }
                   />
                 </div>
               </div>
@@ -139,6 +155,13 @@ const Coincard: React.FC<coincardsprops> = ({
               <div className="mt-[30px]">
                 <p className="pb-[5px]">Remarks</p>
                 <input
+                  value={depositeBTCdetail.remark || ""}
+                  onChange={(e) =>
+                    setdepositeBTCdetail((prev) => ({
+                      ...prev,
+                      remark: e.target.value,
+                    }))
+                  }
                   type="text"
                   className="py-[20px] bg-[#0C4E66] px-[30px] rounded-[5px] w-[100%]"
                 />
@@ -157,7 +180,12 @@ const Coincard: React.FC<coincardsprops> = ({
               </div>
               {/* submit button ... */}
               <div className="w-[100%] flex justify-center mt-[30px]">
-                <div className="bg-[#E65661] inline mx-auto px-[100px] py-[5px] text-[2rem] font-poppinsSemibold rounded rounded-[5px]">
+                <div
+                  onClick={() => {
+                    onAction(depositeBTCdetail);
+                  }}
+                  className="bg-[#E65661] inline mx-auto px-[100px] py-[5px] text-[2rem] font-poppinsSemibold rounded rounded-[5px]"
+                >
                   Proceed with Withdrawal
                 </div>
               </div>
@@ -181,7 +209,68 @@ const Coincard: React.FC<coincardsprops> = ({
       </AnimatePresence>
       {/* the deposite form end here  .... */}
       {/* .......................................................................... */}
+      {isdepositewopen && (
+        <AnimatePresence>
+          <motion.div
+            className="w-[100%] bg-[#041E27] text-white border-t border-t-[#07303F] border-t-[2px]"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <div className="sm:w-[50%] w-[90%] mx-auto pt-[50px] pb-[10px]">
+              <p className="border-b border-b-[#07303F] border-b-[2px] pb-[10px]">
+                Kindly make sure to choose the TRON (TRC20) network at the
+                sender's wallet.
+              </p>
+              {/* ........... */}
 
+              <div className="mt-[50px]">
+                <p className="pb-[5px]">TRC20</p>
+                <div className="relative flex justify-betweeb bg-[#0C4E66] px-[30px] py-[15px] rounded-[5px]">
+                  <div>fmbHfnpaZjKFvyi1okTjJJusN455paPH</div>
+                  {/* .......Copy button ...... */}
+                  <div
+                    style={{
+                      backgroundImage:
+                        "url(/dashboard/funds/portfolio/copygreen.svg)",
+                    }}
+                    className="bg-center bg-no-repeat bg-contain absolute h-[100%] text-[#5AD776] w-[20px] right-[60px] top-0 flex justify-center items-center"
+                  ></div>
+                  {/* ............. */}
+                  {/* scan butoon .... */}
+                  <div
+                    style={{
+                      backgroundImage:
+                        "url(/dashboard/funds/portfolio/scan.svg)",
+                    }}
+                    className=" bg-center bg-no-repeat bg-contain absolute h-[100%] text-[#5AD776] w-[20px] right-[20px] top-0 flex justify-center items-center"
+                  ></div>
+                  {/* ..................... */}
+                  <div></div>
+                </div>
+              </div>
+              {/* .................... */}
+
+              {/* .. disclamer  */}
+              <div className="text-[#E65661] flex items-center gap-[10px] pb-[10px] border-b border-b-[#07303F] border-b-[2px] mt-[50px]">
+                <FaExclamationCircle /> <p>Disclaimer</p>
+              </div>
+              <p
+                style={{ color: "rgba(247, 247, 247, 0.75)" }}
+                className="mt-[30px] text-[.75rem] pb-[30px]"
+              >
+                Please confirm the selection of the Tron (TRC20) network at the
+                sender's wallet. <br /> Exclusively use the Tron (TRC20) network
+                for sending. Any other network usage may lead to fund loss.{" "}
+                <br /> Deposit only USDT to this deposit address. Depositing any
+                other asset will result in a loss of funds.
+              </p>
+              {/* ........................... */}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      )}
       {/* form below the deposite form start .... */}
     </>
   );
