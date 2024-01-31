@@ -1,7 +1,11 @@
-"use client";
-import React, { useEffect ,useState } from "react";
-import axios from "axios"
-// import { checkAuthorization } from '../../../../utils/auth';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../../common/ToasterCustom/ToasterCustom";
+import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from "../../../../actions/depositeFundActions"
+import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
+
+
 
 interface WalletProps {
   onAction: (action: string) => void;
@@ -14,44 +18,110 @@ const dotenv = require('dotenv')
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
+// Define your custom toaster component
+// const ToasterForWallet = ({ type, message, loading }) => {
+//   return (
+//     <div className={toaster toaster-${type}}>
+//       {loading ? <span>Loading...</span> : <span>{message}</span>}
+//     </div>
+//   );
+// };
+
 
 const Wallet: React.FC<WalletProps> = ({
   onAction,
   activebutton,
   popupactive,
+
 }) => {
-  let upitisend = "saad";
-  let user_balance = `₹ 5,689.00`;
+
+  const [loading, setLoading] = useState(true);
+
+  // const dispatch = useDispatch();
+  let user_balance = "₹ 5,689.00"
   const handleWithdraw = () => {
     // Trigger withdraw action
-    popupactive("withdraw");
+    popupactive("withdraw")
   };
-  
-  const handleDeposit =async () => {
+
+
+  const handleDeposit = async () => {
     // Trigger deposit action
-
+    const token = localStorage.getItem("token");
+  
     try {
-      const token = localStorage.getItem("token")
-      // console.log(userPANresponse );
-      const response1 = await axios.get(apiUrl + 'upi-address',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
-      const response2= await axios.get(apiUrl + 'manul-account',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
-      const response3= await axios.get(apiUrl + 'get-user-van',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
-
-      if(response1.status === 200 && response2.status === 200 && response3.status === 200){
-        popupactive("deposite");
-        var upiID = response1.data.data[0].upi_id;
-        console.log(upiID)
-        console.log(response2.data.data)
-        console.log(response3.data.data)
+      // Set loading state before API call
+      setLoading(true);
+  
+      // Fetch user data
+      const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token);
+      console.log(getUserResponse, "line___47_");
+  
+      if (getUserResponse.success === true) {
+        console.log(getUserResponse.data.kyc_verification, "line___48_");
       }
-    }
-
-    
-    catch (error) {
-      console.error('Error UPI not generated:', error);
-      // toast.error("Error fetching PAN details");
+  
+      if (getUserResponse.success === true && getUserResponse.data.kyc_verification === "approved") {
+        const getUserData = getUserResponse.data;
+        console.log("User Data:", getUserData);
+  
+        // Set loading state before API call
+        setLoading(true);
+  
+        // Fetch UPI address
+        const upiAddressResponse = await getRequestAPIHelper(apiUrl + 'upi-address', token);
+        if (upiAddressResponse.status === 200) {
+          const upiAddressData = upiAddressResponse.data;
+          console.log("UPI Address Data:", upiAddressData);
+          // Perform actions based on upiAddressData if needed
+        }
+  
+        // Set loading state before API call
+        setLoading(true);
+  
+        // Fetch manual account
+        const manualAccountResponse = await getRequestAPIHelper(apiUrl + 'manul-account', token);
+        if (manualAccountResponse.status === 200) {
+          const manualAccountData = manualAccountResponse.data;
+          console.log("Manual Account Data:", manualAccountData);
+          // Perform actions based on manualAccountData if needed
+        }
+  
+        // Set loading state before API call
+        setLoading(true);
+  
+        // Fetch user van
+        const userVanResponse = await getRequestAPIHelper(apiUrl + 'get-user-van', token);
+        if (userVanResponse.status === 200) {
+          const userVanData = userVanResponse.data;
+          console.log("User Van Data:", userVanData);
+          // Perform actions based on userVanData if needed
+        }
+  
+        // Trigger deposit popup
+        popupactive("deposite");
+      }
+  
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      // toast.custom(
+        // <ToasterForWallet type="error" message="KYC is Pending, Deposit details will not open !!! " loading="" />,
+        // {
+        //   position: "top-right",
+        //   duration: 1000,
+        // }
+      // );
+      // return;
+    } finally {
+      // Set loading state to false after all API calls are complete
+      setLoading(false);
     }
   }
+
+  useEffect(() => {
+    handleDeposit();
+  }, []);
+
 
   const handleHome = () => {
     onAction("Portfolio");
@@ -59,11 +129,6 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
-  // useEffect(() => {
-  //   // Simulate getting token from localStorage or cookie
-  //   const token = localStorage.getItem('token');
-  //   checkAuthorization(token);
-  // }, []);
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
@@ -128,7 +193,8 @@ const Wallet: React.FC<WalletProps> = ({
           }}
           className="bg-center bg-no-repeat bg-contain px-[30px] py-[10px]"
         >
-          Withdraw
+
+        Withdraw
         </div> */}
 
           {/* <div
