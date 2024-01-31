@@ -68,10 +68,11 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
 
   useEffect(() => {
-    // Update state with the latest 6 entries or fill with previous data
+    console.log("buy data========= :", buyData);
+
     setData((prevData) => {
-      const newData = [...buyData.slice(0, 6)];
-      const previousData = prevData.slice(0, 6 - newData.length);
+      const newData = [...buyData.slice(0, 10)];
+      const previousData = prevData.slice(0, 10 - newData.length);
 
       return [...newData, ...previousData];
     });
@@ -82,7 +83,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
       header: "VOLUME",
       accessorKey: "volume",
       cell: (info: cellInfo) => (
-        <div style={{ textAlign: "start" }}>{info.row.original.volume}</div>
+        <div style={{ textAlign: "start" }}>{info.row.original[1]}</div>
       ),
     },
     {
@@ -90,7 +91,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
       accessorKey: "rate",
       cell: (info: cellInfo) => (
         <div style={{ textAlign: "end", color: "rgba(90, 215, 118, 1)" }}>
-          {info.row.original.rate}
+          {info.row.original[0]}
         </div>
       ),
     },
@@ -141,7 +142,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
                   : row.original.type === "rate"
                   ? "bg-green"
                   : ""
-              } sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
+              } sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (

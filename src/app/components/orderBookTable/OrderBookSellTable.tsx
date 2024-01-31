@@ -72,8 +72,8 @@ export default function OrderBookSellTable({
   useEffect(() => {
     // Update state with the latest 6 entries
     setData((prevData) => {
-      const newData = [...sellData.slice(0, 6)];
-      const previousData = prevData.slice(0, 6 - newData.length);
+      const newData = [...sellData.slice(0, 10)];
+      const previousData = prevData.slice(0, 10 - newData.length);
 
       return [...newData, ...previousData];
     });
@@ -85,7 +85,7 @@ export default function OrderBookSellTable({
       accessorKey: "rate",
       cell: (info: cellInfo) => (
         <div style={{ textAlign: "start", color: "rgba(230, 86, 97, 1)" }}>
-          {info.row.original.rate}
+          {info.row.original[0]}
         </div>
       ),
     },
@@ -93,7 +93,7 @@ export default function OrderBookSellTable({
       header: "VOLUME",
       accessorKey: "volume",
       cell: (info: cellInfo) => (
-        <div style={{ textAlign: "end" }}>{info.row.original.volume}</div>
+        <div style={{ textAlign: "end" }}>{info.row.original[1]}</div>
       ),
     },
   ];
@@ -143,7 +143,7 @@ export default function OrderBookSellTable({
                   : row.original.type === "buy"
                   ? "bg-green"
                   : ""
-              } sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
+              } sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
