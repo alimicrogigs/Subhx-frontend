@@ -4,7 +4,7 @@ import { useDispatch, useSelector  } from "react-redux";
 import {depositeFundFailure, depositeFundRequest , depositeFundSuccess} from "../../../../actions/depositeFundActions"
 import {getRequestAPIHelper} from "../../../../utils/lib/requestHelpers"
 
-interface WalletProps {
+interface WalletProps: {
   onAction: (action: string) => void;
   popupactive: (action: string) => void;
   activebutton: string;
@@ -35,7 +35,7 @@ const Wallet: React.FC<WalletProps> = ({
     // Trigger deposit action
     try {
       const token = localStorage.getItem("token")
-      console.log('token 1111111', token );
+      console.log('token', token );
       console.log('API URL', apiUrl + 'upi-address');
 
       dispatch(depositeFundRequest())

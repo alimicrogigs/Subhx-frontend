@@ -17,3 +17,5 @@ export const depositeFundFailure = (error:any) => ({
   type: DEPOSITFUND_DETAILS_FAILURE,
   payload: error,
 });
+
+

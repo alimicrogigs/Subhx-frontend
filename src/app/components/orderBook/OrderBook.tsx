@@ -59,10 +59,7 @@ export default function OrderBook() {
       console.log("WebSocket connection opened");
     };
 
-    socket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
-
+    
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setOrderBookData(data);

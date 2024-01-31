@@ -1,10 +1,11 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../../common/ToasterCustom/ToasterCustom";
 import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from "../../../../actions/depositeFundActions"
+import { storeUserData } from "../../../../actions/storeUserDataAction";
 import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
-
 
 
 interface WalletProps {
@@ -13,20 +14,7 @@ interface WalletProps {
   activebutton: string;
 }
 
-
-const dotenv = require('dotenv')
-dotenv.config();
 const apiUrl = process.env.API_URL;
-
-// Define your custom toaster component
-// const ToasterForWallet = ({ type, message, loading }) => {
-//   return (
-//     <div className={toaster toaster-${type}}>
-//       {loading ? <span>Loading...</span> : <span>{message}</span>}
-//     </div>
-//   );
-// };
-
 
 const Wallet: React.FC<WalletProps> = ({
   onAction,
@@ -36,9 +24,11 @@ const Wallet: React.FC<WalletProps> = ({
 }) => {
 
   const [loading, setLoading] = useState(true);
+  const [userBalance, setUserBalance] = useState<string>('0.00');
 
-  // const dispatch = useDispatch();
-  let user_balance = "₹ 5,689.00"
+  const dispatch = useDispatch();
+
+  let user_balance = userBalance
   const handleWithdraw = () => {
     // Trigger withdraw action
     popupactive("withdraw")
@@ -48,22 +38,25 @@ const Wallet: React.FC<WalletProps> = ({
   const handleDeposit = async () => {
     // Trigger deposit action
     const token = localStorage.getItem("token");
-  
+    popupactive("deposite");
     try {
       // Set loading state before API call
       setLoading(true);
-  
+    
       // Fetch user data
       const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token);
+
       console.log(getUserResponse, "line___47_");
   
       if (getUserResponse.success === true) {
+        //save user data in redux
+        console.log(getUserResponse, "line___53_")
+        dispatch(storeUserData(getUserResponse));        
         console.log(getUserResponse.data.kyc_verification, "line___48_");
       }
   
       if (getUserResponse.success === true && getUserResponse.data.kyc_verification === "approved") {
         const getUserData = getUserResponse.data;
-        console.log("User Data:", getUserData);
   
         // Set loading state before API call
         setLoading(true);
@@ -119,7 +112,33 @@ const Wallet: React.FC<WalletProps> = ({
   }
 
   useEffect(() => {
-    handleDeposit();
+    
+    const token = '161|$2y$10$a640/iN/UHCfu.BSvt59J.piV1SS5KSvtqjSfTn8jMIjgnQ55sfH6ddeb8d08';
+   
+    const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+
+    const socket = new WebSocket(socketUrl);  
+
+    socket.onopen = () => {
+      console.log("WebSocket connection Get_user_balance");
+      socket.send(JSON.stringify({ 'x-auth-token': token }));
+
+    };
+
+    socket.onmessage = (event) => {
+      const jsonData = JSON.parse(event.data);
+      const inrBalance = jsonData.inr_balance;
+      console.log('qINR Balance:', inrBalance);
+      setUserBalance(inrBalance);
+    };
+
+    socket.onclose = (event) => {
+      console.log("WebSocket connection closed:", event);
+    };
+
+    return () => {
+      socket.close();
+    };
   }, []);
 
 
@@ -129,6 +148,10 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
+
+
+
+
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
@@ -216,3 +239,7 @@ const Wallet: React.FC<WalletProps> = ({
 };
 
 export default Wallet;
+
+function dispatch(arg0: { type: string; payload: any; }) {
+  throw new Error("Function not implemented.");
+}
