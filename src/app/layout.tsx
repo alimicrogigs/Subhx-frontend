@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import toast, { Toaster } from "react-hot-toast";
+import { Providers } from "./Providers";
 
 export const metadata: Metadata = {
   title: "BIT24HR",
@@ -16,7 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-maincolor">
       <body className="font-poppinsRegular bg-maincolor">
-        {children}
+        <Providers>{children}</Providers>
+
         <Toaster />
       </body>
     </html>

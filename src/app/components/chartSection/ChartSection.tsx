@@ -91,7 +91,7 @@ export default function ChartSection() {
       </div>
 
       <div className="bg-dashbgtrans sm:mt-0  w-[100%] sm:h-[69.4%] sm:rounded-b-lg sm:w-[100%] sm:p-2 ">
-        <div className="rounded-lg sm:h-[100%] sm:w-[100%]  ">
+        <div className="rounded-lg  sm:h-[100%] sm:w-[100%]  ">
           <LiveChart />
         </div>
       </div>

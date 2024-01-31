@@ -19,19 +19,19 @@ export default function page() {
   }, []);
 
   return (
-    <>
-      {storedValue ? <Dashboardnavbar /> : <Navbar />}
+      <>
+        {storedValue ? <Dashboardnavbar /> : <Navbar />}
     
       {/* <Navbar /> */}
-      <Container isborder={true}>
-        <Herolanding />
-      </Container>
-      <Container isborder={true}>
-        <div className="pt-[50px]">
-          <div className="w-[100%] h-[80px] bg-[#111111]"></div>
-        </div>
-      </Container>
-      <Footer />
-    </>
+        <Container isborder={true}>
+          <Herolanding />
+        </Container>
+        <Container isborder={true}>
+          <div className="pt-[50px]">
+            <div className="w-[100%] h-[80px] bg-[#111111]"></div>
+          </div>
+        </Container>
+        <Footer />
+      </>
   );
 }
