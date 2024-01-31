@@ -22,6 +22,8 @@ const FundsPage: React.FC<FundsPageProps> = () => {
     setCurrentpopupactive(action);
   };
 
+  const handledepositeinsdiecoin = () => {};
+
   return (
     <>
       <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">

@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import Stepone from "../components/multistepform/Stepone/Stepone";
 import Steptwo from "../components/multistepform/Steptwo/Steptwo";
 import Stepthree from "../components/multistepform/Stepthree/Stepthree";
@@ -12,7 +13,20 @@ import Link from "next/link";
 
 import styles from "./page.module.css";
 export default function page() {
+  //..
+  const controls = useAnimation();
+  //..
   const [currentstep, setcurrentstep] = useState(1);
+  ///.....
+  useEffect(() => {
+    // Add animations based on the current step
+    if (currentstep === 1) {
+      controls.start({ opacity: 1, y: 0 });
+    } else {
+      controls.start({ opacity: 0, y: -200 });
+    }
+  }, [currentstep, controls]);
+  ////...
   const handleNextStep = () => {
     // Update the current step to move to the next one
     setcurrentstep((prevStep) => (prevStep < 8 ? prevStep + 1 : prevStep));
@@ -22,7 +36,7 @@ export default function page() {
     setcurrentstep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
   return (
-    <section
+    <motion.section
       style={{
         backgroundImage: "url(/signup/signupbg.svg)",
       }}
@@ -89,6 +103,6 @@ export default function page() {
           active={currentstep == 8 ? true : false}
         />
       </div>
-    </section>
+    </motion.section>
   );
 }
