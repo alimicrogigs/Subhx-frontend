@@ -24,7 +24,7 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
   const handlePANChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPANno(value);
-    console.log("line24__" + value);
+    console.log("line24__" + value)
     if (PANno == "") { 
       toast.custom(
         <ToasterCustom type="error" message="Please provide Pan no " />,

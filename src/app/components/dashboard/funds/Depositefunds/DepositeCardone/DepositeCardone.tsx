@@ -2,7 +2,9 @@
 import React, { useState, ChangeEvent } from "react";
 import DepositeCard from "../DepositeCard/DepositeCard";
 import CopyCard from "../../../Common/CopyCard/CopyCard";
+import {useSelector} from "react-redux"; 
 import ToasterCustom from "@/app/components/common/ToasterCustom/ToasterCustom";
+// import { RootState } from '../path/to/your/rootReducer';
 import { postRequestAPIHelper } from "../../../../../utils/lib/requestHelpers"
 const dotenv = require('dotenv');
 dotenv.config();
@@ -15,6 +17,7 @@ interface props {
 
 
 export default function DepositeCardone() {
+  const {manualAccount} = useSelector((state)=>state.deposite);
   const [IMPSrrnNumber, setIMPSrrnNumber] = useState("");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,15 +54,15 @@ export default function DepositeCardone() {
     <>
       <DepositeCard eventKey="0" heading="IMPS">
         <div className="flex w-[100%] flex-wrap gap-[20px] justify-between">
-          <CopyCard heading="Beneficiary name" subheading="JJ Trading Cmpany" />
-          <CopyCard heading="IFSC Code" subheading="SBIN000466" />
-          <CopyCard heading="Bank Name" subheading="State Bank of India" />
+          <CopyCard heading="Beneficiary name" subheading={manualAccount[0]?.name} />
+          <CopyCard heading="IFSC Code" subheading={manualAccount[0]?.ifsc} />
+          <CopyCard heading="Bank Name" subheading={manualAccount[0]?.bank_name} />
           <div
             className="w-[45%]
             "
           >
             <h1>Account Type</h1>
-            <p className="">Current </p>
+            <p className="">{manualAccount[0]?.type}</p>
             {/* <select
               className="bg-[#002B50] py-[3px] mt-[5px] px-[5px] w-[100%] focus:border-none focus:outline-none "
               name=""
@@ -69,7 +72,7 @@ export default function DepositeCardone() {
               <option value="">Current</option>
             </select> */}
           </div>
-          <CopyCard heading="Account Number" subheading="ZANM1754665623" />
+          <CopyCard heading="Account Number" subheading={manualAccount[0]?.account_no}/>
         </div>
         {/* ........... */}
         <div className="w-[100%] mt-[20px]">

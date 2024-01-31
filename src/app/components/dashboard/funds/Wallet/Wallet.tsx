@@ -1,10 +1,15 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../../common/ToasterCustom/ToasterCustom";
-import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from "../../../../actions/depositeFundActions"
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { getUpiAddressRequest, getUpiAddressSuccess, getUpiAddressFailure, getManualAccountFailure, getManualAccountRequest, getManualAccountSuccess, getUserVanFailure, getUserVanRequest, getUserVanSuccess } from "../../../../actions/depositeFundActions"
 import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
+import CardSkeleton from "@/app/components/common/skeleton/depositSkeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
+
 
 interface WalletProps {
   onAction: (action: string) => void;
@@ -13,9 +18,19 @@ interface WalletProps {
 }
 
 
+
 const dotenv = require('dotenv')
 dotenv.config();
 const apiUrl = process.env.API_URL;
+
+// Define your custom toaster component
+// const ToasterCustom = ({ type, message, loading }) => {
+//   return (
+//     <div className={`toaster toaster-${type}`}>
+//       {loading ? <span>Loading...</span> : <span>{message}</span>}
+//     </div>
+//   );
+// };
 
 
 const Wallet: React.FC<WalletProps> = ({
@@ -24,89 +39,106 @@ const Wallet: React.FC<WalletProps> = ({
   popupactive,
 
 }) => {
-  // const { loading, error, upiAddress } = useSelector((state) => state.deposite);
-  // console.log("upiAddress=====", upiAddress);
-  //  console.log("line26  " , upiAddress);
+  const dispatch = useDispatch();
+  const { loading, upiAddress, error } = useSelector((state) => state.deposite)
+  console.log("upiAddressformredux___", upiAddress)
+  // const [loading, setLoading] = useState(true);
+  const [apiHitTime, setApiHitTime] = useState(null)
 
-  // const dispatch = useDispatch();
+
   let user_balance = `₹ 5,689.00`
   const handleWithdraw = () => {
     // Trigger withdraw action
     popupactive("withdraw")
-  };
+  }
+  const getUPIaddress = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(getUpiAddressRequest())
+      // Fetch UPI address
+      const upiAddressResponse = await getRequestAPIHelper(apiUrl + 'upi-address', token);
+      if (upiAddressResponse.status === 200) {
+        const upiAddressData = upiAddressResponse.data;
+        console.log("UPI Address Data:", upiAddressData);
+        dispatch(getUpiAddressSuccess(upiAddressResponse.data))
+        // Perform actions based on upiAddressData if needed
+      }
+    } catch (error) {
+      console.error('Error fetching UPI address:', error);
+      dispatch(getUpiAddressFailure(error));
+    }
+  }
+  const getManaualAccount = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(getManualAccountRequest())
+      // Fetch UPI address
+      const manualAccountResponse = await getRequestAPIHelper(apiUrl + 'manul-account', token);
+      if (manualAccountResponse.status === 200) {
+        dispatch(getManualAccountSuccess(manualAccountResponse.data))
+        // Perform actions based on upiAddressData if needed
+      }
+    } catch (error) {
+      console.error('Error fetching manual account:', error);
+      dispatch(getManualAccountFailure(error));
+    }
+  }
 
+  const getVanUser = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(getUserVanRequest())
+      // Fetch UPI address
+      const vanUserResponse = await getRequestAPIHelper(apiUrl + 'get-user-van', token);
+      if (vanUserResponse.status === 200) {
+        dispatch(getUserVanSuccess(vanUserResponse.data))
+        // Perform actions based on upiAddressData if needed
+      }
+    } catch (error) {
+      console.error('Error fetching VAN USER account:', error);
+      dispatch(getUserVanFailure(error));
+    }
+  }
 
   const handleDeposit = async () => {
     // Trigger deposit action
     const token = localStorage.getItem("token");
-
-
     try {
       // Fetch UPI address
       const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token)
-      console.log(getUserResponse , "line______47__")
-      if (getUserResponse.success === true) {
-        console.log(getUserResponse.data.kyc_verification , "line______48__");
-
-      }
-      if (getUserResponse.success === true && getUserResponse.data.kyc_verification === "approved") {
+      // setLoading(true);
+      console.log(getUserResponse.data.kyc_verification)
+      if (getUserResponse.status === 200 && getUserResponse.data.kyc_verification === "approved") {
         const getUserData = getUserResponse.data;
         console.log("UPI Address Data:", getUserData)
         // Perform actions based on upiAddressData if needed
-
-        try {
-          // Fetch UPI address
-          const upiAddressResponse = await getRequestAPIHelper(apiUrl + 'upi-address', token);
-          if (upiAddressResponse.status === 200) {
-            const upiAddressData = upiAddressResponse.data;
-            console.log("UPI Address Data:", upiAddressData);
-            // Perform actions based on upiAddressData if needed
+        getUPIaddress();
+        getManaualAccount();
+        getVanUser();
+      }else{
+        toast.custom(
+          <ToasterCustom type="error" message="KYC is Pending , Desposite details will not open !!! " />,
+          {
+            position: "top-right",
+            duration: 1000,
           }
-        } catch (error){
-          console.error('Error fetching UPI address:', error);
-        }
-
-        try {
-          // Fetch manual account
-          const manualAccountResponse = await getRequestAPIHelper(apiUrl + 'manul-account', token);
-          if (manualAccountResponse.status === 200) {
-            const manualAccountData = manualAccountResponse.data;
-            console.log("Manual Account Data:", manualAccountData);
-            // Perform actions based on manualAccountData if needed
-          }
-        } catch (error) {
-          console.error('Error fetching manual account:', error);
-        }
-
-        try {
-          // Fetch user van
-          const userVanResponse = await getRequestAPIHelper(apiUrl + 'get-user-van', token);
-          if (userVanResponse.status === 200) {
-            const userVanData = userVanResponse.data;
-            console.log("User Van Data:", userVanData);
-            // Perform actions based on userVanData if needed
-          }
-        } catch (error) {
-          console.error('Error fetching user van:', error);
-        }
-
-        // Trigger deposit popup
-        popupactive("deposite");
+        )
+        return;
       }
-
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Error fetching UPI address:', error);
       toast.custom(
         <ToasterCustom type="error" message="KYC is Pending , Desposite details will not open !!! " />,
         {
-          position: "top-right", // Set the position (e.g., "top-center")
-          duration: 1000, // Set the duration in milliseconds
+          position: "top-right",
+          duration: 1000,
         }
       )
-      return
+      return;
     }
-  };
 
+  };
 
   const handleHome = () => {
     onAction("Portfolio");
