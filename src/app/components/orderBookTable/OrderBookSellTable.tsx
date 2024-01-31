@@ -85,7 +85,7 @@ export default function OrderBookSellTable({
       accessorKey: "rate",
       cell: (info: cellInfo) => (
         <div style={{ textAlign: "start", color: "rgba(230, 86, 97, 1)" }}>
-          {info.row.original.rate}
+          {info.row.original[0]}
         </div>
       ),
     },
@@ -93,7 +93,7 @@ export default function OrderBookSellTable({
       header: "VOLUME",
       accessorKey: "volume",
       cell: (info: cellInfo) => (
-        <div style={{ textAlign: "end" }}>{info.row.original.volume}</div>
+        <div style={{ textAlign: "end" }}>{info.row.original[1]}</div>
       ),
     },
   ];

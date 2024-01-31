@@ -68,6 +68,8 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
 
   useEffect(() => {
+    console.log("buy data========= :", buyData);
+
     setData((prevData) => {
       const newData = [...buyData.slice(0, 10)];
       const previousData = prevData.slice(0, 10 - newData.length);
@@ -81,7 +83,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
       header: "VOLUME",
       accessorKey: "volume",
       cell: (info: cellInfo) => (
-        <div style={{ textAlign: "start" }}>{info.row.original.volume}</div>
+        <div style={{ textAlign: "start" }}>{info.row.original[1]}</div>
       ),
     },
     {
@@ -89,7 +91,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
       accessorKey: "rate",
       cell: (info: cellInfo) => (
         <div style={{ textAlign: "end", color: "rgba(90, 215, 118, 1)" }}>
-          {info.row.original.rate}
+          {info.row.original[0]}
         </div>
       ),
     },
