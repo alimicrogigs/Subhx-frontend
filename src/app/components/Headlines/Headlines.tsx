@@ -30,7 +30,7 @@ export default function HeadLines() {
   return (
     <div className="sm:w-[100%] sm:mt-1 mt-1  flex flex-col sm:flex-col items-center sm:items-center h-[100%] sm:h-[100%]">
       <div className="sm:h-[11%] text-[0.6rem] sm:text-[0.6rem] flex justify-center sm:justify-center items-center sm:items-center p-1 sm:p-1 ">
-        <p className="sm:w-[98%] sm:font-poppinsRegular font-poppinsRegular text-textdull sm:text-textdull">
+        <p className="sm:w-[98%] sm:font-poppinsRegular font-poppinsRegular text-textdull sm:p-[0.5rem] p-[0.5rem] sm:text-textdull">
           Disclaimer: This platform includes third-party opinions. We do not
           endorse their accuracy. Digital asset prices can be volatile. Do your
           own research.

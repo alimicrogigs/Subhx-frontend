@@ -5,54 +5,45 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import moment from "moment";
 
-const tableData = [
-  {
-    id: 1,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-  {
-    id: 2,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "buy",
-  },
-  {
-    id: 3,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
+// const tableData = [
+//   {
+//     id: 1,
+//     rate: 320.26,
+//     volume: 0.002,
+//   },
 
-  {
-    id: 1,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-  {
-    id: 2,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "buy",
-  },
-  {
-    id: 3,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-];
+//   {
+//     id: 2,
+//     rate: 222,
+//     volume: 11111,
+//   },
+//   {
+//     id: 3,
+//     rate: 320.26,
+//     volume: 0.002,
+//   },
+//   {
+//     id: 4,
+//     rate: 320.26,
+//     volume: 0.002,
+//   },
+//   {
+//     id: 5,
+//     rate: 320.26,
+//     volume: 0.002,
+//   },
+
+//   {
+//     id: 6,
+//     rate: 222,
+//     volume: 11111,
+//   },
+
+//   // Add more data as needed
+// ];
 
 interface CellInfo {
   value: any;
@@ -69,26 +60,38 @@ interface CustomColumnDef {
   cell?: (info: CellInfo) => React.ReactNode;
 }
 
-export default function MarketTrades() {
-  const data = useMemo(() => tableData, []);
+interface OrderBookBuyTableProps {
+  buyData: Order[];
+}
+
+export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
+  const [data, setData] = useState<Order[]>([]);
+
+  useEffect(() => {
+    // Update state with the latest 6 entries or fill with previous data
+    setData((prevData) => {
+      const newData = [...buyData.slice(0, 6)];
+      const previousData = prevData.slice(0, 6 - newData.length);
+
+      return [...newData, ...previousData];
+    });
+  }, [buyData]);
 
   const columns: CustomColumnDef[] = [
     {
-      header: "PRICE",
-      accessorKey: "price",
-      cell: (info: CellInfo) => (
-        <div style={{ textAlign: "start" }}>{info.row.original.price}</div>
+      header: "VOLUME",
+      accessorKey: "volume",
+      cell: (info: cellInfo) => (
+        <div style={{ textAlign: "start" }}>{info.row.original.volume}</div>
       ),
     },
     {
-      header: "VOLUME",
-      accessorKey: "volume",
-    },
-    {
-      header: "TIME",
-      accessorKey: "time",
-      cell: (info: CellInfo) => (
-        <div style={{ textAlign: "end" }}>{info.row.original.time}</div>
+      header: "BUY PRICE",
+      accessorKey: "rate",
+      cell: (info: cellInfo) => (
+        <div style={{ textAlign: "end", color: "rgba(90, 215, 118, 1)" }}>
+          {info.row.original.rate}
+        </div>
       ),
     },
   ];
@@ -111,10 +114,10 @@ export default function MarketTrades() {
                 <th
                   className={`${
                     header.column.columnDef.accessorKey === "volume"
-                      ? "text-center"
+                      ? "text-start"
                       : ""
                   } ${
-                    header.column.columnDef.accessorKey === "time"
+                    header.column.columnDef.accessorKey === "rate"
                       ? "text-end"
                       : ""
                   }  text-[0.65rem] sm:text-[0.8rem] font-thin sm:font-normal px-3 py-2 sm:p-0 sm:px-4 sm:py-2 sm:items-center`}
@@ -135,15 +138,15 @@ export default function MarketTrades() {
               className={`${
                 row.original.type === "sell"
                   ? "bg-red"
-                  : row.original.type === "buy"
+                  : row.original.type === "rate"
                   ? "bg-green"
                   : ""
-              } sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem] border-b-[1px] sm:border-b-[1px] border-borderline sm:justify-between items-center sm:items-center`}
+              } sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className={`  text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
+                  className={` font-poppinsSemibold text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

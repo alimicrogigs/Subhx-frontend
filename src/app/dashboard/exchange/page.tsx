@@ -25,17 +25,17 @@ export default function page() {
     <>
       {!isMobile ? (
         <div className="w-[100%] text-white  sm:h-full   sm:max-h-screen  sm:overflow-x-hidden">
-          <div className="sm:h-auto  flex sm:flex-row  sm:m-2">
+          <div className="sm:h-auto   flex sm:flex-row  sm:m-2">
             {/* currency section */}
             <div className="sm:h-[130vh]">
               {!isMobile && <CurrencySection />}
             </div>
-            <div className="flex  sm:h-[130vh] sm:ml-4 sm:rounded-lg sm:flex-col">
-              <div className="sm:h-[64%] flex   sm:rounded-lg sm:flex-row">
+            <div className="flex  sm:h-[130vh]  sm:ml-4 sm:rounded-lg sm:flex-col">
+              <div className="sm:h-[50%] flex  sm:rounded-lg sm:flex-row">
                 <ChartSection />
                 <OrderSection />
               </div>
-              <div className="sm:h-[64%] flex   sm:mt-3 sm:rounded-lg sm:flex-row">
+              <div className="sm:h-[50%] flex  sm:mt-3 sm:rounded-lg sm:flex-row">
                 <OrderBook />
                 <OrderHistory />
               </div>

@@ -124,19 +124,19 @@ export default function OrderHistory() {
 
   const columns: CustomColumnDef[] = [
     {
-      header: "Coin",
+      header: "COIN",
       accessorKey: "coin",
     },
     {
-      header: "Price",
+      header: "PRICE",
       accessorKey: "price",
     },
     {
-      header: "Quantity",
+      header: "QUANTITY",
       accessorKey: "quantity",
     },
     {
-      header: "Date",
+      header: "DATE",
       accessorKey: "formattedDateTime",
       cell: (info: CellInfo) => (
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -146,7 +146,7 @@ export default function OrderHistory() {
       ),
     },
     {
-      header: "Total",
+      header: "TOTAL",
       accessorKey: "total",
     },
   ];
@@ -177,6 +177,7 @@ export default function OrderHistory() {
           Complete Order
         </span>
       </div>
+
       <table className="">
         <thead className="bg-switchColor ">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -186,7 +187,11 @@ export default function OrderHistory() {
             >
               {headerGroup.headers.map((header) => (
                 <th
-                  className=" text-[0.65rem] sm:text-[0.8rem] font-thin sm:font-normal px-3 py-2 sm:p-0 sm:px-4 sm:py-2 sm:items-center"
+                  className={` ${
+                    header.column.columnDef.accessorKey === "formattedDateTime"
+                      ? "text-center"
+                      : ""
+                  } text-[0.65rem] sm:text-[0.8rem] font-thin sm:font-normal px-3 py-2 sm:p-0 sm:px-4 sm:py-2 sm:items-center`}
                   key={header.id}
                 >
                   {flexRender(
@@ -201,12 +206,12 @@ export default function OrderHistory() {
         <tbody className="">
           {table.getRowModel().rows.map((row) => (
             <tr
-              className="sm:text-[0.8rem] text-[0.8rem] border-b-[1px] sm:border-b-[1px] border-borderline items-center sm:items-center"
+              className="sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem] border-b-[1px] sm:border-b-[1px] border-borderline items-center sm:items-center"
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className=" text-center sm:text-center px-3 sm:px-4 py-2 sm:py-2 text-[0.6rem] sm:text-[0.6rem] font-normal "
+                  className=" text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal "
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
