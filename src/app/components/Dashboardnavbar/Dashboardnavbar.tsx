@@ -13,36 +13,16 @@ import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
 import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
 dotenv.config();
 
-
 export default function () {
-  // //.............................
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const storedToken = localStorage.getItem("token");
+  // //............................
 
-  //     // Check if storedToken is not null before using it
-  //     const token = storedToken ? JSON.parse(storedToken) : null;
-  //     console.log(apiUrl + "user");
-  //     console.log(token);
-  //     try {
-  //       //...................
-  //       const response = await getRequestAPIHelper(apiUrl + "user", token);
-  //       console.log({ response });
-
-  //       // Assuming the response.data contains an array of objects with properties: email, date, reward
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //       // Handle the error, e.g., show an error message to the user
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
   //...............................
   const [mobilemenuopen, setMobilemenuopen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   let pathname = usePathname();
   // let active = href == pathname;
+
+
 
   const handleLogout = async () => {
     try {
@@ -89,7 +69,8 @@ export default function () {
   const closeallmenu = () => {
     setDropdownOpen(false);
     setMobilemenuopen(false);
-  };
+  }
+
 
   console.log(pathname);
   return (
@@ -143,8 +124,7 @@ export default function () {
           <li
             style={{ cursor: "pointer" }}
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="relative flex items-center justify-center gap-[10px]"
-          >
+            className="relative flex items-center justify-center gap-[10px]">
             <div
               style={{
                 background: "url(/avatar.svg)",
@@ -180,8 +160,7 @@ export default function () {
                     <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
-                          backgroundImage:
-                            "url(/dashboard/dashboradnavbar/accountseting.svg)",
+                          backgroundImage: "url(/dashboard/dashboradnavbar/accountseting.svg)",
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
@@ -193,8 +172,7 @@ export default function () {
                     <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
-                          backgroundImage:
-                            "url(/dashboard/dashboradnavbar/refer.svg)",
+                          backgroundImage: "url(/dashboard/dashboradnavbar/refer.svg)",
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
@@ -221,7 +199,7 @@ export default function () {
           </li>
           {/* ...... */}
 
-          <li className="flex items-center justify-center ">
+          <li className="flex items-center justify-center">
             <Link href="/dashboard/referandreward">Refer & Rewards</Link>
           </li>
         </ul>

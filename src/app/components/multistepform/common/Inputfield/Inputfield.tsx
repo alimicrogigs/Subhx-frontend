@@ -7,6 +7,7 @@ interface InputProps {
   placeholder: string;
   showToggle?: boolean;
   onToggle?: () => void;
+  bgColor?: string
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,22 +17,26 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   showToggle,
   onToggle,
+  bgColor,
 }) => {
   return (
     <div className="w-[100%] relative">
       {showToggle && (
         <div
           onClick={onToggle}
-          className="absolute top-0 right-[20px] flex justify-center items-center h-[100%] text-[#DC04FF] cursor-pointer"
+          // style={bgColor}
+          className="absolute top-0 right-[20px] flex justify-center   items-center h-[100%] text-[#DC04FF] cursor-pointer"
         >
           {type === "password" ? "Show" : "Hide"}
         </div>
       )}
+      
       <input
-        className="w-[100%] py-[15px] text-black pl-[20px] rounded-[10px] focus:border-none focus:outline-none"
+        className="w-[100%] py-[15px] text-black pl-[20px] border-red-600 rounded-[10px]  focus:outline-none"
         type={type}
         value={value}
         onChange={onChange}
+        // style={bgColor}
         placeholder={placeholder}
       />
     </div>

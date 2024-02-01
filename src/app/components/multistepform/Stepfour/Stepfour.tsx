@@ -12,6 +12,7 @@ import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 interface StepfourProps {
   active: boolean;
   onNextStep: () => void;
+
 }
 
 const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
@@ -23,6 +24,10 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
   const handlePANChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPANno(value);
+<<<<<<< HEAD
+=======
+    console.log("line24__" + value)
+>>>>>>> a25303134637797efea753a005790913f34dea8b
     if (PANno == "") { 
       toast.custom(
         <ToasterCustom type="error" message="Please provide Pan no " />,
@@ -58,17 +63,26 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
     e.preventDefault();
     
     try {
+<<<<<<< HEAD
         const token = localStorage.getItem("token")
         console.log(userPANresponse );
         const response = await axios.post(apiUrl + 'save-pan-response',{
         pan_number : PANno , pan_response : userPANresponse 
       },{ headers: { 'token': token,
+=======
+      const token = localStorage.getItem("token")
+      console.log(userPANresponse )
+      const response = await axios.post(apiUrl + 'save-pan-response',{
+      pan_number : PANno , pan_response : userPANresponse 
+    },{ headers: { 'token': token,
+>>>>>>> a25303134637797efea753a005790913f34dea8b
                    'Content-Type': 'application/json',
                    'Authorization': `Bearer `+ token}
       })
       if(response.status ===200){
         onNextStep();
       }
+      
     } catch (error) {
       console.error('Error fetching PAN details:', error);
       toast.error("Error fetching PAN details");

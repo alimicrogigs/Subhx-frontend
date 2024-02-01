@@ -10,12 +10,16 @@ import { FaPlay } from "react-icons/fa";
 import { TbReceiptTax } from "react-icons/tb";
 import { GoDotFill } from "react-icons/go";
 import { IoIosAddCircle } from "react-icons/io";
+import {useSelector} from "react-redux"; 
 
 export default function Profile() {
   // data
   const [GSTno, setGSTno] = useState("");
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
+  const {getUserAllDetails} = useSelector((state)=>state.deposite);
+  console.log(getUserAllDetails);
+
 
   // nominee edit form
   const [nomineeEditopen, setNomineeEditopen] = useState(false);
@@ -76,7 +80,7 @@ export default function Profile() {
               <FaCheck />
             </div>
 
-            {user.name}
+            {getUserAllDetails.name === null ? "NA" : getUserAllDetails.name}
           </h1>
         </div>
         {/* ........ */}
@@ -88,7 +92,7 @@ export default function Profile() {
               <IoMdMail />
             </div>
 
-            {user.mail}
+            {getUserAllDetails.email}
           </h1>
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
@@ -101,7 +105,7 @@ export default function Profile() {
               <FaMobileAlt />
             </div>
             +91 &nbsp;
-            {user.contactno}
+            {getUserAllDetails.phone}
           </h1>
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
@@ -205,8 +209,7 @@ export default function Profile() {
 
               <button
                 onClick={handleNewNominee}
-                className="bg-[#F5CD8E] mb-[30px] py-[10px] rounded-[10px] w-auto"
-              >
+                className="bg-[#F5CD8E] mb-[30px] py-[10px] rounded-[10px] w-auto">
                 {" "}
                 Save Changes
               </button>

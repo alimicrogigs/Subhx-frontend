@@ -9,12 +9,12 @@ import Changepassword from "./Changepassword/Changepassword";
 
 interface DetailContainerProps {
   currentSection: string;
-  isdetailcontainer: boolean;
 }
 
 const MainContainer: React.FC<DetailContainerProps> = ({
   currentSection,
   isdetailcontainer,
+
 }) => {
   return (
     <div
@@ -32,5 +32,5 @@ const MainContainer: React.FC<DetailContainerProps> = ({
       {currentSection == "change-password" && <Changepassword />}
     </div>
   )
-};
+} 
 export default MainContainer;

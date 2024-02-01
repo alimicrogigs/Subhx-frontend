@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./Providers";
 import toast, { Toaster } from "react-hot-toast";
 import { Providers } from "./Providers";
 
@@ -17,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-maincolor">
       <body className="font-poppinsRegular bg-maincolor">
-        <Providers>{children}</Providers>
+        <Providers><Providers>{children}</Providers></Providers>
 
         <Toaster />
       </body>

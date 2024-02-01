@@ -1,4 +1,8 @@
 import React, { ChangeEvent } from "react";
+<<<<<<< HEAD
+=======
+
+>>>>>>> a25303134637797efea753a005790913f34dea8b
 interface InputProps {
   type: "text" | "password" | "number";
   value: string | number;
@@ -42,4 +46,9 @@ const Input: React.FC<InputProps> = ({
     </div>
   );
 };
+<<<<<<< HEAD
 export default Input;
+=======
+
+export default Input;
+>>>>>>> a25303134637797efea753a005790913f34dea8b

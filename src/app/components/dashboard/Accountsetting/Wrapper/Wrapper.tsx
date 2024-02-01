@@ -13,8 +13,8 @@ export default function MainContainer() {
 
   const handleSectionChange = (section: string) => {
     setcurrentSection(section);
-  };
-
+  }
+  
   return (
     <>
       <div className="relative sm:w-[70%] w-[100%] mx-auto sm:min-w-[900px] min-w-[0px]  flex mt-[50px] gap-[10px] sm:min-h-[0%] min-h-[100%]">
@@ -30,6 +30,7 @@ export default function MainContainer() {
           onSectionChange={handleSectionChange}
           ismobilecontainer={handleisdetailcontainer}
         />
+
         <DetailContainer
           currentSection={currentSection}
           isdetailcontainer={isdetailcontainer}
