@@ -16,6 +16,7 @@ export default function page() {
     if (isUserLoggedIn) {
       setStoredValue(isUserLoggedIn); 
     }
+    
   }, []);
 
   return (

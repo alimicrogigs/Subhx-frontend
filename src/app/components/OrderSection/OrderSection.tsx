@@ -68,17 +68,39 @@ export default function OrderSection() {
         type: string;
       } = {
         to_coin_amount: buyAmount,
-        to_coin: "INR",
+      to_coin: "USDT",
         type: "sell"
       };
 
       const response = await postRequestAPIHelper(apiUrl + "trade/usdt-to-inr", token, requestData);
       console.log("response=====", response);
-      if (response.success === true) {
+      if (response.success === true) {     
+        toast.custom(
+          <ToasterCustom
+            type="success"
+            message="Order placed successfully !!!"
+          />, 
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
+        return;
         
       }
     } catch (error) {
-      dispatch(depositeFundFailure(error));
+      toast.custom(
+        <ToasterCustom
+          type="error"
+          message="Order placed failed !!!"
+        />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+      return;
+     
     }
   };
 
@@ -91,7 +113,7 @@ export default function OrderSection() {
         type: string;
       } = {
         to_coin_amount: buyAmount,
-        to_coin: "USDT",
+        to_coin: "INR",
         type: "buy"
       };
 

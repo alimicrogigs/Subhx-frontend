@@ -133,6 +133,7 @@ const Wallet: React.FC<WalletProps> = ({
         const jsonData = JSON.parse(event.data);
         const inrBalance = jsonData.inr_balance;
         console.log('INR Balance:', inrBalance);
+        console.log('USDT Balance:', jsonData.usdt_balance);
         setUserBalance(inrBalance);
       }
 

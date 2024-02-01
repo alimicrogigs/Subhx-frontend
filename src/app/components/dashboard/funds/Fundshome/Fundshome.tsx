@@ -1,7 +1,7 @@
-import React from "react";
+import React, { use } from "react";
 import Coincard from "./Coincard/Coincard";
 import styles from "./page.module.css";
-
+import { useEffect, useState } from "react";
 export default function Fundshome() {
   const handledepositeBTC = (depositeBTCdetail: {
     amount: string | null;
@@ -11,6 +11,39 @@ export default function Fundshome() {
     console.log("Depositing BTC");
     console.log(depositeBTCdetail);
   };
+
+  const [usdtBalance, setusdtBalance] = useState<number>(0);
+  const [btcBalance, setbtcBalance] = useState<number>(0);
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+
+    const socket = new WebSocket(socketUrl);
+
+    socket.onopen = () => {
+      console.log("WebSocket connection Get_user_balance");
+      socket.send(JSON.stringify({ 'x-auth-token': token }));
+
+    };
+
+    socket.onmessage = (event) => {
+      console.log("WebSocket message received:", event.data);
+      if (event.data !== 'null') {
+        const jsonData = JSON.parse(event.data);
+        console.log('USDT Balance:', jsonData.usdt_balance);
+        setusdtBalance(jsonData.usdt_balance);
+        setbtcBalance(jsonData.btc_balance);
+      }
+
+    };
+    socket.onclose = (event) => {
+      console.log("WebSocket connection closed:", event);
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
 
   return (
     <div
@@ -26,8 +59,8 @@ export default function Fundshome() {
       </div>
 
       <Coincard
-        coinname="BTC"
-        coinQuantity={4}
+        coinname="USDT"
+        coinQuantity={usdtBalance ? usdtBalance : 0}
         profitlosspercentage="+.007%"
         currentportfolio=" 1,32,00,000.00"
         liveprice="30,00,000.00"
@@ -38,7 +71,7 @@ export default function Fundshome() {
       />
       <Coincard
         coinname="BTC"
-        coinQuantity={4}
+        coinQuantity={btcBalance ? btcBalance : 0}
         profitlosspercentage="+.007%"
         currentportfolio=" 1,32,00,000.00"
         liveprice="30,00,000.00"
@@ -47,37 +80,7 @@ export default function Fundshome() {
         backgroundcolor="#07303f"
         onAction={handledepositeBTC}
       />
-      <Coincard
-        coinname="BTC"
-        coinQuantity={4}
-        profitlosspercentage="+.007%"
-        currentportfolio=" 1,32,00,000.00"
-        liveprice="30,00,000.00"
-        isbutton={true}
-        profit={true}
-        onAction={handledepositeBTC}
-      />
-      <Coincard
-        coinname="BTC"
-        coinQuantity={4}
-        profitlosspercentage="+.007%"
-        currentportfolio=" 1,32,00,000.00"
-        liveprice="30,00,000.00"
-        isbutton={true}
-        profit={false}
-        backgroundcolor="#07303f"
-        onAction={handledepositeBTC}
-      />
-      <Coincard
-        coinname="BTC"
-        coinQuantity={4}
-        profitlosspercentage="+.007%"
-        currentportfolio=" 1,32,00,000.00"
-        liveprice="30,00,000.00"
-        isbutton={true}
-        profit={false}
-        onAction={handledepositeBTC}
-      />
+     
     </div>
   );
 }
