@@ -12,8 +12,7 @@ export default function Withrawlfunds() {
   const [withdrawlamount, setWithdrawlamount] = useState(0);
   const token = localStorage.getItem("token");
 
-  useEffect(() => {    
-   
+  useEffect(() => {       
       const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
       const socket = new WebSocket(socketUrl);  
       socket.onopen = () => {
@@ -33,8 +32,7 @@ export default function Withrawlfunds() {
       };
       return () => {
         socket.close();
-      };
-    
+      };  
     
   }, []);
    

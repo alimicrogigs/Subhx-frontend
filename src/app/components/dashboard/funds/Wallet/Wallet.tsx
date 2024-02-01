@@ -133,18 +133,36 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
-  // useEffect(() => {
-  //   // Simulate getting token from localStorage or cookie
-  //   const token = localStorage.getItem('token');
-  //   checkAuthorization(token);
-  // }, []);
+    useEffect(() => {       
+          const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+          const socket = new WebSocket(socketUrl);  
+          socket.onopen = () => {
+            console.log("WebSocket connection get_user_balance");
+            socket.send(JSON.stringify({ 'x-auth-token': token }));
+          };
+
+          socket.onmessage = (event) => {
+            const jsonData = JSON.parse(event.data);
+            const inrBalance = jsonData.inr_balance;
+            console.log('INR Balance:', inrBalance);
+            setUserBalance(inrBalance);
+          };
+
+          socket.onclose = (event) => {
+            console.log("WebSocket connection closed:", event);
+          };
+          return () => {
+            socket.close();
+          };  
+        
+      }, []);
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
         {/* wallets balance  */}
         <div className="flex gap-[20px]  items-center sm:px-[20px] px-[0px] sm:justify-auto justify-center  sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[10px]">
           <p>Wallet Balance</p>
-          <p>₹ {userBalance}</p>
+          <p>₹ {userBalance} </p>
         </div>
         {/* withdrawl and deposite button  */}
         <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[5px] sm:pt-[0px] pt-[10px]">

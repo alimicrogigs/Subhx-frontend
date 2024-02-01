@@ -10,21 +10,17 @@ import { collectGenerateParams } from "next/dist/build/utils";
 export default function CurrencySection() {
   const dispatch = useDispatch();
   const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
-    (state) => state.coin
+    (state:any) => state.coin
   );
-  console.log("selectedCoin===", selectedCoin);
 
   const filteredCoins = allCoins.filter((obj: any) => obj.coin !== "INR");
 
   const [currenciesData, setCurrenciesData] = useState(filteredCoins);
   const [percentageChanges, setPercentageChanges] = useState({});
 
-  //console.log("filteredCoins====", filteredCoins);
-  // console.log("currentRates=====", currentRates);
-
   //handle click function to select the coin and store their data in redux state to show in other component
 
-  const handleCoinClick = (coin) => {
+  const handleCoinClick = (coin:any) => {
     dispatch(
       selectedCoinData({
         name: coin.coin,
@@ -34,7 +30,7 @@ export default function CurrencySection() {
   };
 
   const handleFavoriteClick = (id: any) => {
-    const updatedCurrencies = currenciesData.map((currency) =>
+    const updatedCurrencies = currenciesData.map((currency:any) =>
       currency.id === id
         ? { ...currency, favorite: !currency.favorite }
         : currency
@@ -62,14 +58,11 @@ export default function CurrencySection() {
       }
     }
 
-    // console.log("Data received:", data);
-    // console.log("Current rates:", currentRates);
-    // console.log("Changes:", changes);
 
     return changes;
   };
 
-  const calculatePercentageChange = (newPrice, oldPrice) => {
+  const calculatePercentageChange = (newPrice:any, oldPrice:any) => {
     if (oldPrice === undefined || oldPrice === null) {
       return 0; // Handle cases where oldPrice is not available
     }
@@ -109,7 +102,7 @@ export default function CurrencySection() {
         <span className="sm:mr-3 mr-10">PRICE</span>
       </div>
       <div className={`flex flex-col`}>
-        {filteredCoins.map((currency) => {
+        {filteredCoins.map((currency:any) => {
           const lowercaseCoinName = currency.coin.toLowerCase();
 
           const decodedSvg = atob(currency.icon);

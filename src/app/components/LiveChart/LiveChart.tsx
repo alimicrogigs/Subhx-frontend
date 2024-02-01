@@ -188,10 +188,10 @@ const LiveChart = () => {
     };
 
     const handleWindowResize = () => {
-      if (chartRef.current) {
+      if (chartRef.current && chartContainerRef.current) {
         chartRef.current.resize(
-          chartContainerRef.current!.clientWidth,
-          chartContainerRef.current!.clientHeight
+          chartContainerRef.current.clientWidth,
+          chartContainerRef.current.clientHeight
         );
       }
     };

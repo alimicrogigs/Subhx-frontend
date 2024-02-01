@@ -4,26 +4,17 @@ import { useDispatch, useSelector  } from "react-redux";
 import {depositeFundFailure, depositeFundRequest , depositeFundSuccess} from "../../../../actions/depositeFundActions"
 import {getRequestAPIHelper} from "../../../../utils/lib/requestHelpers"
 
-interface WalletProps: {
-  onAction: (action: string) => void;
-  popupactive: (action: string) => void;
-  activebutton: string;
-}
-
-
 const dotenv = require('dotenv')
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
 
-const Wallet: React.FC<WalletProps> = ({
+const Wallet = ({
   onAction,
   activebutton,
   popupactive,
 
 }) => {
-  //  const {loading, error , upiAddress} = useSelector((state)=>state.deposit) 
-  //  console.log("line26  "+upiAddress);
   const dispatch = useDispatch();
   let user_balance = ₹ 5,689.00;
   const handleWithdraw = () => {
@@ -35,9 +26,6 @@ const Wallet: React.FC<WalletProps> = ({
     // Trigger deposit action
     try {
       const token = localStorage.getItem("token")
-      console.log('token', token );
-      console.log('API URL', apiUrl + 'upi-address');
-
       dispatch(depositeFundRequest())
 
       const upiAddress = await getRequestAPIHelper(apiUrl + 'upi-address',token)
@@ -45,16 +33,9 @@ const Wallet: React.FC<WalletProps> = ({
       if(upiAddress.data.success === true ){
         dispatch(depositeFundSuccess(upiAddress.data.data));
       }
-
-      // const manulAccount = await getRequestAPIHelper(apiUrl + 'manul-account',token)
-      // const getUserVan = await getRequestAPIHelper(apiUrl + 'get-user-van',token)
-      // && manulAccount.status === 200 && getUserVan.status === 200
       if(upiAddress.status === 200 ){
         popupactive("deposite");
-        var upiID = upiAddress.data.data.upi_id;
-        console.log(upiID)
-        // console.log(manulAccount.data.data)
-        // console.log(getUserVan.data.data)
+        var upiID = upiAddress.data.data.upi_id;        
       }
     }catch (error) {
       console.error('Error UPI not generated:', error);
@@ -70,14 +51,6 @@ const Wallet: React.FC<WalletProps> = ({
     onAction("transferhistory");
   }
   
-  
-  // useEffect(() => {
-  //   // Simulate getting token from localStorage or cookie
-  //   const token = localStorage.getItem('token');
-  //   checkAuthorization(token);
-  // }, []);
-
-
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">

@@ -18,7 +18,6 @@ export default function ChartSection() {
   const { loading, allCoins, currentRates, selectedCoin, orderType, error } =
     useSelector((state: any) => state.coin);
 
-  console.log("currentRates from chartsection===", currentRates);
 
   const timeframes = ["1M", "5M", "15M", "30M", "1H", "1D", "7D"];
   const isMobile = useWindowResize();
@@ -26,14 +25,10 @@ export default function ChartSection() {
   //get all the coins from api
   const getAllCoins = async () => {
     try {
-      const token =
-        "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
+      const token = localStorage.getItem("token");
+      const apiURL = process.env.API_URL;
       dispatch(getAllCoinsRequest());
-      const response = await getRequestAPIHelper(
-        "http://authentication.bit24hr.in/api/v1/get-coins",
-        token
-      );
-      console.log("response.coins====", response.coins);
+      const response = await getRequestAPIHelper(apiURL, token);
       if (response) {
         dispatch(getAllCoinsSuccess(response.coins));
       }
@@ -58,11 +53,7 @@ export default function ChartSection() {
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      // console.log("WebSocket data received current rate:=====", data);
       dispatch(currentRatesSuccess(data));
-      // const changes = calculatePercentageChanges(data);
-      // Update state with percentage changes
-      // setPercentageChanges(changes);
     };
     socket.onclose = (event) => {
       console.log("WebSocket connection closed:", event);
@@ -82,7 +73,7 @@ export default function ChartSection() {
               src="/dashboard/exchange/tron.svg"
               className="h-[1.5rem] mr-3"
             />
-            <span className="font-poppinsMedium mr-1">TetherUS</span>
+            <span className="font-poppinsMedium mr-1"></span>
             <span className="font-poppinsRegular">{selectedCoin.name}</span>
           </div>
           {isMobile && (

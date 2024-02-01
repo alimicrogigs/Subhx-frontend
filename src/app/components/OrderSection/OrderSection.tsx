@@ -20,9 +20,8 @@ export default function OrderSection() {
   const [buyAmount, setBuyAmount] = useState('0');
   // ===========use selector to get api data from store=======
   const { loading, error, upiAddress } = useSelector((state:any) => state.deposite);
-  console.log("upiAddress=====", upiAddress);
   const selectedCoin = ""; // Declare the 'selectedCoin' variable
-  console.log("selectedCoinfrom_ordersection", selectedCoin);
+
   // ========================
   const dispatch = useDispatch();
 
@@ -36,8 +35,7 @@ export default function OrderSection() {
   };
 
   const handleInputChange = (event: any) => {
-    console.log("event.target.value====", event.target.value)
-    setBuyAmount(event.target.value);
+       setBuyAmount(event.target.value);
   };
   // ====================
 

@@ -48,7 +48,7 @@ export default function () {
           // redirect to hero page
           window.location.href = mainUrl;
           // window.location.href = "/login";
-        }, 2000);
+        }, 1000);
       } else {
         toast.custom(
           <ToasterCustom

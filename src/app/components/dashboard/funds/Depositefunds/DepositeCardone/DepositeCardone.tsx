@@ -26,11 +26,8 @@ export default function DepositeCardone() {
 
   const handleSubmit = async () => {
     // Add your logic to handle the submission with rrnNumber
-    console.log({ IMPSrrnNumber });
     try {
       const token = localStorage.getItem("token")
-      console.log(token);
-      console.log(IMPSrrnNumber)
       const IMPSresponse = await postRequestAPIHelper(apiUrl + 'create-deposit-request', token, {
         deposit_reference_id: IMPSrrnNumber
       })

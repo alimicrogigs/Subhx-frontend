@@ -17,8 +17,7 @@ export default function Profile() {
   const [GSTno, setGSTno] = useState("");
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
-  const {getUserAllDetails} = useSelector((state)=>state.deposite);
-  console.log(getUserAllDetails);
+  const {getUserAllDetails} = useSelector((state:any)=>state.deposite);
 
 
   // nominee edit form
@@ -32,7 +31,6 @@ export default function Profile() {
     emailAddress: "",
   });
   const handleNewNominee = () => {
-    console.log(nomineeFormData);
   };
   const handleNomineeFormDataChange = (e: any) => {
     const { name, value } = e.target;
@@ -42,7 +40,6 @@ export default function Profile() {
     }));
   };
   const handleGSTIN = () => {
-    console.log({ GSTno });
     setGSTno("");
   };
 

@@ -8,8 +8,7 @@ export default function Fundshome() {
     remark: string;
   }) => {
     // add logic hre
-    console.log("Depositing BTC");
-    console.log(depositeBTCdetail);
+
   };
 
   const [usdtBalance, setusdtBalance] = useState<number>(0);
@@ -30,9 +29,10 @@ export default function Fundshome() {
       console.log("WebSocket message received:", event.data);
       if (event.data !== 'null') {
         const jsonData = JSON.parse(event.data);
-        console.log('USDT Balance:', jsonData.usdt_balance);
+        console.log('32 USDT Balance:', jsonData.usdt_balance);
         setusdtBalance(jsonData.usdt_balance);
         setbtcBalance(jsonData.btc_balance);
+      
       }
 
     };

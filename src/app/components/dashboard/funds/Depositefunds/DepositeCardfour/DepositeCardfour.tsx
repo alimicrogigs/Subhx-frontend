@@ -23,8 +23,7 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
     // if (UPIrrnnumber.length >= 5) {
     try {
       const token = localStorage.getItem("token")
-      console.log(token);
-      console.log(UPIrrnnumber)
+
       const RRNorUTN = await postRequestAPIHelper(apiUrl + 'create-deposit-request', token, {
         deposit_reference_id: UPIrrnnumber
       })
