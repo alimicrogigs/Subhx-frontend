@@ -18,8 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     onSectionChange(title);
     ismobilecontainer(true);
   }
-
-
+  
   return (
     <div className="sm:w-[38%] w-[90%]   sm:m-none mx-auto text-white">
       <h1 className="pb-[50px] text-[1.5rem] font- poppinsMedium">
