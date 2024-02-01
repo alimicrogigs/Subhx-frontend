@@ -15,9 +15,8 @@ import { getRequestAPIHelper } from "@/app/helperfunctions";
 
 export default function ChartSection() {
   const dispatch = useDispatch();
-  const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
-    (state) => state.coin
-  );
+  const { loading, allCoins, currentRates, selectedCoin, orderType, error } =
+    useSelector((state: any) => state.coin);
 
   console.log("currentRates from chartsection===", currentRates);
 
@@ -88,11 +87,14 @@ export default function ChartSection() {
           </div>
           {isMobile && (
             <div className="sm:mr-12 mr-3 w-[30%]  flex flex-col sm:w-[25%] items-end justify-center sm:items-center sm:justify-evenly">
-              <span className="sm:text-[0.8rem] font-poppinsRegular text-[0.7rem] ">
-                Live Price
+              <span className="sm:text-[0.8rem] font-poppinsRegular text-[0.6rem] ">
+                {orderType === "sell" ? "SELL PRICE" : "BUY PRICE"}
               </span>
               <span className="sm:text-[0.6rem] font-poppinsMedium text-[0.8rem] ">
-                ₹ {selectedCoin.currentRate}
+                ₹
+                {currentRates[selectedCoin.lowerCaseName]
+                  ? currentRates[selectedCoin.lowerCaseName].buy
+                  : "0"}
               </span>
             </div>
           )}
@@ -152,11 +154,15 @@ export default function ChartSection() {
         </div>
         {!isMobile && (
           <div className="sm:mr-12  flex sm:w-[25%] sm:items-center sm:justify-evenly">
-            <span className="sm:text-[0.8rem]">Live Price</span>
             <span className="sm:text-[0.6rem]">
-              ₹{" "}
-              {currentRates[selectedCoin.lowerCaseName]
-                ? currentRates[selectedCoin.lowerCaseName].buy
+              {orderType === "sell" ? "SELL PRICE" : "BUY PRICE"}
+            </span>
+            <span className="sm:text-[0.6rem]">
+              ₹
+              {orderType === "buy"
+                ? currentRates[selectedCoin.lowerCaseName]?.buy || "0"
+                : orderType === "sell"
+                ? currentRates[selectedCoin.lowerCaseName]?.sell || "0"
                 : "0"}
             </span>
           </div>

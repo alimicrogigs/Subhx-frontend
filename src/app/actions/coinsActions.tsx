@@ -6,6 +6,7 @@ import {
   CURRENT_RATES_SUCCESS,
   CURRENT_RATES_FAILURE,
   SELECTED_COIN_DATA,
+  ORDER_TYPE,
 } from "../constants/coinsConstants";
 
 export const getAllCoinsRequest = () => ({
@@ -39,4 +40,9 @@ export const currentRatesFailure = (error: any) => ({
 export const selectedCoinData = (selectedCoin: any) => ({
   type: SELECTED_COIN_DATA,
   payload: selectedCoin,
+});
+
+export const orderType = (orderType: any) => ({
+  type: ORDER_TYPE,
+  payload: orderType,
 });
