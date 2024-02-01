@@ -9,8 +9,8 @@ import {
   depositeFundSuccess,
   depositeFundFailure,
 } from "../../actions/depositeFundActions";
+import { orderType } from "@/app/actions/coinsActions";
 import { postRequestAPIHelper } from "../../helperfunctions";
-// =====================
 
 const apiUrl = process.env.API_URL;
 const token = localStorage.getItem("token");
@@ -21,10 +21,14 @@ export default function OrderSection() {
   // ===========use selector to get api data from store=======
   const { loading, error, upiAddress } = useSelector((state:any) => state.deposite);
   console.log("upiAddress=====", upiAddress);
+  const selectedCoin = ""; // Declare the 'selectedCoin' variable
+  console.log("selectedCoinfrom_ordersection", selectedCoin);
   // ========================
+  const dispatch = useDispatch();
 
   const handleOrderSwitch = (tab: any) => {
     setSelectedTab(tab);
+    dispatch(orderType(tab));
   };
 
   const handleLimitSwitch = (tab: any) => {
@@ -36,8 +40,6 @@ export default function OrderSection() {
     setBuyAmount(event.target.value);
   };
   // ====================
-  const dispatch = useDispatch();
-
 
   //===========function that calls on click ==================
 
@@ -74,6 +76,8 @@ export default function OrderSection() {
 
       const response = await postRequestAPIHelper(apiUrl + "trade/usdt-to-inr", token, requestData);
       console.log("response=====", response);
+      if (response.success === true) {
+        dispatch(depositeFundSuccess(response.data));
       if (response.success === true) {     
         toast.custom(
           <ToasterCustom
@@ -86,7 +90,7 @@ export default function OrderSection() {
           }
         );
         return;
-        
+      }
       }
     } catch (error) {
       toast.custom(
@@ -172,33 +176,40 @@ export default function OrderSection() {
           <span className="font-poppinsSemibold text-[0.9rem]">Sell USDT</span>
         </div>
       </div>
-      <div className="sm:h-[10%]  flex sm:flex-row sm:justify-center sm:items-center ">
+      <div className="sm:h-[10%] flex sm:flex-row sm:justify-center sm:items-center ">
         <span
           onClick={() => handleLimitSwitch("instant")}
-          className={`sm:px-4 border border-borderline sm:py-1 sm:rounded-l sm:text-[0.6rem] ${
+          className={`sm:px-4 border bg-red-200 border-borderline sm:py-1 ${
+            selectedCoin?.lowerCaseName !== "usdt"
+              ? "sm:rounded-l"
+              : "sm:rounded"
+          } sm:rounded-l sm:text-[0.6rem] ${
             selectLimit === "instant" ? "bg-switchColor" : ""
           }`}
         >
           Instant Trade
         </span>
-        <span
-          onClick={() => handleLimitSwitch("limit")}
-          className={`border border-borderline sm:rounded-r sm:px-4 sm:py-1 sm:text-[0.6rem] ${
-            selectLimit === "limit" ? "bg-switchColor" : ""
-          }`}
-        >
-          Limit Trade
-        </span>
+
+        {selectedCoin?.lowerCaseName !== "usdt" && (
+          <span
+            onClick={() => handleLimitSwitch("limit")}
+            className={`border  border-borderline sm:rounded-r sm:px-4 sm:py-1 sm:text-[0.6rem] ${
+              selectLimit === "limit" ? "bg-switchColor" : ""
+            }`}
+          >
+            Limit Trade
+          </span>
+        )}
       </div>
       <div className="flex sm:flex-col ">
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Amount</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-            <div className="flex sm:flex-row  sm:w-[60%]">
-              <input className="focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " type="text"  onChange={handleInputChange}/>
-              <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center  font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
-                USDT
-              </div>
+          <div className="flex sm:flex-row  sm:w-[60%]">
+            <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+            <div className="sm:h-[2rem]   sm:w-[2.5rem] flex sm:items-center sm:text-center sm:justify-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
+              USDT
             </div>
+          </div>
 
           <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-red-200">
             +
@@ -213,12 +224,6 @@ export default function OrderSection() {
         <div className="flex sm:flex-col sm:mt-2  ">
           <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
           <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-            {/* <span
-              style={{ color: "#416384" }}
-              className="absolute text-switchColor font-poppinsMedium text-[0.6rem] right-[9.1rem] "
-            >
-              USDT
-            </span> */}
             <div className="flex sm:flex-row  sm:w-[60%]">
               <input className="focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] "  />
               <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
