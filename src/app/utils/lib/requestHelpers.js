@@ -26,13 +26,8 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
       url: url,
       headers: {
         'Content-Type': 'application/json',
-<<<<<<< HEAD
-        'Authorization': 'Bearer ' + authorizationToken,
-        'User-Agent': getUserAgentInfo(),
-=======
         'Authorization': 'Bearer '+authorizationToken,
         // 'User-Agent': getUserAgentInfo(),
->>>>>>> a25303134637797efea753a005790913f34dea8b
       },
       data: (requestData)
     };
@@ -46,25 +41,15 @@ exports.postRequestAPIHelper = async (url, authorizationToken, requestData) => {
 
 
 exports.getRequestAPIHelper = async (url, authorizationToken) => {
-<<<<<<< HEAD
- 
-=======
   // const userAgentInfo = getUserAgentInfo();                                                                                                                                                                                                                                                                                                                                    )
->>>>>>> a25303134637797efea753a005790913f34dea8b
     try {
       const config = {
         method: 'get',
         url: url,
         headers: { 
-<<<<<<< HEAD
           'Content-Type': 'application/json', 
           'Authorization': 'Bearer ' + authorizationToken,
-          'User-Agent': getUserAgentInfo(),
-=======
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+authorizationToken, 
-          // 'User-Agent': JSON.stringify(userAgentInfo),
->>>>>>> a25303134637797efea753a005790913f34dea8b
+          'User-Agent': getUserAgentInfo()      
         }
       };
   

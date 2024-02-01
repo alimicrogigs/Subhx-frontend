@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
 import toast, { Toaster } from "react-hot-toast";
-import { Providers } from "./Providers";
 
 export const metadata: Metadata = {
   title: "BIT24HR",

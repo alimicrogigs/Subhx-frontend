@@ -1,30 +1,20 @@
-"use client";
-import React, { use, useEffect, useState } from "react";
 "use client"
 // Import React and useState hook
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// Import your components
 import Wallet from "@/app/components/dashboard/funds/Wallet/Wallet";
 import Depositefunds from "@/app/components/dashboard/funds/Depositefunds/Depositefunds";
 import Fundshome from "@/app/components/dashboard/funds/Fundshome/Fundshome";
 import { getUserDataRequest, getUserDataSuccess, getUserDataFailure } from "../../actions/depositeFundActions"
 import Withrawlfunds from "@/app/components/dashboard/funds/Withrawlfunds/Withrawlfunds";
 import Transferhistory from "@/app/components/dashboard/funds/Transferhistory/Transferhistory";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { getRequestAPIHelper } from "../../utils/lib/requestHelpers"
 const dotenv = require('dotenv')
 dotenv.config();
 const apiUrl = process.env.API_URL;
 import 'react-loading-skeleton/dist/skeleton.css'
 
-// Define Props interface
-import { useSelector } from "react-redux";
-
 interface FundsPageProps {}
-
-
-
 // Define FundsPage component
 const FundsPage: React.FC<FundsPageProps> = () => {
   const dispatch = useDispatch();
@@ -75,7 +65,7 @@ const FundsPage: React.FC<FundsPageProps> = () => {
   const handledepositeinsdiecoin = () => {};
   return (
     <>
-      <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
+    <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
         {/* first popup  */}
         {currentpopupactive === "deposite" && (
           <div
@@ -114,31 +104,30 @@ const FundsPage: React.FC<FundsPageProps> = () => {
           </div>
         )}
         {/* wallet start form here  */}
-        <Wallet
+        {/* <Wallet
           onAction={handleWalletAction}
-          popupactive={handlepopupactive}
+          popupactive={handlePopupActive}
           activebutton={currentfundsstep}
-        />
+        /> */}
 
-        <div className="w-[100%] relative overflow-scroll">
+        {/* <div className="w-[100%] relative overflow-scroll">
           {currentfundsstep === "Portfolio" && <Fundshome />}
           {currentfundsstep === "transferhistory" && <Transferhistory />}
-        </div>
-      )}
+        </div> */}
+     
 
-      {/* Render main wallet component */}
       <Wallet
         onAction={handleWalletAction}
         popupactive={handlePopupActive}
         activebutton={currentfundsstep}
-      />
+      /> 
 
-      {/* Render main content */}
+      
       <div className="w-[100%] relative overflow-scroll">
         {currentfundsstep === "Portfolio" && <Fundshome />}
         {currentfundsstep === "transferhistory" && <Transferhistory />}
 
-        <div className="w-[99%] h-[98%] max-h-[98%] bg-dashbgtrans overflow-x-scroll">
+        <div className="w-[99%] h-[98%] max-h-[98%] bg-dashbgtrans ">
           {/* Wallet component */}
           {/* Render different components based on current step */}
           <div className="w-[100%] relative">
@@ -148,8 +137,12 @@ const FundsPage: React.FC<FundsPageProps> = () => {
           </div>
         </div>
       </div>
+
     </div>
+    </>
   );
+      
+
 };
 
-export default FundsPage; // Export FundsPage as default
+export default FundsPage; 

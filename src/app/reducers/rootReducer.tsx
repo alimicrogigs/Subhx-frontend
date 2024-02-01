@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { combineReducers } from "redux";
 
 import { depositFundReducer } from "./depositeFundReducer";
@@ -10,13 +9,3 @@ export const rootReducer = combineReducers({
   coin: coinsReducer,
   user: storeUserDataReducer
 });
-=======
-"use client";
-import { combineReducers } from "redux";
-
-import {depositFundReducer} from "./depositFundReducer";
-
-export const rootReducer = combineReducers({
-  deposite: depositFundReducer,
-})
->>>>>>> a25303134637797efea753a005790913f34dea8b

@@ -6,12 +6,9 @@ import ToasterCustom from "../../../common/ToasterCustom/ToasterCustom";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getUpiAddressRequest, getUpiAddressSuccess, getUpiAddressFailure, getManualAccountFailure, getManualAccountRequest, getManualAccountSuccess, getUserVanFailure, getUserVanRequest, getUserVanSuccess } from "../../../../actions/depositeFundActions"
 import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
-// import CardSkeleton from "@/app/components/common/skeleton/depositSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
-
 import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from "../../../../actions/depositeFundActions"
 import { storeUserData } from "../../../../actions/storeUserDataAction";
-
 
 
 interface WalletProps {
@@ -20,18 +17,7 @@ interface WalletProps {
   activebutton: string;
 }
 
-
 const apiUrl = process.env.API_URL;
-
-// Define your custom toaster component
-// const ToasterCustom = ({ type, message, loading }) => {
-//   return (
-//     <div className={`toaster toaster-${type}`}>
-//       {loading ? <span>Loading...</span> : <span>{message}</span>}
-//     </div>
-//   );
-// };
-
 
 const Wallet: React.FC<WalletProps> = ({
   onAction,
@@ -40,7 +26,7 @@ const Wallet: React.FC<WalletProps> = ({
 
 }) => {
   const dispatch = useDispatch();
-  const { loading, upiAddress, error } = useSelector((state:any) => state.deposite)
+  const { loading, upiAddress, error } = useSelector((state: any) => state.deposite)
   console.log("upiAddressformredux___", upiAddress)
   // const [loading, setLoading] = useState(true);
   const [apiHitTime, setApiHitTime] = useState(null)
@@ -50,13 +36,11 @@ const Wallet: React.FC<WalletProps> = ({
   const [userBalance, setUserBalance] = useState<string>('0.00');
 
   const apiData = useSelector((state: any) => state.apiData);
-  const token = localStorage.getItem("token");
+  var token = localStorage.getItem("token");
   const handleWithdraw = () => {
-    // Trigger withdraw action
     popupactive("withdraw")
   }
   const getUPIaddress = async () => {
-    const token = localStorage.getItem("token");
     try {
       dispatch(getUpiAddressRequest())
       // Fetch UPI address
@@ -73,7 +57,7 @@ const Wallet: React.FC<WalletProps> = ({
     }
   }
   const getManaualAccount = async () => {
-    const token = localStorage.getItem("token");
+   
     try {
       dispatch(getManualAccountRequest())
       // Fetch UPI address
@@ -87,9 +71,9 @@ const Wallet: React.FC<WalletProps> = ({
       dispatch(getManualAccountFailure(error));
     }
   }
-  
+
   const getVanUser = async () => {
-    const token = localStorage.getItem("token");
+  
     try {
       dispatch(getUserVanRequest())
       // Fetch UPI address
@@ -105,8 +89,7 @@ const Wallet: React.FC<WalletProps> = ({
   }
 
   const handleDeposit = async () => {
-    // Trigger deposit action
-    const token = localStorage.getItem("token");
+
     try {
       // Fetch UPI address
       const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token)
@@ -119,7 +102,7 @@ const Wallet: React.FC<WalletProps> = ({
         getUPIaddress();
         getManaualAccount();
         getVanUser();
-      }else{
+      } else {
         toast.custom(
           <ToasterCustom type="error" message="KYC is Pending , Desposite details will not open !!! " />,
           {

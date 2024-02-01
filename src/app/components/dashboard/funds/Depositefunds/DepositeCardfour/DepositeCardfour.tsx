@@ -12,15 +12,9 @@ interface props {
   UPIid: string;
 }
 
-const DepositeCardone: React.FC<props> = ({ UPIid })=> {
-interface props {
-  UPIid: string;
-}
-
-// const DepositeCardone: React.FC<props> = ({ UPIid }) => {
 const DepositeCardone: React.FC<props> = ({ UPIid }) => {
   const upi = "Payments.bit24hr@upi";
-  const {upiAddress} = useSelector((state)=>state.deposite);
+  const {upiAddress} = useSelector((state:any)=>state.deposite);
   const [UPIrrnnumber, setUPIrrnnumber] = useState("");
 
   const handleupisubmit = async () => {
