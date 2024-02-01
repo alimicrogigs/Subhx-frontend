@@ -8,43 +8,6 @@ import {
 import { useMemo, useState, useEffect } from "react";
 import moment from "moment";
 
-// const tableData = [
-//   {
-//     id: 1,
-//     rate: 320.26,
-//     volume: 0.002,
-//   },
-
-//   {
-//     id: 2,
-//     rate: 222,
-//     volume: 11111,
-//   },
-//   {
-//     id: 3,
-//     rate: 320.26,
-//     volume: 0.002,
-//   },
-//   {
-//     id: 4,
-//     rate: 320.26,
-//     volume: 0.002,
-//   },
-//   {
-//     id: 5,
-//     rate: 320.26,
-//     volume: 0.002,
-//   },
-
-//   {
-//     id: 6,
-//     rate: 222,
-//     volume: 11111,
-//   },
-
-//   // Add more data as needed
-// ];
-
 interface CellInfo {
   value: any;
   column: {
@@ -66,25 +29,41 @@ interface OrderBookBuyTableProps {
 
 export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
+  const [percentages, setPercentages] = useState<number[]>([]);
 
   useEffect(() => {
-    console.log("buy data========= :", buyData);
+    const newData = [...buyData.slice(0, 10)];
 
-    setData((prevData) => {
-      const newData = [...buyData.slice(0, 10)];
-      const previousData = prevData.slice(0, 10 - newData.length);
+    const volumes = newData.map((item) => item[1]);
+    const maxVolume = Math.max(...volumes);
+    const minVolume = Math.min(...volumes);
 
-      return [...newData, ...previousData];
-    });
+    const calculatedPercentages = volumes.map(
+      (volume) => ((volume - minVolume) / (maxVolume - minVolume)) * 100
+    );
+
+    setPercentages(calculatedPercentages);
+    setData(newData);
   }, [buyData]);
+
+  console.log("percentages====", percentages);
+  // percentages.map((per, ind) => console.log("mapped per", per));
 
   const columns: CustomColumnDef[] = [
     {
       header: "VOLUME",
       accessorKey: "volume",
-      cell: (info: cellInfo) => (
-        <div style={{ textAlign: "start" }}>{info.row.original[1]}</div>
-      ),
+      cell: (info: cellInfo) => {
+        return (
+          <div
+            style={{
+              textAlign: "start",
+            }}
+          >
+            {info.row.original[1]}
+          </div>
+        );
+      },
     },
     {
       header: "BUY PRICE",
@@ -133,24 +112,24 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className="">
           {table.getRowModel()?.rows?.map((row) => (
             <tr
-              className={`${
-                row.original.type === "sell"
-                  ? "bg-red"
-                  : row.original.type === "rate"
-                  ? "bg-green"
-                  : ""
-              } sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
+              className={`  relative sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className={` font-poppinsSemibold text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
+                  className={`  font-poppinsSemibold text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
                   key={cell.id}
                 >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  <div
+                    className={`nikhil sm:w-[20%]  absolute bg-green-900  right-0 top-0 bottom-0 left-auto`}
+                  ></div>
+
+                  <div className="relative z-10">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </div>
                 </td>
               ))}
             </tr>

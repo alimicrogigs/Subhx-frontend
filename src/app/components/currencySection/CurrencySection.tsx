@@ -5,87 +5,27 @@ import {
   getAllCoinsRequest,
   getAllCoinsSuccess,
   getAllCoinsFailure,
+  currentRatesRequest,
+  currentRatesSuccess,
+  currentRatesFailure,
 } from "../../actions/coinsActions";
 
 import "./currency.css";
 import { getRequestAPIHelper } from "@/app/helperfunctions";
 
 export default function CurrencySection() {
-  const currencies = [
-    {
-      id: 1,
-      icon: "/dashboard/exchange/btc.svg",
-      name: "BTC",
-      favoriteIcon: "/dashboard/exchange/favHeartThin.svg",
-      favorite: false,
-      changePercentage: "+0.07%",
-      price: "₹ 34,61,173.29",
-    },
-    {
-      id: 2,
-      icon: "/dashboard/exchange/btc.svg",
-      name: "SHIB",
-      favoriteIcon: "/dashboard/exchange/favHeartFill.svg",
-      favorite: false,
-      changePercentage: "+0.07%",
-      price: "₹ 19,62,52.00",
-    },
-    {
-      id: 3,
-      icon: "/dashboard/exchange/btc.svg",
-      name: "BTC",
-      favoriteIcon: "/dashboard/exchange/favHeartThin.svg",
-      favorite: false,
-      changePercentage: "+0.07%",
-      price: "₹ 34,61,173.29",
-    },
-    {
-      id: 4,
-      icon: "/dashboard/exchange/btc.svg",
-      name: "SHIB",
-      favoriteIcon: "/dashboard/exchange/favHeartThin.svg",
-      favorite: false,
-      changePercentage: "+0.07%",
-      price: "₹ 19,62,52.00",
-    },
-    {
-      id: 5,
-      icon: "/dashboard/exchange/btc.svg",
-      name: "BTC",
-      favoriteIcon: "/dashboard/exchange/favHeartThin.svg",
-      favorite: false,
-      changePercentage: "+0.07%",
-      price: "₹ 34,61,173.29",
-    },
-    {
-      id: 6,
-      icon: "/dashboard/exchange/btc.svg",
-      name: "SHIB",
-      favoriteIcon: "/dashboard/exchange/favHeartThin.svg",
-      favorite: false,
-      changePercentage: "+0.07%",
-      price: "₹ 19,62,52.00",
-    },
-  ];
-
-  [
-    {
-      coin: "INR",
-      created_at: null,
-      icon: null,
-      id: 1,
-      status: "active",
-      updated_at: null,
-    },
-  ];
-
   const dispatch = useDispatch();
-
-  const [currenciesData, setCurrenciesData] = useState(currencies);
-  const { loading, allCoins, error } = useSelector((state) => state.coin);
-  console.log("allCoins====", allCoins);
+  const { loading, allCoins, currentRates, error } = useSelector(
+    (state) => state.coin
+  );
 
   const filteredCoins = allCoins.filter((obj: any) => obj.coin !== "INR");
+
+  const [currenciesData, setCurrenciesData] = useState(filteredCoins);
+  const [percentageChanges, setPercentageChanges] = useState({});
+
+  console.log("filteredCoins====", filteredCoins);
+  console.log("currentRates=====", currentRates);
 
   const handleFavoriteClick = (id: any) => {
     const updatedCurrencies = currenciesData.map((currency) =>
@@ -118,6 +58,33 @@ export default function CurrencySection() {
     }
   };
 
+  const calculatePercentageChanges = (data) => {
+    const changes = {};
+
+    // Iterate through each coin in currentRates
+    for (const coin in data) {
+      if (data.hasOwnProperty(coin)) {
+        // Calculate percentage change and update changes object
+        const buyChange = calculatePercentageChange(
+          data[coin].buy,
+          currentRates[coin]?.buy
+        );
+        const sellChange = calculatePercentageChange(
+          data[coin].sell,
+          currentRates[coin]?.sell
+        );
+
+        changes[coin] = { buy: buyChange, sell: sellChange };
+      }
+    }
+
+    console.log("Data received:", data);
+    console.log("Current rates:", currentRates);
+    console.log("Changes:", changes);
+
+    return changes;
+  };
+
   useEffect(() => {
     const socket = new WebSocket("ws://stream.bit24hr.in:8765/current_rate");
     socket.onopen = () => {
@@ -131,6 +98,11 @@ export default function CurrencySection() {
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       // console.log("WebSocket data received current rate:=====", data);
+      dispatch(currentRatesSuccess(data));
+      const changes = calculatePercentageChanges(data);
+
+      // Update state with percentage changes
+      setPercentageChanges(changes);
     };
 
     socket.onclose = (event) => {
@@ -140,7 +112,21 @@ export default function CurrencySection() {
     return () => {
       socket.close();
     };
-  }, []);
+  }, [dispatch, setPercentageChanges, calculatePercentageChanges]);
+
+  const calculatePercentageChange = (newPrice, oldPrice) => {
+    if (oldPrice === undefined || oldPrice === null) {
+      return 0; // Handle cases where oldPrice is not available
+    }
+
+    if (oldPrice === 0) {
+      // Handle cases where oldPrice is zero
+      return "Infinity";
+    }
+
+    const percentageChange = ((newPrice - oldPrice) / oldPrice) * 100;
+    return percentageChange.toFixed(2); // Round to 2 decimal places
+  };
 
   return (
     <section className="sm:h-[100%] h-[100%] sm:rounded-lg w-full sm:w-[17vw] flex flex-col sm:flex-col sm:m-w-[16vw] bg-dashbgtrans">
@@ -168,38 +154,45 @@ export default function CurrencySection() {
         <span className="sm:mr-3 mr-10">PRICE</span>
       </div>
       <div className={`flex flex-col`}>
-        {filteredCoins.map((currency) => (
-          <div
-            key={currency.id}
-            className="flex flex-row sm:flex-row items-center sm:items-center border-b border-borderline justify-evenly sm:justify-evenly text-[0.55rem] sm:text-[0.55rem] h-[3rem] p-2 sm:h-[2.4rem]"
-          >
-            <img
-              className="sm:border-r sm:pr-2 cursor-pointer"
-              src={
-                currency.favorite
-                  ? "/dashboard/exchange/favHeartFill.svg"
-                  : "/dashboard/exchange/favHeartThin.svg"
-              }
-              onClick={() => handleFavoriteClick(currency.id)}
-            />
-            <img src={currency.icon} alt={`${currency.coin} icon`} />{" "}
-            <span className="sm:text-[0.8rem] text-[0.9rem] font-poppinsMedium">
-              {currency.coin}
-            </span>
-            <span
-            // className={`${
-            //   currency.changePercentage.startsWith("+")
-            //     ? "text-priceGreen"
-            //     : "text-priceRed"
-            // } sm:text-[0.45rem] text-[0.7rem]`}
+        {filteredCoins.map((currency) => {
+          const lowercaseCoinName = currency.coin.toLowerCase();
+
+          const decodedSvg = atob(currency.icon);
+
+          return (
+            <div
+              key={currency.id}
+              className="flex sm:w-[100%] flex-row  sm:text-center sm:flex-row items-center sm:items-center border-b border-borderline justify-evenly sm:justify-between text-[0.55rem] sm:text-[0.55rem] h-[3rem] sm:p-2 sm:h-[2.4rem]"
             >
-              {/* {currency.changePercentage} */}
-            </span>
-            <span className="sm:text-[0.45rem] sm:ml-0  text-[0.7rem]">
-              {/* {currency.price} */}
-            </span>
-          </div>
-        ))}
+              <img
+                className="sm:border-r   cursor-pointer"
+                src={
+                  currency.favorite
+                    ? "/dashboard/exchange/favHeartFill.svg"
+                    : "/dashboard/exchange/favHeartThin.svg"
+                }
+                onClick={() => handleFavoriteClick(currency.id)}
+              />
+
+              <div
+                dangerouslySetInnerHTML={{ __html: decodedSvg }}
+                className="sm:w-[1rem] sm:h-[1rem]  "
+              ></div>
+
+              <span className="sm:text-[0.8rem] text-[0.9rem]  font-poppinsMedium">
+                {currency.coin}
+              </span>
+              <span className={`sm:text-[0.45rem] text-[0.7rem] `}>
+                {percentageChanges[currency.coin]?.sell || "N/A"}%
+              </span>
+              <span className="sm:text-[0.45rem] sm:ml-0  text-[0.7rem]">
+                {currentRates[lowercaseCoinName]
+                  ? currentRates[lowercaseCoinName].buy
+                  : "N/A"}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
