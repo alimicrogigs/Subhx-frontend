@@ -63,8 +63,7 @@ export default function () {
         );
         // Remove the token from the storage
         localStorage.removeItem("token");
-        const mainUrl = window.location.origin;
-        console.log('mainUrl', mainUrl);  
+        const mainUrl = window.location.origin; 
         setTimeout(() => {
           // redirect to hero page
           window.location.href = mainUrl;

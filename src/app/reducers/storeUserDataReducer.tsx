@@ -1,17 +1,18 @@
-const initialState = {
-    apiData: null,
+  const initialState = {
+    userData: null  ,
   };
   
-  const reducer = (state = initialState, action:any) => {
+  const storeUserDataReducer = (state = initialState, action:any) => {
     switch (action.type) {
-      case 'SET_DATA':
+      case 'STORE_USER_DATA':
+        console.log('Reducer - Storing User Data:', action.payload);
         return {
           ...state,
-          apiData: action.payload,
+          userData: action.payload,
         };
       default:
         return state;
     }
   };
   
-  export default reducer;
+  export default storeUserDataReducer;

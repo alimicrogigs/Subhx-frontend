@@ -11,15 +11,16 @@ export default function page() {
 
   const [storedValue, setStoredValue] = useState();
 
-  useEffect(() => {
+  useEffect(() => { 
     const isUserLoggedIn:any = localStorage.getItem('token');
     if (isUserLoggedIn) {
-      setStoredValue(isUserLoggedIn);
+      setStoredValue(isUserLoggedIn); 
     }
   }, []);
 
   return (
       <>
+      
         {storedValue ? <Dashboardnavbar /> : <Navbar />}
     
       {/* <Navbar /> */}

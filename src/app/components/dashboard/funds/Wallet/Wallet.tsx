@@ -15,52 +15,43 @@ interface WalletProps {
 }
 
 const apiUrl = process.env.API_URL;
-
 const Wallet: React.FC<WalletProps> = ({
   onAction,
   activebutton,
   popupactive,
-
 }) => {
-
   const [loading, setLoading] = useState(true);
   const [userBalance, setUserBalance] = useState<string>('0.00');
-
   const dispatch = useDispatch();
-
-  let user_balance = userBalance
+  const apiData = useSelector((state: any) => state.apiData);
+  const token = localStorage.getItem("token");
   const handleWithdraw = () => {
     // Trigger withdraw action
     popupactive("withdraw")
   };
 
-
   const handleDeposit = async () => {
     // Trigger deposit action
-    const token = localStorage.getItem("token");
+
     popupactive("deposite");
     try {
       // Set loading state before API call
       setLoading(true);
-    
       // Fetch user data
       const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token);
-
-      console.log(getUserResponse, "line___47_");
-  
       if (getUserResponse.success === true) {
         //save user data in redux
         console.log(getUserResponse, "line___53_")
         dispatch(storeUserData(getUserResponse));        
         console.log(getUserResponse.data.kyc_verification, "line___48_");
       }
-  
+
       if (getUserResponse.success === true && getUserResponse.data.kyc_verification === "approved") {
         const getUserData = getUserResponse.data;
-  
+
         // Set loading state before API call
         setLoading(true);
-  
+
         // Fetch UPI address
         const upiAddressResponse = await getRequestAPIHelper(apiUrl + 'upi-address', token);
         if (upiAddressResponse.status === 200) {
@@ -68,10 +59,10 @@ const Wallet: React.FC<WalletProps> = ({
           console.log("UPI Address Data:", upiAddressData);
           // Perform actions based on upiAddressData if needed
         }
-  
+
         // Set loading state before API call
         setLoading(true);
-  
+
         // Fetch manual account
         const manualAccountResponse = await getRequestAPIHelper(apiUrl + 'manul-account', token);
         if (manualAccountResponse.status === 200) {
@@ -79,10 +70,10 @@ const Wallet: React.FC<WalletProps> = ({
           console.log("Manual Account Data:", manualAccountData);
           // Perform actions based on manualAccountData if needed
         }
-  
+
         // Set loading state before API call
         setLoading(true);
-  
+
         // Fetch user van
         const userVanResponse = await getRequestAPIHelper(apiUrl + 'get-user-van', token);
         if (userVanResponse.status === 200) {
@@ -90,19 +81,19 @@ const Wallet: React.FC<WalletProps> = ({
           console.log("User Van Data:", userVanData);
           // Perform actions based on userVanData if needed
         }
-  
+
         // Trigger deposit popup
         popupactive("deposite");
       }
-  
+
     } catch (error) {
       console.error('Error fetching user data:', error);
       // toast.custom(
-        // <ToasterForWallet type="error" message="KYC is Pending, Deposit details will not open !!! " loading="" />,
-        // {
-        //   position: "top-right",
-        //   duration: 1000,
-        // }
+      // <ToasterForWallet type="error" message="KYC is Pending, Deposit details will not open !!! " loading="" />,
+      // {
+      //   position: "top-right",
+      //   duration: 1000,
+      // }
       // );
       // return;
     } finally {
@@ -111,13 +102,24 @@ const Wallet: React.FC<WalletProps> = ({
     }
   }
 
+  const fetchData = async () => {
+
+    const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token);
+    console.log('27', getUserResponse);
+    if (getUserResponse.success === true) {
+      console.log("line___112_", getUserResponse.data)
+      dispatch(storeUserData( getUserResponse.data));
+    }
+
+    console.log(apiData, "apiData");
+  };
+
   useEffect(() => {
-    
-    const token = '161|$2y$10$a640/iN/UHCfu.BSvt59J.piV1SS5KSvtqjSfTn8jMIjgnQ55sfH6ddeb8d08';
-   
+    fetchData();
+
     const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
 
-    const socket = new WebSocket(socketUrl);  
+    const socket = new WebSocket(socketUrl);
 
     socket.onopen = () => {
       console.log("WebSocket connection Get_user_balance");
@@ -126,12 +128,15 @@ const Wallet: React.FC<WalletProps> = ({
     };
 
     socket.onmessage = (event) => {
-      const jsonData = JSON.parse(event.data);
-      const inrBalance = jsonData.inr_balance;
-      console.log('qINR Balance:', inrBalance);
-      setUserBalance(inrBalance);
-    };
+      console.log("WebSocket message received:", event.data);
+      if (event.data !== 'null') {
+        const jsonData = JSON.parse(event.data);
+        const inrBalance = jsonData.inr_balance;
+        console.log('INR Balance:', inrBalance);
+        setUserBalance(inrBalance);
+      }
 
+    };
     socket.onclose = (event) => {
       console.log("WebSocket connection closed:", event);
     };
@@ -141,24 +146,19 @@ const Wallet: React.FC<WalletProps> = ({
     };
   }, []);
 
-
   const handleHome = () => {
     onAction("Portfolio");
   }
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
-
-
-
-
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
         {/* wallets balance  */}
         <div className="flex gap-[20px]  items-center sm:px-[20px] px-[0px] sm:justify-auto justify-center  sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[10px]">
           <p>Wallet Balance</p>
-          <p>{user_balance}</p>
+          <p>₹ {userBalance}</p>
         </div>
         {/* withdrawl and deposite button  */}
         <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[5px] sm:pt-[0px] pt-[10px]">

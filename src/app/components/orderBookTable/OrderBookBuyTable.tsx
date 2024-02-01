@@ -68,7 +68,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
 
   useEffect(() => {
-    console.log("buy data========= :", buyData);
+    // console.log("buy data========= :", buyData);
 
     setData((prevData) => {
       const newData = [...buyData.slice(0, 10)];

@@ -30,9 +30,9 @@ export default function OrderBook() {
     sell: [],
   });
 
-  console.log("orderBookData====", orderBookData);
-  console.log("orderBookData buy====", orderBookData.buy);
-  console.log("orderBookData sell====", orderBookData.sell);
+  // console.log("orderBookData====", orderBookData);
+  // console.log("orderBookData buy====", orderBookData.buy);
+  // console.log("orderBookData sell====", orderBookData.sell);
 
   // const addVolumes = (orders: Order[] = []) => {
   //   console.log("orders====", orders);
@@ -63,7 +63,7 @@ export default function OrderBook() {
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setOrderBookData(data);
-      console.log("WebSocket data received:", data);
+     // console.log("WebSocket data received:", data);
     };
 
     socket.onclose = (event) => {

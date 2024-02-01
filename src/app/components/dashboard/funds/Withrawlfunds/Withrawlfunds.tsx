@@ -3,59 +3,44 @@ import React, {useEffect, useState } from "react";
 import { getRequestAPIHelper } from "@/app/utils/lib/requestHelpers";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
+import { storeUserData } from "@/app/actions/storeUserDataAction";
 
 const apiUrl = process.env.API_URL;
 export default function Withrawlfunds() {
-  // redux state
   const [userBalance, setUserBalance] = useState<string>('0.00');
-  // freeze amout usestate
   const [freezeamount, setFreezeamount] = useState(0);
   const [withdrawlamount, setWithdrawlamount] = useState(0);
+  const token = localStorage.getItem("token");
 
-  const apiData = useSelector((state:any) => state.apiData);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {   
-    console.log(apiData, "apiData");
-    // make api call by using getRequestAPIHelper function
-
-    
-    const token = localStorage.getItem("token");
-
-    const getUserResponse = getRequestAPIHelper(apiUrl + 'user', token);
-    console.log(getUserResponse, "line___27_");
-    if (getUserResponse.success === true) {
-      dispatch(storeUserData(getUserResponse));        
-    }
+  useEffect(() => {    
    
-    const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+      // const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+      // const socket = new WebSocket(socketUrl);  
+      // socket.onopen = () => {
+      //   console.log("WebSocket connection get_user_balance");
+      //   socket.send(JSON.stringify({ 'x-auth-token': token }));
 
-    const socket = new WebSocket(socketUrl);  
+      // };
 
-    socket.onopen = () => {
-      console.log("WebSocket connection get_user_balance");
-      socket.send(JSON.stringify({ 'x-auth-token': token }));
+      // socket.onmessage = (event) => {
+      //   const jsonData = JSON.parse(event.data);
+      //   const inrBalance = jsonData.inr_balance;
+      //   console.log('INR Balance:', inrBalance);
+      //   setUserBalance(inrBalance);
+      // };
 
-    };
-
-    socket.onmessage = (event) => {
-      const jsonData = JSON.parse(event.data);
-      const inrBalance = jsonData.inr_balance;
-      console.log('INR Balance:', inrBalance);
-      setUserBalance(inrBalance);
-    };
-
-    socket.onclose = (event) => {
-      console.log("WebSocket connection closed:", event);
-    };
-
-    return () => {
-      socket.close();
-    };
-
+      // socket.onclose = (event) => {
+      //   console.log("WebSocket connection closed:", event);
+      // };
+      // return () => {
+      //   socket.close();
+      // };
+    
     
   }, []);
+   
+
+    
   const handlewithdrawal = () => {
     console.log({ withdrawlamount });
   };
