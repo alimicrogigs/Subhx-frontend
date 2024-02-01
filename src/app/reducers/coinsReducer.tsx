@@ -5,13 +5,17 @@ import {
   CURRENT_RATES_REQUEST,
   CURRENT_RATES_SUCCESS,
   CURRENT_RATES_FAILURE,
+  SELECTED_COIN_DATA,
 } from "../constants/coinsConstants";
 
 const initialState = {
   loading: false,
   allCoins: [],
   currentRates: {},
-
+  selectedCoin: {
+    name: "USDT",
+    lowerCaseName: "usdt",
+  },
   error: null,
 };
 
@@ -61,6 +65,15 @@ export const coinsReducer = (state = initialState, action: any) => {
         loading: false,
         currentRates: {},
         error: action.payload,
+      };
+
+    case SELECTED_COIN_DATA:
+      return {
+        ...state,
+        selectedCoin: {
+          ...action.payload,
+          lowerCaseName: action.payload.name.toLowerCase(), // Add lowercase version
+        },
       };
 
     default:

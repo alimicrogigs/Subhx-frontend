@@ -46,7 +46,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
     setData(newData);
   }, [buyData]);
 
-  console.log("percentages====", percentages);
+  // console.log("percentages====", percentages);
   // percentages.map((per, ind) => console.log("mapped per", per));
 
   const columns: CustomColumnDef[] = [
