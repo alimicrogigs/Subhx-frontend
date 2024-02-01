@@ -1,31 +1,37 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllCoinsRequest,
-  getAllCoinsSuccess,
-  getAllCoinsFailure,
-  currentRatesRequest,
-  currentRatesSuccess,
-  currentRatesFailure,
-} from "../../actions/coinsActions";
+import { selectedCoinData } from "../../actions/coinsActions";
 
 import "./currency.css";
 import { getRequestAPIHelper } from "@/app/helperfunctions";
+import { collectGenerateParams } from "next/dist/build/utils";
 
 export default function CurrencySection() {
   const dispatch = useDispatch();
-  const { loading, allCoins, currentRates, error } = useSelector(
+  const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
     (state) => state.coin
   );
+  console.log("selectedCoin===", selectedCoin);
 
   const filteredCoins = allCoins.filter((obj: any) => obj.coin !== "INR");
 
   const [currenciesData, setCurrenciesData] = useState(filteredCoins);
   const [percentageChanges, setPercentageChanges] = useState({});
 
-  console.log("filteredCoins====", filteredCoins);
-  console.log("currentRates=====", currentRates);
+  //console.log("filteredCoins====", filteredCoins);
+  // console.log("currentRates=====", currentRates);
+
+  //handle click function to select the coin and store their data in redux state to show in other component
+
+  const handleCoinClick = (coin) => {
+    dispatch(
+      selectedCoinData({
+        name: coin.coin,
+        currentRate: currentRates[coin.coin.toLowerCase()]?.buy || "N/A",
+      })
+    );
+  };
 
   const handleFavoriteClick = (id: any) => {
     const updatedCurrencies = currenciesData.map((currency) =>
@@ -36,29 +42,7 @@ export default function CurrencySection() {
     setCurrenciesData(updatedCurrencies);
   };
 
-  useEffect(() => {
-    getAllCoins();
-  }, []);
-
-  const getAllCoins = async () => {
-    try {
-      const token =
-        "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
-      dispatch(getAllCoinsRequest());
-      const response = await getRequestAPIHelper(
-        "http://authentication.bit24hr.in/api/v1/get-coins",
-        token
-      );
-      console.log("response.coins====", response.coins);
-      if (response) {
-        dispatch(getAllCoinsSuccess(response.coins));
-      }
-    } catch (error) {
-      dispatch(getAllCoinsFailure(error));
-    }
-  };
-
-  const calculatePercentageChanges = (data) => {
+  const calculatePercentageChanges = (data: any) => {
     const changes = {};
 
     // Iterate through each coin in currentRates
@@ -78,41 +62,12 @@ export default function CurrencySection() {
       }
     }
 
-    console.log("Data received:", data);
-    console.log("Current rates:", currentRates);
-    console.log("Changes:", changes);
+    // console.log("Data received:", data);
+    // console.log("Current rates:", currentRates);
+    // console.log("Changes:", changes);
 
     return changes;
   };
-
-  useEffect(() => {
-    const socket = new WebSocket("ws://stream.bit24hr.in:8765/current_rate");
-    socket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
-
-    socket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
-
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      // console.log("WebSocket data received current rate:=====", data);
-      dispatch(currentRatesSuccess(data));
-      const changes = calculatePercentageChanges(data);
-
-      // Update state with percentage changes
-      setPercentageChanges(changes);
-    };
-
-    socket.onclose = (event) => {
-      console.log("WebSocket connection closed:", event);
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, [dispatch, setPercentageChanges, calculatePercentageChanges]);
 
   const calculatePercentageChange = (newPrice, oldPrice) => {
     if (oldPrice === undefined || oldPrice === null) {
@@ -162,6 +117,7 @@ export default function CurrencySection() {
           return (
             <div
               key={currency.id}
+              onClick={() => handleCoinClick(currency)}
               className="flex sm:w-[100%] flex-row  sm:text-center sm:flex-row items-center sm:items-center border-b border-borderline justify-evenly sm:justify-between text-[0.55rem] sm:text-[0.55rem] h-[3rem] sm:p-2 sm:h-[2.4rem]"
             >
               <img

@@ -1,26 +1,86 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import OrderHistory from "@/app/components/OrderHistory/OrderHistory";
 import OrderSection from "@/app/components/OrderSection/OrderSection";
 import ChartSection from "@/app/components/chartSection/ChartSection";
 import CurrencySection from "@/app/components/currencySection/CurrencySection";
 import OrderBook from "@/app/components/orderBook/OrderBook";
-
 import useWindowResize from "@/app/Hooks/useWindowResize";
 import BottomBar from "@/app/components/BottomBar/BottomBar";
+import {
+  getAllCoinsRequest,
+  getAllCoinsSuccess,
+  getAllCoinsFailure,
+  currentRatesRequest,
+  currentRatesSuccess,
+  currentRatesFailure,
+} from "../../actions/coinsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getRequestAPIHelper } from "@/app/helperfunctions";
 
 export default function page() {
+  const dispatch = useDispatch();
+
   const isMobile = useWindowResize();
   const [currentLayout, setCurrentLayout] = useState("MARKETS");
 
   console.log("ismobile===", isMobile);
-
-  console.log("currentLayout===", currentLayout);
-
   const handleChangeLayout = (newLayout: any) => {
     setCurrentLayout(newLayout);
   };
+
+  //get all the coins from api
+  const getAllCoins = async () => {
+    try {
+      const token =
+        "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
+      dispatch(getAllCoinsRequest());
+      const response = await getRequestAPIHelper(
+        "http://authentication.bit24hr.in/api/v1/get-coins",
+        token
+      );
+      // console.log("response.coins====", response.coins);
+      if (response) {
+        dispatch(getAllCoinsSuccess(response.coins));
+      }
+    } catch (error) {
+      dispatch(getAllCoinsFailure(error));
+    }
+  };
+
+  useEffect(() => {
+    getAllCoins();
+  }, []);
+
+  //fethcing currentRates from socket
+  useEffect(() => {
+    const socket = new WebSocket("ws://stream.bit24hr.in:8765/current_rate");
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      // console.log("WebSocket data received current rate page.tsx:=====", data);
+      dispatch(currentRatesSuccess(data));
+      // const changes = calculatePercentageChanges(data);
+      // Update state with percentage changes
+      // setPercentageChanges(changes);
+    };
+    socket.onclose = (event) => {
+      console.log("WebSocket connection closed:", event);
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, [dispatch]);
+
   return (
     <>
       {!isMobile ? (
