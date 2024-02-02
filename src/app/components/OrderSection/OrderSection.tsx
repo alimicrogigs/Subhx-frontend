@@ -22,7 +22,6 @@ export default function OrderSection() {
   const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0");
   const [enteredAmountINR, setEnteredAmountINR] = useState("0");
 
-  console.log("enteredAmount===", enteredAmountUSDT);
 
   const [buyAmount, setBuyAmount] = useState('0');
   // ===========use selector to get api data from store=======
@@ -31,9 +30,6 @@ export default function OrderSection() {
   const { selectedCoin, currentRates, orderType } = useSelector(
     (state: any) => state.coin
   );
-  console.log("upiAddress=====", upiAddress);
-  console.log("selectedCoinfrom_ordersection", selectedCoin);
-  // console.log("ordertype=====", orderType);
 
   // ========================
   const dispatch = useDispatch();
@@ -99,6 +95,7 @@ export default function OrderSection() {
 
   //===========function that calls on click ==================
 
+<<<<<<< HEAD
   const handleSell = async () => {
     console.log("sell");
     try {     
@@ -114,6 +111,17 @@ export default function OrderSection() {
 
       const response = await postRequestAPIHelper(apiUrl + "trade/usdt-to-inr", token, requestData);
       console.log("response success", response);
+=======
+  const handleDeposit = async () => {
+    try {
+      const token =
+        "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
+      dispatch(depositeFundRequest());
+      const response = await getRequestAPIHelper(
+        "http://authentication.bit24hr.in/api/v1/upi-address",
+        token
+      );
+>>>>>>> 712293a909393c70232f626537f656e21a423352
       if (response.success === true) {
        
           toast.custom(
