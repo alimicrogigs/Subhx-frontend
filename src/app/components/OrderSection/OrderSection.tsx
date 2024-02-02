@@ -14,7 +14,7 @@ import { getRequestAPIHelper } from "../../helperfunctions";
 
 export default function OrderSection() {
   const [selectedTab, setSelectedTab] = useState("buy"); // Default to 'buy'
-  const [selectLimit, setSelectLimit] = useState("instant");
+  const [selectLimit, setSelectLimit] = useState<any>("instant");
   const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0.00");
   const [enteredAmountINR, setEnteredAmountINR] = useState("0.00");
 
@@ -178,25 +178,25 @@ export default function OrderSection() {
         </div>
       </div>
 
-      {selectLimit === "limit" && (
-        <div className="flex sm:flex-col sm:mt-2  ">
-          <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
-          <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-            <div className="flex sm:flex-row  sm:w-[60%]">
-              <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
-              <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
-                USDT
+      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit ==="limit" (
+            <div className="flex sm:flex-col sm:mt-2  ">
+              <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
+              <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
+                <div className="flex sm:flex-row  sm:w-[60%]">
+                  <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+                  <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
+                    USDT
+                  </div>
+                </div>
+                <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
+                  +
+                </div>
+                <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem]">
+                  -
+                </div>
               </div>
             </div>
-            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
-              +
-            </div>
-            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem]">
-              -
-            </div>
-          </div>
-        </div>
-      )}
+          )}
 
       <div className="flex sm:flex-col sm:mt-2 ">
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>
