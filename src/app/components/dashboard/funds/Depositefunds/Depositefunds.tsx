@@ -67,7 +67,7 @@ export default function Depositefunds() {
 
             <div className="sm:mb-[20rem] sm:mt-[40px] ">
         <SkeletonTheme baseColor="#07303F" highlightColor="#9694955e" height="4rem" >
-              <Skeleton   count={1} />
+              <Skeleton count={1} />
               <Skeleton className="sm:mt-[1.5vw]" count={1} />
               <Skeleton className="sm:mt-[1.5vw]" count={1} />
               <Skeleton className="sm:mt-[1.5vw]" count={1} />

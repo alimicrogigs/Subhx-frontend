@@ -4,33 +4,99 @@ import { usePathname } from "next/navigation";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-//  ....
-import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
+import { postRequestAPIHelper } from "@/app/utils/lib/requestHelpers";
 const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
-export default function () {
-  // //............................
+import { toast } from "react-hot-toast";
+import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
+import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
+dotenv.config();
 
+
+export default function () {
+  // //.............................
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const storedToken = localStorage.getItem("token");
+
+  //     // Check if storedToken is not null before using it
+  //     const token = storedToken ? JSON.parse(storedToken) : null;
+  //     console.log(apiUrl + "user");
+  //     console.log(token);
+  //     try {
+  //       //...................
+  //       const response = await getRequestAPIHelper(apiUrl + "user", token);
+  //       console.log({ response });
+
+  //       // Assuming the response.data contains an array of objects with properties: email, date, reward
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       // Handle the error, e.g., show an error message to the user
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
   //...............................
   const [mobilemenuopen, setMobilemenuopen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   let pathname = usePathname();
   // let active = href == pathname;
 
-
+  const handleLogout = async () => {
+    try {
+      // You should replace 'YOUR_LOGOUT_API_URL' with the actual URL of your logout API
+      let token = localStorage.getItem("token");
+      const response = await postRequestAPIHelper(apiUrl + 'logout', token, null);
+      console.log('Logout Response', response);
+      if (response.status === 200) {
+        toast.custom(
+          <ToasterCustom
+            type="success"
+            message={response.data.message || "Logout successful"}
+          />,
+          {
+            position: "top-right",
+            duration: 1000,
+          }
+        );
+        // Remove the token from the storage
+        localStorage.removeItem("token");
+        const mainUrl = window.location.origin;
+        setTimeout(() => {
+          // redirect to hero page
+          window.location.href = mainUrl;
+          window.location.href = "/login";
+        }, 2000);
+      } else {
+        toast.custom(
+          <ToasterCustom
+            type="error"
+            message={response.data.message || "Logout failed"}
+          />,
+          {
+            position: "top-right",
+            duration: 1000,
+          }
+        );
+      }
+    } catch (error) {
+      // Handle any unexpected errors
+      console.error('Error during logout:', error);
+    }
+  };
   const closeallmenu = () => {
     setDropdownOpen(false);
     setMobilemenuopen(false);
-  }
-
+  };
 
   console.log(pathname);
   return (
     <div className="w-[100%] h-[80px] bg-dashboardbgone text-white">
       <nav className="sm:flex hidden h-[100%] items-center justify-between">
-        <ul className="flex gap-[50px] pl-[50px] h-[100%] ">
-          <li className="flex items-center justify-center h-[100%] ">
+        <ul className="flex gap-[50px] pl-[50px] h-[100%]">
+          <li className="flex items-center justify-center h-[100%]">
             <Link href="/">
               <img
                 src="/landingpage/mainlogo.svg"
@@ -40,24 +106,23 @@ export default function () {
               />
             </Link>
           </li>
-          <Link href="/dashboard/exchange">
-            <li className="relative h-[100%] flex items-center justify-center ">
+          <li className="relative h-[100%] flex items-center justify-center">
+            <Link href="/dashboard/exchange">
               EXCHANGE
               {/* this is active bar  */}
               <div
                 style={{
                   transition: "all .2s ease-in-out",
-                  width: `${
-                    pathname === "/dashboard/exchange" ? "120%" : "0%"
-                  }`,
+                  width: `${pathname === "/dashboard/exchange" ? "120%" : "0%"}`,
                 }}
-                className="active absolute   h-[6px] bottom-[0px] bg-activedashboardbutton"
+                className="active absolute h-[6px] bottom-[0px] bg-activedashboardbutton"
               ></div>
               {/* this is active bar  end here  */}
-            </li>
-          </Link>
-          <Link href="/dashboard/funds">
-            <li className="relative h-[100%] flex items-center justify-center">
+            </Link>
+          </li>
+
+          <li className="relative h-[100%] flex items-center justify-center">
+            <Link href="/dashboard/funds">
               FUNDS
               {/* this is active bar  */}
               <div
@@ -65,19 +130,21 @@ export default function () {
                   transition: "all .2s ease-in-out",
                   width: `${pathname === "/dashboard/funds" ? "150%" : "0%"}`,
                 }}
-                className="active absolute   h-[6px] bottom-[0px] bg-activedashboardbutton"
+                className="active absolute h-[6px] bottom-[0px] bg-activedashboardbutton"
               ></div>
               {/* this is active bar  end here  */}
-            </li>
-          </Link>
+            </Link>
+          </li>
         </ul>
+
 
         <ul className="flex gap-[50px] pr-[50px] h-[100%] ">
           {/* ......... */}
           <li
             style={{ cursor: "pointer" }}
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="relative flex items-center justify-center gap-[10px]">
+            className="relative flex items-center justify-center gap-[10px]"
+          >
             <div
               style={{
                 background: "url(/avatar.svg)",
@@ -90,9 +157,8 @@ export default function () {
             JASON
             <div
               style={{
-                transform: `${
-                  dropdownOpen ? "rotate(-180deg)" : "rotate(0deg)"
-                }`,
+                transform: `${dropdownOpen ? "rotate(-180deg)" : "rotate(0deg)"
+                  }`,
                 transition: "all .1s ease-in-out",
               }}
             >
@@ -113,7 +179,8 @@ export default function () {
                     <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
-                          backgroundImage: "url(/dashboard/dashboradnavbar/accountseting.svg)",
+                          backgroundImage:
+                            "url(/dashboard/dashboradnavbar/accountseting.svg)",
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
@@ -125,16 +192,17 @@ export default function () {
                     <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
-                          backgroundImage: "url(/dashboard/dashboradnavbar/refer.svg)",
+                          backgroundImage:
+                            "url(/dashboard/dashboradnavbar/refer.svg)",
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>REFER AND REWARDS</p>
+                      <p>Refer & Rewards</p>
                     </div>
                   </Link>
                   {/* ......... third item .......... */}
-                  <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
+                  <Link href={{}}>
+                    <div onClick={() => { handleLogout(); }} className="flex gap-[20px] py-[10px] text-[1.2rem] items-center pl-[10px] hover:bg-[#041E27]">
                       <div
                         style={{
                           backgroundImage:
@@ -142,7 +210,7 @@ export default function () {
                         }}
                         className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
                       ></div>
-                      <p>LOGOUT</p>
+                      <p>Logout</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -152,11 +220,12 @@ export default function () {
           </li>
           {/* ...... */}
 
-          <li className="flex items-center justify-center">
+          <li className="flex items-center justify-center ">
             <Link href="/dashboard/referandreward">Refer & Rewards</Link>
           </li>
         </ul>
       </nav>
+
       {/* ...... responsive navbar ,........ */}
       <nav className="sm:hidden flex h-[100%] items-center justify-between">
         <ul className="w-[100%] h-[100%] flex justify-between items-center">
@@ -172,19 +241,17 @@ export default function () {
           </li>
           <li
             onClick={() => setMobilemenuopen(!mobilemenuopen)}
-            className={`relative w-[50px] h-[70%] bg-tableodd mr-[20px]`}
+            className={"relative w-[50px] h-[70%] bg-tableodd mr-[20px]"}
           >
             <div
-              className={`${
-                mobilemenuopen ? "top-[45%] transform -rotate-45" : "top-[30%]"
-              } absolute w-[70%] bg-white h-[10%]  left-[15%] rounded-[20px] transition-all duration-300 ease-in-out`}
+              className={`${mobilemenuopen ? "top-[45%] transform -rotate-45" : "top-[30%]"
+                } absolute w-[70%] bg-white h-[10%]  left-[15%] rounded-[20px] transition-all duration-300 ease-in-out`}
             ></div>
             <div
-              className={`${
-                mobilemenuopen
+              className={`${mobilemenuopen
                   ? "bottom-[45%] transform rotate-45"
                   : "bottom-[30%]"
-              } absolute w-[70%] bg-white h-[10%]  left-[15%] rounded-[20px] transition-all duration-300 ease-in-out`}
+                } absolute w-[70%] bg-white h-[10%]  left-[15%] rounded-[20px] transition-all duration-300 ease-in-out`}
             ></div>
           </li>
         </ul>
@@ -198,9 +265,8 @@ export default function () {
             <Link href="/dashboard/exchange">
               <div
                 style={{
-                  background: `${
-                    pathname === "/dashboard/exchange" ? "#041E27" : "#07303F"
-                  }`,
+                  background: `${pathname === "/dashboard/exchange" ? "#041E27" : "#07303F"
+                    }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
                 className="w-[100%] py-[20px] pl-[20px] text-[1.2rem]  border-b border-b-[.5px] "
@@ -211,9 +277,8 @@ export default function () {
             <Link href="/dashboard/funds">
               <div
                 style={{
-                  background: `${
-                    pathname === "/dashboard/funds" ? "#041E27" : "#07303F"
-                  }`,
+                  background: `${pathname === "/dashboard/funds" ? "#041E27" : "#07303F"
+                    }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
                 className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]"
@@ -240,9 +305,8 @@ export default function () {
               <p> jason</p>
               <div
                 style={{
-                  transform: `${
-                    dropdownOpen ? "rotate(-180deg)" : "rotate(0deg)"
-                  }`,
+                  transform: `${dropdownOpen ? "rotate(-180deg)" : "rotate(0deg)"
+                    }`,
                   transition: "all .1s ease-in-out",
                 }}
               >
@@ -289,8 +353,8 @@ export default function () {
                     </div>
                   </Link>
                   {/* ......... third item .......... */}
-                  <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
+                  <Link href={""} >
+                    <div onClick={() => { handleLogout(); }} className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
                       <div
                         style={{
                           backgroundImage:

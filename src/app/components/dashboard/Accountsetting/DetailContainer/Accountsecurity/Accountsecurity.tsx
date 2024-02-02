@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeadContainer from "../Common/HeadContainer/HeadContainer";
 import { SiSpringsecurity } from "react-icons/si";
 import { RxActivityLog } from "react-icons/rx";
@@ -7,44 +6,33 @@ import ReactPaginate from 'react-paginate';
 import { getRequestAPIHelper } from "../../../../../utils/lib/requestHelpers"
 import { FaPlay } from "react-icons/fa";
 
+
 const dotenv = require('dotenv')
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
+interface ActivityLog {
+  date: string;
+  activity: string;
+  ipAddress: string;
+  country: string;
+  city: string;
+  latitude: string;
+  longitude: string;
+}
 
 export default function Profile() {
-  // data
-  const activityData = [
-    {
-      date: "2024-01-30",
-      activity: "Login",
-      ipAddress: "192.168.1.1",
-      country: "United States",
-      city: "New York",
-      latitude: "40.7128",
-      longitude: "-74.0060",
-    },
-    {
-      date: "2024-01-30",
-      activity: "Login",
-      ipAddress: "192.168.1.1",
-      country: "United States",
-      city: "New York",
-      latitude: "40.7128",
-      longitude: "-74.0060",
-    },
-  ];
-
   const [twofacteropen, settwofacteropen] = useState(false);
   const [Activitylogopen, setActivitylogopen] = useState(false);
-  const [ActivitylogResult, setActivitylogResult] = useState([]);
+  const [ActivitylogResult, setActivitylogResult] = useState<ActivityLog[]>([]);
   const [formattedTime, setformattedTime] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+  const perPage = 10;
 
-  const handleActivityLog =async ()=>{
+  const handleActivityLog = async () => {
     const token = localStorage.getItem("token");
 
     try {
-
       const activityLogsResponse = await getRequestAPIHelper(apiUrl + 'activity-logs', token);
       if (activityLogsResponse.success === true) {
         setActivitylogResult(activityLogsResponse.data.data);
@@ -53,7 +41,12 @@ export default function Profile() {
       console.error('Error fetching Activity Log', error);
     }
   }
-  function convertTo12HourFormat(timestamp :any) {
+
+  useEffect(() => {
+    handleActivityLog();
+  }, []);
+
+  const convertTo12HourFormat = (timestamp: string) => {
     const date = new Date(timestamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -63,18 +56,25 @@ export default function Profile() {
     const formatTime = `${formattedHours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds} ${period}`;
     console.log(formatTime);
     return formatTime;
-}
+  }
+
+  const pageCount = Math.ceil(ActivitylogResult.length / perPage);
+  const offset = pageNumber * perPage;
+
+
+
+
+  const handlePageClick = ({ selected: selectedPage }: { selected: number }) => {
+    setPageNumber(selectedPage);
+  };
 
   return (
     <>
       <HeadContainer
-        title="ACCOUNT SECURITY
-"
+        title="ACCOUNT SECURITY"
         logo="/dashboard/account-setting/sidebar/acountsetting.svg"
       />
-      {/* ............... USser detail */}
       <div className="w-[100%]  bg-dashboardbgone mt-[37px] text-white px-[20px]">
-        {/* ........ */}
         <div
           onClick={() => settwofacteropen(!twofacteropen)}
           className="w=[100%] py-[10px] border-t border-t-[#041E27] flex justify-between"
@@ -96,20 +96,16 @@ export default function Profile() {
             <FaPlay />
           </div>
         </div>
-        {/* ........ */}
-        {/* nominee list goes here ... */}
+
         <div style={{ display: `${twofacteropen ? "block" : "none"}` }}>
           <p>goes here</p>
         </div>
-        {/* nominee list goes here ... */}
 
-        {/* ........ */}
         <div
-          onClick={() => setActivitylogopen(!Activitylogopen) }
+          onClick={() => setActivitylogopen(!Activitylogopen)}
           className="w=[100%] py-[10px] border-t border-t-[#041E27] flex justify-between"
-          // onChange={handleActivityLog}
         >
-          <h1 className="flex gap-[20px]" >
+          <h1 className="flex gap-[20px]">
             <div className="text-[#F5CD8E]">
               {" "}
               <RxActivityLog />
@@ -119,17 +115,18 @@ export default function Profile() {
           <div
             style={{
               transition: ".1s all ease-in-out",
-              transform: `${Activitylogopen ? "rotate(90deg)" : "rotate(0deg)"
-                }`,
+              transform: `${Activitylogopen ? "rotate(90deg)" : "rotate(0deg)"}`,
             }}
             className="mr-[20px] text-[#F5CD8E]"
           >
-            <div className="" onClick={handleActivityLog}><FaPlay  /></div>
+            <div className="" onClick={handleActivityLog}><FaPlay /></div>
           </div>
         </div>
-        {/* ........ */}
+
+
+
         {Activitylogopen && (
-          <div className="flex gap-[20px] w-[100%] ">
+          <div className="flex flex-col gap-[20px] w-[100%]">
             <table className="text-[.65rem] w-[100%]">
               <thead className="bg-[#032835]">
                 <tr className="text-center">
@@ -143,17 +140,7 @@ export default function Profile() {
                 </tr>
               </thead>
               <tbody>
-                {/* <tr className="text-center">
-                  <td className="py-[5px]">2024-01-30</td>
-                  <td>Login</td>
-                  <td>192.168.1.1</td>
-                  <td>United States</td>
-                  <td>New York</td>
-                  <td>40.7128</td>
-                  <td>-74.0060</td>
-                </tr>
-                 */}
-                {ActivitylogResult.map((data, index) => (
+                {ActivitylogResult.slice(offset, offset + perPage).map((data, index) => (
                   <tr key={index} className="text-center">
                     <td className="py-[5px]">{convertTo12HourFormat(data.created_at)}</td>
                     <td>NA</td>
@@ -166,6 +153,21 @@ export default function Profile() {
                 ))}
               </tbody>
             </table>
+
+            <div className="p-4">
+              <ReactPaginate
+                previousLabel={"← Previous"}
+                nextLabel={"Next →"}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName={"flex justify-center"}
+                previousLinkClassName={"px-2 py-1 border rounded mr-2 text-sm"}
+                nextLinkClassName={"px-2 py-1 border rounded ml-2 text-sm"}
+                pageLinkClassName={"px-2 py-1  mx-1 text-sm cursor-not-allowed"}
+                disabledClassName={"text-gray-500 cursor-not-allowed"}
+                activeClassName={"bg-gray-500 text-white rounded-md"}
+              />
+            </div>
           </div>
         )}
       </div>

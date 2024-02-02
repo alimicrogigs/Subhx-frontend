@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
+import jwtDecode from 'jwt-decode';
 import OrderHistory from "@/app/components/OrderHistory/OrderHistory";
 import OrderSection from "@/app/components/OrderSection/OrderSection";
 import ChartSection from "@/app/components/chartSection/ChartSection";
@@ -9,6 +9,7 @@ import OrderBook from "@/app/components/orderBook/OrderBook";
 
 import useWindowResize from "@/app/Hooks/useWindowResize";
 import BottomBar from "@/app/components/BottomBar/BottomBar";
+
 
 export default function page() {
   const isMobile = useWindowResize();
@@ -21,6 +22,7 @@ export default function page() {
   const handleChangeLayout = (newLayout: any) => {
     setCurrentLayout(newLayout);
   };
+
   return (
     <>
       {!isMobile ? (
@@ -33,6 +35,7 @@ export default function page() {
             <div className="flex  sm:h-[130vh] sm:ml-4 sm:rounded-lg sm:flex-col">
               <div className="sm:h-[64%] flex   sm:rounded-lg sm:flex-row">
                 <ChartSection />
+                if()
                 <OrderSection />
               </div>
               <div className="sm:h-[64%] flex   sm:mt-3 sm:rounded-lg sm:flex-row">

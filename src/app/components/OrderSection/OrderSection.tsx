@@ -11,7 +11,7 @@ export default function OrderSection() {
 
   const handleLimitSwitch = (tab: any) => {
     setSelectLimit(tab);
-  };
+  }
 
   return (
     <section className="bg-dashbgtrans rounded-lg flex sm:flex-col sm:w-[26.2vw] sm:h-[100%]">

@@ -14,10 +14,10 @@ import {useSelector} from "react-redux";
 
 export default function Profile() {
   // data
-  const [GSTno, setGSTno] = useState("");
+  const [GSTno, setGSTno] = useState("")
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
-  const {getUserAllDetails} = useSelector((state)=>state.deposite);
+  const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
   console.log(getUserAllDetails);
 
 
@@ -63,7 +63,8 @@ export default function Profile() {
     mail: "john.doe@example.com",
     contactno: 9876543210,
     nominee: [{ name: "Alice Johnson", relation: "Spouse" }],
-  };
+  }
+
   return (
     <>
       <HeadContainer
@@ -80,7 +81,7 @@ export default function Profile() {
               <FaCheck />
             </div>
 
-            {getUserAllDetails.name === null ? "NA" : getUserAllDetails.name}
+            {(getUserAllDetails.name === null ||getUserAllDetails.name === undefined) ? "NA" : getUserAllDetails.name}
           </h1>
         </div>
         {/* ........ */}
@@ -92,10 +93,11 @@ export default function Profile() {
               <IoMdMail />
             </div>
 
-            {getUserAllDetails.email}
+            {(getUserAllDetails.email === null ||getUserAllDetails.email === undefined) ? "NA" : getUserAllDetails.email}
           </h1>
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
+        
         {/* ........ */}
         {/* ........ */}
         <div className="w=[100%] py-[10px] border-t border-t-[#041E27] flex justify-between">
@@ -105,8 +107,9 @@ export default function Profile() {
               <FaMobileAlt />
             </div>
             +91 &nbsp;
-            {getUserAllDetails.phone}
+            {(getUserAllDetails.phone === null ||getUserAllDetails.phone === undefined) ? "NA" : getUserAllDetails.phone}
           </h1>
+
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
         {/* ........ */}
