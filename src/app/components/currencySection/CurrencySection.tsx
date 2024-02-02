@@ -121,7 +121,7 @@ export default function CurrencySection() {
               className="flex sm:w-[100%] flex-row  sm:text-center sm:flex-row items-center sm:items-center border-b border-borderline justify-evenly sm:justify-between text-[0.55rem] sm:text-[0.55rem] h-[3rem] sm:p-2 sm:h-[2.4rem]"
             >
               <img
-                className="sm:border-r   cursor-pointer"
+                className="   cursor-pointer"
                 src={
                   currency.favorite
                     ? "/dashboard/exchange/favHeartFill.svg"

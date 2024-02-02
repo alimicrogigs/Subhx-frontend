@@ -42,7 +42,7 @@ export const selectedCoinData = (selectedCoin: any) => ({
   payload: selectedCoin,
 });
 
-export const orderType = (orderType: any) => ({
+export const orderTypeSet = (orderType: any) => ({
   type: ORDER_TYPE,
   payload: orderType,
 });

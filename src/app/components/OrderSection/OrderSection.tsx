@@ -8,30 +8,84 @@ import {
   depositeFundSuccess,
   depositeFundFailure,
 } from "../../actions/depositeFundActions";
-import { orderType } from "@/app/actions/coinsActions";
+import { orderTypeSet } from "@/app/actions/coinsActions";
 import { getRequestAPIHelper } from "../../helperfunctions";
 // =====================
 
 export default function OrderSection() {
   const [selectedTab, setSelectedTab] = useState("buy"); // Default to 'buy'
   const [selectLimit, setSelectLimit] = useState("instant");
+  const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0.00");
+  const [enteredAmountINR, setEnteredAmountINR] = useState("0.00");
+
+  console.log("enteredAmount===", enteredAmountUSDT);
 
   // ===========use selector to get api data from store=======
   const { loading, error, upiAddress } = useSelector((state) => state.deposite);
 
-  const { selectedCoin } = useSelector((state:any) => state.coin);
+  const { selectedCoin, currentRates, orderType } = useSelector(
+    (state: any) => state.coin
+  );
   console.log("upiAddress=====", upiAddress);
   console.log("selectedCoinfrom_ordersection", selectedCoin);
+  console.log("ordertype=====", orderType);
+
   // ========================
   const dispatch = useDispatch();
 
   const handleOrderSwitch = (tab: any) => {
+    console.log("==tab===", tab);
     setSelectedTab(tab);
-    dispatch(orderType(tab));
+    dispatch(orderTypeSet(tab));
   };
 
   const handleLimitSwitch = (tab: any) => {
     setSelectLimit(tab);
+  };
+
+  const handleAmountChangeUSDT = (event) => {
+    setEnteredAmountUSDT(event.target.value);
+    const enteredAmountNumeric = parseFloat(event.target.value);
+
+    if (orderType === "buy") {
+      const totalAmount = isNaN(enteredAmountNumeric)
+        ? "0.00"
+        : (
+            enteredAmountNumeric *
+            (currentRates[selectedCoin.lowerCaseName]?.buy || 0)
+          ).toFixed(2);
+      setEnteredAmountINR(totalAmount);
+    } else if (orderType === "sell") {
+      const totalAmount = isNaN(enteredAmountNumeric)
+        ? "0.00"
+        : (
+            enteredAmountNumeric *
+            (currentRates[selectedCoin.lowerCaseName]?.sell || 0)
+          ).toFixed(2);
+      setEnteredAmountINR(totalAmount);
+    }
+  };
+
+  const handleAmountChangeINR = (event) => {
+    setEnteredAmountINR(event.target.value);
+    const enteredAmountNumeric = parseFloat(event.target.value);
+    if (orderType === "buy") {
+      const totalAmount = isNaN(enteredAmountNumeric)
+        ? "0.00"
+        : (
+            enteredAmountNumeric /
+            (currentRates[selectedCoin.lowerCaseName]?.buy || 0)
+          ).toFixed(2);
+      setEnteredAmountUSDT(totalAmount);
+    } else if (orderType === "sell") {
+      const totalAmount = isNaN(enteredAmountNumeric)
+        ? "0.00"
+        : (
+            enteredAmountNumeric /
+            (currentRates[selectedCoin.lowerCaseName]?.sell || 0)
+          ).toFixed(2);
+      setEnteredAmountUSDT(totalAmount);
+    }
   };
 
   // ====================
@@ -79,7 +133,7 @@ export default function OrderSection() {
       <div className="sm:h-[10%] flex sm:flex-row sm:justify-center sm:items-center ">
         <span
           onClick={() => handleLimitSwitch("instant")}
-          className={`sm:px-4 border bg-red-200 border-borderline sm:py-1 ${
+          className={`sm:px-4 border border-borderline sm:py-1 ${
             selectedCoin?.lowerCaseName !== "usdt"
               ? "sm:rounded-l"
               : "sm:rounded"
@@ -105,16 +159,20 @@ export default function OrderSection() {
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Amount</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
           <div className="flex sm:flex-row  sm:w-[60%]">
-            <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+            <input
+              value={enteredAmountUSDT}
+              onChange={handleAmountChangeUSDT}
+              className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] "
+            />
             <div className="sm:h-[2rem]   sm:w-[2.5rem] flex sm:items-center sm:text-center sm:justify-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
               USDT
             </div>
           </div>
 
-          <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-red-200">
+          <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
             +
           </div>
-          <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-green-200">
+          <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
             -
           </div>
         </div>
@@ -130,10 +188,10 @@ export default function OrderSection() {
                 USDT
               </div>
             </div>
-            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-red-200">
+            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
               +
             </div>
-            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-green-200">
+            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem]">
               -
             </div>
           </div>
@@ -144,7 +202,11 @@ export default function OrderSection() {
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
           <div className="flex sm:flex-row  sm:w-[89%]">
-            <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+            <input
+              value={enteredAmountINR}
+              onChange={handleAmountChangeINR}
+              className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] "
+            />
             <div className="sm:h-[2rem] sm:p-2 sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.65rem] text-dashbgtrans rounded-r">
               INR
             </div>
