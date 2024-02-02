@@ -77,8 +77,7 @@ export default function Profile() {
               <FaCheck />
             </div>
 
-            {getUserAllDetails.name === null ? "NA" : getUserAllDetails.name}
-          </h1>
+            {(getUserAllDetails.name === null ||getUserAllDetails.name === undefined) ? "NA" : getUserAllDetails.name}          </h1>
         </div>
         {/* ........ */}
         {/* ........ */}
