@@ -5,19 +5,14 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { postRequestAPIHelper } from "@/app/utils/lib/requestHelpers";
-import { postRequestAPIHelper } from "@/app/utils/lib/requestHelpers";
 const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
 import { toast } from "react-hot-toast";
 import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
 import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
-dotenv.config();
 
 
-import { toast } from "react-hot-toast";
-import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
-import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
 dotenv.config();
 
 export default function () {
@@ -49,49 +44,6 @@ export default function () {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   let pathname = usePathname();
   // let active = href == pathname;
-
-  const handleLogout = async () => {
-    try {
-      // You should replace 'YOUR_LOGOUT_API_URL' with the actual URL of your logout API
-      let token = localStorage.getItem("token");
-      const response = await postRequestAPIHelper(apiUrl + 'logout', token, null);
-      console.log('Logout Response', response);
-      if (response.status === 200) {
-        toast.custom(
-          <ToasterCustom
-            type="success"
-            message={response.data.message || "Logout successful"}
-          />,
-          {
-            position: "top-right",
-            duration: 1000,
-          }
-        );
-        // Remove the token from the storage
-        localStorage.removeItem("token");
-        const mainUrl = window.location.origin;
-        setTimeout(() => {
-          // redirect to hero page
-          window.location.href = mainUrl;
-          window.location.href = "/login";
-        }, 2000);
-      } else {
-        toast.custom(
-          <ToasterCustom
-            type="error"
-            message={response.data.message || "Logout failed"}
-          />,
-          {
-            position: "top-right",
-            duration: 1000,
-          }
-        );
-      }
-    } catch (error) {
-      // Handle any unexpected errors
-      console.error('Error during logout:', error);
-    }
-  };
 
   const handleLogout = async () => {
     try {

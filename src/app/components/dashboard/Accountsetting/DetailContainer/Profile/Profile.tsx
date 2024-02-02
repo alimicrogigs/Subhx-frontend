@@ -61,7 +61,7 @@ export default function Profile() {
     contactno: 9876543210,
     nominee: [{ name: "Alice Johnson", relation: "Spouse" }],
   }
-
+console.log("getUserAllDetails 64",getUserAllDetails)
   return (
     <>
       <HeadContainer
@@ -77,7 +77,7 @@ export default function Profile() {
               {" "}
               <FaCheck />
             </div>
-
+ 
             {((getUserAllDetails.name === null ||getUserAllDetails.name === undefined) ||getUserAllDetails.name === undefined) ? "NA" : getUserAllDetails.name}          </h1>
         </div>
         {/* ........ */}

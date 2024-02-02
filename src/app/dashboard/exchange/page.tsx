@@ -92,7 +92,7 @@ export default function page() {
             <div className="flex  sm:h-[130vh]  sm:ml-4 sm:rounded-lg sm:flex-col">
               <div className="sm:h-[50%] flex  sm:rounded-lg sm:flex-row">
                 <ChartSection />
-                if()
+                
                 <OrderSection />
               </div>
               <div className="sm:h-[50%] flex  sm:mt-3 sm:rounded-lg sm:flex-row">
