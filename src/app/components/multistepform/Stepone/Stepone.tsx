@@ -9,7 +9,6 @@ import {postRequestAPIHelper} from "../../../utils/lib/requestHelpers"
 const dotenv = require('dotenv');
 dotenv.config();
 const apiUrl = process.env.API_URL;
-import InputField_colorfull from "../common/Inputfield/InputField_colorfull";
 
 interface SteponeProps {
   active: boolean;
@@ -36,42 +35,17 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const handleToggleRetypePassword = () => {
     setShowRetypePassword((prevShowRetypePassword) => !prevShowRetypePassword);
   };
-<<<<<<< HEAD
   const handleReferralOptionalChange = (e:any) => {
     console.log(e.target.value)
     setReferralOptional((prevValue) => !prevValue);
 
     // setReferralOptional((prevReferralOptional) => !prevReferralOptional);
-=======
-  const handleReferralOptionalChange = () => {
-    
-    setReferralOptional((prevValue) => !prevValue);
->>>>>>> a25303134637797efea753a005790913f34dea8b
   };
 
   const handleAgreeTermsChange = () => {
     setAgreeTerms((prevAgreeTerms) => !prevAgreeTerms);
   }
-  const Handlesetreferalcode = async (e: any)=>{
-    setreferalcode(e.target.value)
-    if(referalcode.length >= 6){
-      const requestData: { referral_code: string} = { referral_code :e.target.value};
-      try{
-        const response = await postRequestAPIHelper(apiUrl+'check-referral-code', null, requestData);
-        if(response.success === true) {
-          console.log("referal code correct !!!")
 
-          setInputBorderColor('green');
-        }else {
-          console.log("referal code is invalid !!!")
-
-          setInputBorderColor('rose');
-        }
-      }catch(err){
-        console.log(err);
-      }
-    } 
-  }
 
 
   const Handlesetreferalcode = async (e: any)=>{
@@ -218,18 +192,12 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           register_type: 'individual',
           referral_code: null, 
         };
-<<<<<<< HEAD
-=======
-        console.log('API URL:', apiUrl)
-
->>>>>>> a25303134637797efea753a005790913f34dea8b
         const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
         console.log('172',response);
         if (response.status === 200){
           const token = (response.data.token)
 
           if (token) {
-<<<<<<< HEAD
             localStorage.setItem('token', response.data.token);
             toast.custom(
               <ToasterCustom
@@ -241,10 +209,6 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
                 duration: 1000, 
               }
             );
-=======
-            localStorage.setItem('token', response.data.token); 
-            console.log(referralOptional)
->>>>>>> a25303134637797efea753a005790913f34dea8b
             onNextStep();
           } else {
             console.log('Token not found in response:', response.data);
@@ -354,11 +318,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         />
         <p className="text-[.8rem]">I agree to BIT24HR Term & Conditions </p>
       </div>
-<<<<<<< HEAD
                {/* .................................... */}
-=======
-            {/* .................................... */}
->>>>>>> a25303134637797efea753a005790913f34dea8b
       {referralOptional && (
         <div className="w-[80%]  mt-[20px]">
           <InputField_colorfull
@@ -370,11 +330,6 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           />
         </div>
       )}
-<<<<<<< HEAD
-=======
-
-      {/* ................................. */}
->>>>>>> a25303134637797efea753a005790913f34dea8b
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",

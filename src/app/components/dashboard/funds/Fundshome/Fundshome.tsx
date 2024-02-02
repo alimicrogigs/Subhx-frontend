@@ -10,6 +10,8 @@ export default function Fundshome() {
     // add logic hre
 
   };
+  // get SOCKET_URL from env
+  // const SOCKET_URL = process.env.SOCKET_URL;
 
   const [usdtBalance, setusdtBalance] = useState<number>(0);
   const [btcBalance, setbtcBalance] = useState<number>(0);

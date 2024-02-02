@@ -49,7 +49,7 @@ exports.getRequestAPIHelper = async (url, authorizationToken) => {
         headers: { 
           'Content-Type': 'application/json', 
           'Authorization': 'Bearer ' + authorizationToken,
-          'User-Agent': getUserAgentInfo()      
+          // 'User-Agent': getUserAgentInfo()      
         }
       };
   

@@ -32,7 +32,6 @@ const Wallet: React.FC<WalletProps> = ({
   const [apiHitTime, setApiHitTime] = useState(null)
 
 
-  let user_balance = `₹ 5,689.00`
   const [userBalance, setUserBalance] = useState<string>('0.00');
 
   const apiData = useSelector((state: any) => state.apiData);
@@ -133,7 +132,8 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
-    useEffect(() => {       
+    useEffect(() => {     
+      var token = localStorage.getItem("token");
           const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
           const socket = new WebSocket(socketUrl);  
           socket.onopen = () => {
@@ -142,10 +142,14 @@ const Wallet: React.FC<WalletProps> = ({
           };
 
           socket.onmessage = (event) => {
-            const jsonData = JSON.parse(event.data);
-            const inrBalance = jsonData.inr_balance;
-            console.log('INR Balance:', inrBalance);
-            setUserBalance(inrBalance);
+            console.log("WebSocket data received:", event.data);
+            // add consition to check if the event.data not null
+             if(event.data !== null){
+              const jsonData = JSON.parse(event.data);
+              const inrBalance = jsonData?.inr_balance;
+              console.log('INR Balance:', inrBalance);
+              setUserBalance(inrBalance);
+             }                     
           };
 
           socket.onclose = (event) => {

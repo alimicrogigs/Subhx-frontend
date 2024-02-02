@@ -19,8 +19,8 @@ const token = localStorage.getItem("token");
 export default function OrderSection() {
   const [selectedTab, setSelectedTab] = useState("buy"); // Default to 'buy'
   const [selectLimit, setSelectLimit] = useState<any>("instant");
-  const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0.00");
-  const [enteredAmountINR, setEnteredAmountINR] = useState("0.00");
+  const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0");
+  const [enteredAmountINR, setEnteredAmountINR] = useState("0");
 
   console.log("enteredAmount===", enteredAmountUSDT);
 
@@ -95,9 +95,6 @@ export default function OrderSection() {
   };
 
 
-  const handleInputChange = (event: any) => {
-       setBuyAmount(event.target.value);
-  };
   // ====================
 
   //===========function that calls on click ==================
@@ -110,21 +107,34 @@ export default function OrderSection() {
         to_coin: string;
         type: string;
       } = {
-        to_coin_amount: buyAmount,
-      to_coin: "USDT",
+        to_coin_amount: enteredAmountUSDT,
+        to_coin: "USDT",
         type: "sell"
       };
 
       const response = await postRequestAPIHelper(apiUrl + "trade/usdt-to-inr", token, requestData);
-      console.log("response=====", response);
+      console.log("response success", response);
       if (response.success === true) {
-        dispatch(depositeFundSuccess(response.data));
-      if (response.success === true) {     
+       
+          toast.custom(
+            <ToasterCustom
+              type="success"
+              message="Order placed successfully !!!"
+            />, 
+            {
+              position: "top-right", // Set the position (e.g., "top-center")
+              duration: 1000, // Set the duration in milliseconds
+            }
+          );
+          setEnteredAmountINR('0');
+          
+          return;        
+      }else {
         toast.custom(
           <ToasterCustom
-            type="success"
-            message="Order placed successfully !!!"
-          />, 
+            type="error"
+            message={response.response.data.data}
+          />,
           {
             position: "top-right", // Set the position (e.g., "top-center")
             duration: 1000, // Set the duration in milliseconds
@@ -132,12 +142,11 @@ export default function OrderSection() {
         );
         return;
       }
-      }
     } catch (error) {
       toast.custom(
         <ToasterCustom
           type="error"
-          message="Order placed failed !!!"
+          message="response.data"
         />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
@@ -157,7 +166,7 @@ export default function OrderSection() {
         to_coin: string;
         type: string;
       } = {
-        to_coin_amount: buyAmount,
+        to_coin_amount: enteredAmountINR,
         to_coin: "INR",
         type: "buy"
       };
@@ -169,15 +178,29 @@ export default function OrderSection() {
         toast.custom(
           <ToasterCustom
             type="success"
-            message="Order placed successfully !!!"
+            message={response.response.data.data}
           />, 
           {
             position: "top-right", // Set the position (e.g., "top-center")
             duration: 1000, // Set the duration in milliseconds
           }
         );
+        setEnteredAmountINR('0');
+
         return;
         
+      }else{
+        toast.custom(
+          <ToasterCustom
+            type="error"
+            message={response.response.data.data}
+          />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
+        return;
       }
     } catch (error) {
       // Add custom toaster here
@@ -286,7 +309,7 @@ export default function OrderSection() {
       )}
      
 
-      <div className="flex sm:flex-col sm:mt-2 ">
+      {/* <div className="flex sm:flex-col sm:mt-2 ">
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
           <div className="flex sm:flex-row  sm:w-[89%]">
@@ -300,7 +323,7 @@ export default function OrderSection() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex sm:flex-col sm:mt-8  ">
         {selectedTab === "buy" ? (

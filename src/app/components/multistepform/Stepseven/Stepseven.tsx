@@ -5,7 +5,7 @@ const apiUrl = process.env.API_URL;
 import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
-// import { postRequestAPIHelper } from "../../../utils/lib/requestHelpers";
+import { postRequestAPIHelper } from "../../../utils/lib/requestHelpers";
 
 interface StepsevenProps {
   active: boolean;
@@ -49,17 +49,50 @@ const Stepseven: React.FC<StepsevenProps> = ({ active, onNextStep }) => {
       try {
         const token = localStorage.getItem("token")
 
-        const response = await axios.post(apiUrl + 'upi-verification',{
-          vpa : VPAaddress , vpa_name : null 
-        },{ headers: { 'token': token,'Content-Type': 'application/json','Authorization': `Bearer `+ token}
-          })
+        const requestData: {
+            vpa: string;
+          } = {
+            vpa: VPAaddress,
+          };
+    
+          const response = await postRequestAPIHelper(apiUrl + "upi-verification", token, requestData);
+          console.log("response===== 61", response);
+          if (response.success === true) {     
+            // Add custom toaster here
+            toast.custom(
+              <ToasterCustom
+                type="success"
+                message="UPI Verified"
+              />, 
+              {
+                position: "top-right", // Set the position (e.g., "top-center")
+                duration: 1000, // Set the duration in milliseconds
+              }
+            );
+            onNextStep();
+            return;
+            
+          }else{
+            toast.custom(
+              <ToasterCustom
+                type="error"
+                message="UPI not verified"
+              />,
+              {
+                position: "top-right", // Set the position (e.g., "top-center")
+                duration: 1000, // Set the duration in milliseconds
+              }
+            );
+            return;
+          }
+        
       }
       catch (error) {
         console.error('upi not found:', error);
         toast.error("upi not found");
       }
     
-    onNextStep();
+    
   };
 
   return (
