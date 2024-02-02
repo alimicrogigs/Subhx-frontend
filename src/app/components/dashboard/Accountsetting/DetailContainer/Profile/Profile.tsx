@@ -18,8 +18,6 @@ export default function Profile() {
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
   const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
-  console.log(getUserAllDetails);
-  const {getUserAllDetails} = useSelector((state:any)=>state.deposite);
 
 
   // nominee edit form
