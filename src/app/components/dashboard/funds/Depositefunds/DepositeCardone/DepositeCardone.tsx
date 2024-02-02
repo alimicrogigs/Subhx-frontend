@@ -17,7 +17,7 @@ interface props {
 
 
 export default function DepositeCardone() {
-  const {manualAccount} = useSelector((state)=>state.deposite);
+  const {manualAccount} = useSelector((state:any)=>state.deposite);
   const [IMPSrrnNumber, setIMPSrrnNumber] = useState("");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

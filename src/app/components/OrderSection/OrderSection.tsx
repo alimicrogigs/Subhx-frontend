@@ -102,24 +102,6 @@ export default function OrderSection() {
 
   //===========function that calls on click ==================
 
-  const handleDeposit = async () => {
-    // try {
-    //   const token =
-    //     "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
-    //   dispatch(depositeFundRequest());
-    //   const response = await getRequestAPIHelper(
-    //     "http://authentication.bit24hr.in/api/v1/upi-address",
-    //     token
-    //   );
-    //   console.log("response=====", response);
-    //   if (response.success === true) {
-    //     dispatch(depositeFundSuccess(response.data)); 
-    //   }
-    // } catch (error) {
-    //   dispatch(depositeFundFailure(error));
-    // }
-  };
-
   const handleSell = async () => {
     console.log("sell");
     try {     
@@ -283,7 +265,7 @@ export default function OrderSection() {
         </div>
       </div>
 
-      {selectLimit === "limit" && (
+      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit === "limit" && (
         <div className="flex sm:flex-col sm:mt-2  ">
           <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
           <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
@@ -302,25 +284,7 @@ export default function OrderSection() {
           </div>
         </div>
       )}
-      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit ==="limit" (
-            <div className="flex sm:flex-col sm:mt-2  ">
-              <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
-              <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-                <div className="flex sm:flex-row  sm:w-[60%]">
-                  <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
-                  <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
-                    USDT
-                  </div>
-                </div>
-                <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
-                  +
-                </div>
-                <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem]">
-                  -
-                </div>
-              </div>
-            </div>
-          )}
+     
 
       <div className="flex sm:flex-col sm:mt-2 ">
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>

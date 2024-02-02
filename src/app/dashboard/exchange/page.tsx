@@ -18,7 +18,8 @@ import {
 } from "../../actions/coinsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { getRequestAPIHelper } from "@/app/helperfunctions";
-
+const apiUrl = process.env.API_URL;
+const token = localStorage.getItem("token");
 export default function page() {
   const dispatch = useDispatch();
 
@@ -33,13 +34,9 @@ export default function page() {
   //get all the coins from api
   const getAllCoins = async () => {
     try {
-      const token =
-        "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
+      
       dispatch(getAllCoinsRequest());
-      const response = await getRequestAPIHelper(
-        "http://authentication.bit24hr.in/api/v1/get-coins",
-        token
-      );
+      const response = await getRequestAPIHelper(apiUrl + "get-coins", token);
       // console.log("response.coins====", response.coins);
       if (response) {
         dispatch(getAllCoinsSuccess(response.coins));
