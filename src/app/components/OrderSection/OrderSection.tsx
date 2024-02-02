@@ -46,7 +46,7 @@ export default function OrderSection() {
 
   const handleLimitSwitch = (tab: any) => {
     setSelectLimit(tab);
-  };
+  }
 
  
   const handleAmountChangeINR = (event:any) => {

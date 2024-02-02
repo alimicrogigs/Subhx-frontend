@@ -2,18 +2,23 @@
 // Import React and useState hook
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from 'next/router';
+
+
+
+// Import your components
 import Wallet from "@/app/components/dashboard/funds/Wallet/Wallet";
 import Depositefunds from "@/app/components/dashboard/funds/Depositefunds/Depositefunds";
 import Fundshome from "@/app/components/dashboard/funds/Fundshome/Fundshome";
+import tokenMiddleware from '../../../app/middleware/tokenMiddleware';
 import { getUserDataRequest, getUserDataSuccess, getUserDataFailure } from "../../actions/depositeFundActions"
 import Withrawlfunds from "@/app/components/dashboard/funds/Withrawlfunds/Withrawlfunds";
 import Transferhistory from "@/app/components/dashboard/funds/Transferhistory/Transferhistory";
 import { getRequestAPIHelper } from "../../utils/lib/requestHelpers"
 const dotenv = require('dotenv')
-dotenv.config();
+dotenv.config()
 const apiUrl = process.env.API_URL;
 import 'react-loading-skeleton/dist/skeleton.css'
-
 interface FundsPageProps {}
 // Define FundsPage component
 const FundsPage: React.FC<FundsPageProps> = () => {
@@ -35,28 +40,39 @@ const FundsPage: React.FC<FundsPageProps> = () => {
     { setCurrentpopupactive(action)}
   }
   
+  // const router = useRouter();
   useEffect(() => {
     // Function to fetch user details from API
+    const token = localStorage.getItem('token');
+
+
     const fetchUserData = async () => {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token');
 
       try {
         dispatch(getUserDataRequest())
         // Make the API call to fetch user details
         const getUserDataResponse = await getRequestAPIHelper(apiUrl + 'user', token)
-        console.log(getUserDataResponse);
+        console.log("line___57")
+        console.log(getUserDataResponse.data.error)
+        console.log(getUserDataResponse.error)
+      // 196|$2y$10$gYHdRlPzMDTYJfAI8I4vX.oSZH5FtAFRrCy8L0C0aobdqyAwxGsIi747d31eb
+        console.log(getUserDataResponse)
         dispatch(getUserDataSuccess(getUserDataResponse.data))
 
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-        dispatch(getUserDataFailure(error));
+      } catch (err) {
+        console.log('Error fetching user details:', err.response.data.error);
+        if(err.response.data.error === "Unauthenticated."){
+          console.log("Token does not exist. Redirecting to login page...");
+          setTimeout(() => {
+              window.location.href = '/login';
+          }, 10)
+        }
+        dispatch(getUserDataFailure(err));
       }
     }
-
     // Call the fetchUserData function when the component mounts
-    fetchUserData();
-
-    // Clean up function (optional)
+    fetchUserData()
     return () => {
       // Any cleanup code if needed
     };

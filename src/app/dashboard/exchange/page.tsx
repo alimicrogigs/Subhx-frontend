@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
+import jwtDecode from 'jwt-decode';
 import OrderHistory from "@/app/components/OrderHistory/OrderHistory";
 import OrderSection from "@/app/components/OrderSection/OrderSection";
 import ChartSection from "@/app/components/chartSection/ChartSection";
@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getRequestAPIHelper } from "@/app/helperfunctions";
 const apiUrl = process.env.API_URL;
 const token = localStorage.getItem("token");
+
 export default function page() {
   const dispatch = useDispatch();
 
@@ -30,6 +31,7 @@ export default function page() {
   const handleChangeLayout = (newLayout: any) => {
     setCurrentLayout(newLayout);
   };
+
 
   //get all the coins from api
   const getAllCoins = async () => {
@@ -90,6 +92,7 @@ export default function page() {
             <div className="flex  sm:h-[130vh]  sm:ml-4 sm:rounded-lg sm:flex-col">
               <div className="sm:h-[50%] flex  sm:rounded-lg sm:flex-row">
                 <ChartSection />
+                if()
                 <OrderSection />
               </div>
               <div className="sm:h-[50%] flex  sm:mt-3 sm:rounded-lg sm:flex-row">
