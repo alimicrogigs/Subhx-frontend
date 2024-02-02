@@ -32,7 +32,6 @@ export default function OrderBookSellTable({
 }: OrderBookSellTableProps) {
   const [data, setData] = useState<Order[]>([]);
 
-  console.log("sellData====", data);
 
   useEffect(() => {
     const newData = [...sellData.slice(0, 10)];

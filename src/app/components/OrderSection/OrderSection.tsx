@@ -18,7 +18,6 @@ export default function OrderSection() {
   const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0.00");
   const [enteredAmountINR, setEnteredAmountINR] = useState("0.00");
 
-  console.log("enteredAmount===", enteredAmountUSDT);
 
   // ===========use selector to get api data from store=======
   const { loading, error, upiAddress } = useSelector((state) => state.deposite);
@@ -26,9 +25,6 @@ export default function OrderSection() {
   const { selectedCoin, currentRates, orderType } = useSelector(
     (state: any) => state.coin
   );
-  console.log("upiAddress=====", upiAddress);
-  console.log("selectedCoinfrom_ordersection", selectedCoin);
-  // console.log("ordertype=====", orderType);
 
   // ========================
   const dispatch = useDispatch();
@@ -101,7 +97,6 @@ export default function OrderSection() {
         "http://authentication.bit24hr.in/api/v1/upi-address",
         token
       );
-      console.log("response=====", response);
       if (response.success === true) {
         dispatch(depositeFundSuccess(response.data));
       }

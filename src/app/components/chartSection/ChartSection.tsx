@@ -18,7 +18,6 @@ export default function ChartSection() {
   const { loading, allCoins, currentRates, selectedCoin, orderType, error } =
     useSelector((state: any) => state.coin);
 
-  console.log("currentRates from chartsection===", currentRates);
 
   const timeframes = ["1M", "5M", "15M", "30M", "1H", "1D", "7D"];
   const isMobile = useWindowResize();
@@ -33,7 +32,6 @@ export default function ChartSection() {
         "http://authentication.bit24hr.in/api/v1/get-coins",
         token
       );
-      console.log("response.coins====", response.coins);
       if (response) {
         dispatch(getAllCoinsSuccess(response.coins));
       }

@@ -12,7 +12,6 @@ export default function CurrencySection() {
   const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
     (state) => state.coin
   );
-  console.log("selectedCoin===", selectedCoin);
 
   const filteredCoins = allCoins.filter((obj: any) => obj.coin !== "INR");
 

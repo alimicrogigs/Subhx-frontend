@@ -6,7 +6,8 @@ import MarketTrades from "../MarketTrades/MarketTrades";
 import HeadLines from "../Headlines/Headlines";
 import OrderBookBuyTable from "../orderBookTable/OrderBookBuyTable";
 import OrderBookSellTable from "../orderBookTable/OrderBookSellTable";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { marketTradeData } from "@/app/actions/orderBookActions";
 
 interface Order {
   close: number;
@@ -25,24 +26,27 @@ interface OrderData {
 export default function OrderBook() {
   const isMobile = useWindowResize();
   const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
-    (state) => state.coin
+    (state:any) => state.coin
   );
-  const [orderType, setOrderType] = useState("orderBook");
+  const [orderType, setOrderType] = useState("marketTrades");
   const [orderBookData, setOrderBookData] = useState<OrderData>({
     asks: [],
     bids: [],
   });
 
+  const dispatch = useDispatch();
+
+  //socket for fetching order book data
   useEffect(() => {
-    let socketUrl;
+    let orderBookSocketUrl;
 
     if (selectedCoin.name === "USDT") {
-      socketUrl = "ws://stream.bit24hr.in:8765/usdt_order_book";
+      orderBookSocketUrl = "ws://stream.bit24hr.in:8765/usdt_order_book";
     } else if (selectedCoin.name === "BTC") {
-      socketUrl = "ws://stream.bit24hr.in:8765/btc_order_book";
+      orderBookSocketUrl = "ws://stream.bit24hr.in:8765/btc_order_book";
     }
 
-    const socket = new WebSocket(socketUrl);
+    const socket = new WebSocket(orderBookSocketUrl);
     socket.onopen = () => {
       console.log("WebSocket connection opened");
     };
@@ -70,43 +74,11 @@ export default function OrderBook() {
     };
   }, [selectedCoin.name]);
 
-  //===============================================================
+ 
 
-  // useEffect(() => {
-  // let socketUrl;
 
-  // if (selectedCoin.name === "USDT") {
-  //   socketUrl = "ws://stream.bit24hr.in:8765/usdt_order_book";
-  // } else if (selectedCoin.name === "BTC") {
-  //   socketUrl = "ws://stream.bit24hr.in:8765/btc_order_book";
-  // }
 
-  //   const socket = new WebSocket("ws://stream.bit24hr.in:8765/btc_order_book");
-  //   socket.onopen = () => {
-  //     console.log("WebSocket connection opened");
-  //   };
-
-  //   socket.onopen = () => {
-  //     console.log("WebSocket connection opened");
-  //   };
-
-  //   socket.onmessage = (event) => {
-  //     const data = JSON.parse(event.data);
-  //     setOrderBookData(data);
-  //     console.log("WebSocket data received btc orderbook:", data);
-  //   };
-
-  //   socket.onclose = (event) => {
-  //     console.log("WebSocket connection closed:", event);
-  //   };
-
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-
-  // table code start from here =====================
-
+  //==================================================
   return (
     <div className="flex flex-col   sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">
       <div className="sm:h-[8vh]  h-[8vh] w-[100%]   sm:border-b-2 border-borderline flex justify-evenly sm:justify-start items-end sm:items-end">
