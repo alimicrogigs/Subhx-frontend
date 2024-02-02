@@ -8,43 +8,6 @@ import {
 import { useMemo, useState, useEffect } from "react";
 import moment from "moment";
 
-const tableData = [
-  {
-    id: 1,
-    rate: 320.26,
-    volume: 0.002,
-  },
-
-  {
-    id: 2,
-    rate: 222,
-    volume: 11111,
-  },
-  {
-    id: 3,
-    rate: 320.26,
-    volume: 0.002,
-  },
-  {
-    id: 4,
-    rate: 320.26,
-    volume: 0.002,
-  },
-  {
-    id: 5,
-    rate: 320.26,
-    volume: 0.002,
-  },
-
-  {
-    id: 6,
-    rate: 222,
-    volume: 11111,
-  },
-
-  // Add more data as needed
-];
-
 interface CellInfo {
   value: any;
   column: {
@@ -69,14 +32,18 @@ export default function OrderBookSellTable({
 }: OrderBookSellTableProps) {
   const [data, setData] = useState<Order[]>([]);
 
-  useEffect(() => {
-    // Update state with the latest 6 entries
-    setData((prevData) => {
-      const newData = [...sellData.slice(0, 10)];
-      const previousData = prevData.slice(0, 10 - newData.length);
+  console.log("sellData====", data);
 
-      return [...newData, ...previousData];
-    });
+  useEffect(() => {
+    const newData = [...sellData.slice(0, 10)];
+    setData(newData);
+
+    // Update state with the latest 6 entries
+    // setData((prevData) => {
+    //   const previousData = prevData.slice(0, 10 - newData.length);
+
+    //   return [...newData, ...previousData];
+    // });
   }, [sellData]);
 
   const columns: CustomColumnDef[] = [
@@ -85,7 +52,7 @@ export default function OrderBookSellTable({
       accessorKey: "rate",
       cell: (info: cellInfo) => (
         <div style={{ textAlign: "start", color: "rgba(230, 86, 97, 1)" }}>
-          {info.row.original[0]}
+          {info.row.original[0].toFixed(2)}
         </div>
       ),
     },
@@ -93,7 +60,9 @@ export default function OrderBookSellTable({
       header: "VOLUME",
       accessorKey: "volume",
       cell: (info: cellInfo) => (
-        <div style={{ textAlign: "end" }}>{info.row.original[1]}</div>
+        <div style={{ textAlign: "end" }}>
+          {info.row.original[1].toFixed(4)}
+        </div>
       ),
     },
   ];

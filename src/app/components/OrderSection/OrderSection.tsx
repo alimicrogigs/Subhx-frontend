@@ -28,7 +28,7 @@ export default function OrderSection() {
   );
   console.log("upiAddress=====", upiAddress);
   console.log("selectedCoinfrom_ordersection", selectedCoin);
-  console.log("ordertype=====", orderType);
+  // console.log("ordertype=====", orderType);
 
   // ========================
   const dispatch = useDispatch();
@@ -178,7 +178,7 @@ export default function OrderSection() {
         </div>
       </div>
 
-      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit ==="limit" (
+      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit ==="limit" && (
             <div className="flex sm:flex-col sm:mt-2  ">
               <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
               <div className="flex sm:flex-row sm:justify-evenly sm:items-center">

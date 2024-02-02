@@ -6,6 +6,7 @@ import MarketTrades from "../MarketTrades/MarketTrades";
 import HeadLines from "../Headlines/Headlines";
 import OrderBookBuyTable from "../orderBookTable/OrderBookBuyTable";
 import OrderBookSellTable from "../orderBookTable/OrderBookSellTable";
+import { useSelector } from "react-redux";
 
 interface Order {
   close: number;
@@ -23,38 +24,25 @@ interface OrderData {
 
 export default function OrderBook() {
   const isMobile = useWindowResize();
-
+  const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
+    (state) => state.coin
+  );
   const [orderType, setOrderType] = useState("orderBook");
   const [orderBookData, setOrderBookData] = useState<OrderData>({
-    buy: [],
-    sell: [],
+    asks: [],
+    bids: [],
   });
 
-  // console.log("orderBookData====", orderBookData);
-  // console.log("orderBookData buy====", orderBookData.buy);
-  // console.log("orderBookData sell====", orderBookData.sell);
-
-  // const addVolumes = (orders: Order[] = []) => {
-  //   console.log("orders====", orders);
-  //   const result: { [key: number]: number } = {};
-  //   orders.forEach((order) => {
-  //     const Price = order?.rate;
-  //     if (!result[Price]) {
-  //       result[Price] = 0;
-  //     }
-  //     result[Price] += order.volume;
-  //   });
-  //   return result;
-  // };
-
-  // const buyVolumes = addVolumes(orderBookData.buy);
-  // const sellVolumes = addVolumes(orderBookData.sell);
-
-  // console.log("buyVolumes===", buyVolumes);
-  // console.log("sellVolumes====", sellVolumes);
-
   useEffect(() => {
-    const socket = new WebSocket("ws://stream.bit24hr.in:8765/usdt_order_book");
+    let socketUrl;
+
+    if (selectedCoin.name === "USDT") {
+      socketUrl = "ws://stream.bit24hr.in:8765/usdt_order_book";
+    } else if (selectedCoin.name === "BTC") {
+      socketUrl = "ws://stream.bit24hr.in:8765/btc_order_book";
+    }
+
+    const socket = new WebSocket(socketUrl);
     socket.onopen = () => {
       console.log("WebSocket connection opened");
     };
@@ -66,7 +54,7 @@ export default function OrderBook() {
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setOrderBookData(data);
-      // console.log("WebSocket data received:", data);
+      console.log("WebSocket data received usdt orderbook:", data);
     };
 
     socket.onclose = (event) => {
@@ -74,9 +62,48 @@ export default function OrderBook() {
     };
 
     return () => {
+      setOrderBookData({
+        asks: [],
+        bids: [],
+      });
       socket.close();
     };
-  }, []);
+  }, [selectedCoin.name]);
+
+  //===============================================================
+
+  // useEffect(() => {
+  // let socketUrl;
+
+  // if (selectedCoin.name === "USDT") {
+  //   socketUrl = "ws://stream.bit24hr.in:8765/usdt_order_book";
+  // } else if (selectedCoin.name === "BTC") {
+  //   socketUrl = "ws://stream.bit24hr.in:8765/btc_order_book";
+  // }
+
+  //   const socket = new WebSocket("ws://stream.bit24hr.in:8765/btc_order_book");
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connection opened");
+  //   };
+
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connection opened");
+  //   };
+
+  //   socket.onmessage = (event) => {
+  //     const data = JSON.parse(event.data);
+  //     setOrderBookData(data);
+  //     console.log("WebSocket data received btc orderbook:", data);
+  //   };
+
+  //   socket.onclose = (event) => {
+  //     console.log("WebSocket connection closed:", event);
+  //   };
+
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
 
   // table code start from here =====================
 
@@ -101,23 +128,23 @@ export default function OrderBook() {
           Order Book
         </span>
 
-        <span
+        {/* <span
           className={`${
             orderType === "headlines" ? "sm:border-b-4 border-b-4" : ""
           } text-sm font-poppinsRegular w-[30%] sm:w-auto text-center  border-borderline  sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
           onClick={() => setOrderType("headlines")}
         >
           Headlines
-        </span>
+        </span> */}
       </div>
 
       {orderType === "orderBook" && (
         <div className="  flex flex-row  sm:h-[90%] sm:max-h-inherit">
           <div className="sm:w-[50%] w-[50%]  ">
-            <OrderBookBuyTable buyData={orderBookData.buy} />
+            <OrderBookBuyTable buyData={orderBookData.bids} />
           </div>
           <div className="sm:w-[50%] w-[50%] ">
-            <OrderBookSellTable sellData={orderBookData.sell} />
+            <OrderBookSellTable sellData={orderBookData.asks} />
           </div>
         </div>
       )}
