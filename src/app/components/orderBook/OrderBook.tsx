@@ -7,7 +7,6 @@ import HeadLines from "../Headlines/Headlines";
 import OrderBookBuyTable from "../orderBookTable/OrderBookBuyTable";
 import OrderBookSellTable from "../orderBookTable/OrderBookSellTable";
 import { useSelector, useDispatch } from "react-redux";
-import { marketTradeData } from "@/app/actions/orderBookActions";
 
 interface Order {
   close: number;
@@ -26,7 +25,7 @@ interface OrderData {
 export default function OrderBook() {
   const isMobile = useWindowResize();
   const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
-    (state:any) => state.coin
+    (state: any) => state.coin
   );
   const [orderType, setOrderType] = useState("marketTrades");
   const [orderBookData, setOrderBookData] = useState<OrderData>({
@@ -74,10 +73,6 @@ export default function OrderBook() {
     };
   }, [selectedCoin.name]);
 
- 
-
-
-
   //==================================================
   return (
     <div className="flex flex-col   sm:flex-col bg-dashbgtrans h-[100%] sm:mr-3 w-[100vw] sm:w-[48vw] sm:rounded-lg">
@@ -91,14 +86,16 @@ export default function OrderBook() {
           Market Trades
         </span>
 
-        <span
-          className={`${
-            orderType === "orderBook" ? "sm:border-b-4 border-b-4" : ""
-          } text-sm font-poppinsRegular w-[25%] sm:w-auto text-center   border-borderline   sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
-          onClick={() => setOrderType("orderBook")}
-        >
-          Order Book
-        </span>
+        {selectedCoin.name !== "USDT" && (
+          <span
+            className={`${
+              orderType === "orderBook" ? "sm:border-b-4 border-b-4" : ""
+            } text-sm font-poppinsRegular w-[25%] sm:w-auto text-center   border-borderline   sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
+            onClick={() => setOrderType("orderBook")}
+          >
+            Order Book
+          </span>
+        )}
 
         {/* <span
           className={`${

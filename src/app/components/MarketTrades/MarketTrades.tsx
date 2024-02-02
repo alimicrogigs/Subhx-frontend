@@ -86,11 +86,37 @@ export default function MarketTrades() {
     {
       header: "PRICE",
       accessorKey: "rate",
-      cell: (info: CellInfo) => (
-        <div className="font-poppinsSemibold" style={{ textAlign: "start" }}>
-          {info.row.original.rate.toFixed(2)}
-        </div>
-      ),
+      cell: (info: CellInfo) => {
+        const nextIndex = info.row.index + 1;
+        const nextRow = table.getRowModel()?.rows?.[nextIndex];
+
+        const rateClass =
+          nextRow && info.row.original.rate !== nextRow.original.rate
+            ? info.row.original.rate > nextRow.original.rate
+              ? "text-priceGreen"
+              : "text-priceRed"
+            : "text-priceRed";
+
+        const arrowIcon = nextRow
+          ? info.row.original.rate > nextRow.original.rate
+            ? "↑"
+            : "↓"
+          : "↓";
+
+        return (
+          <div className=" sm:gap-1  flex flex-row">
+            <div className={`sm:text-[0.6rem] font-poppinsBold ${rateClass}`}>
+              {arrowIcon}
+            </div>
+            <div
+              className={`font-poppinsSemibold  ${rateClass}`}
+              style={{ textAlign: "start" }}
+            >
+              {info.row.original.rate.toFixed(2)}
+            </div>
+          </div>
+        );
+      },
     },
     {
       header: "VOLUME",
@@ -117,6 +143,7 @@ export default function MarketTrades() {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
   return (
     <div className="sm:w-[100%] flex flex-col  h-[100%] sm:flex-col sm:h-[100%]">
       <table>
@@ -176,7 +203,7 @@ export default function MarketTrades() {
               >
                 {row.getVisibleCells().map((cell) => (
                   <td
-                    className={`  text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
+                    className={` ${cell.column.columnDef.cell}  text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
                     key={cell.id}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
