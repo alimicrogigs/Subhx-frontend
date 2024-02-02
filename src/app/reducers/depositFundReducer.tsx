@@ -49,8 +49,6 @@ export const depositFundReducer = (state = initialState, action: any) => {
         error: action.payload,
       };
     
-
-
     //manual accout
     case GET_MANUAL_ACCOUNT_REQUEST:
       return {
@@ -120,7 +118,7 @@ export const depositFundReducer = (state = initialState, action: any) => {
       return {
         ...state,
         loading: false,
-        getUserAllDetails: [],
+        getUserAllDetails :[],
         error: action.payload,
       };
 

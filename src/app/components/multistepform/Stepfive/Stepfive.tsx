@@ -8,6 +8,8 @@ interface StepsixProps {
   onNextStep: () => void;
 }
 
+
+
 const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
   const [video, setvideo] = useState("");
 
@@ -17,7 +19,8 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
     e.preventDefault();
     // Log all form data to the console
     onNextStep();
-  };
+  }
+
 
   return (
     <form

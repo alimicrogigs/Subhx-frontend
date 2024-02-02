@@ -10,16 +10,16 @@ import { FaPlay } from "react-icons/fa";
 import { TbReceiptTax } from "react-icons/tb";
 import { GoDotFill } from "react-icons/go";
 import { IoIosAddCircle } from "react-icons/io";
-import {useSelector} from "react-redux"; 
+import {useSelector} from "react-redux";
+
 
 export default function Profile() {
   // data
   const [GSTno, setGSTno] = useState("")
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
-  const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
-  console.log(getUserAllDetails);
-
+  const {userAllDetails } = useSelector((state :any)=>state.userDetails);
+  console.log("line 222" ,userAllDetails );
 
   // nominee edit form
   const [nomineeEditopen, setNomineeEditopen] = useState(false);
@@ -31,9 +31,11 @@ export default function Profile() {
     panNumber: "",
     emailAddress: "",
   });
+
   const handleNewNominee = () => {
     console.log(nomineeFormData);
   };
+
   const handleNomineeFormDataChange = (e: any) => {
     const { name, value } = e.target;
     setNomineeFormData((prevData) => ({
@@ -81,7 +83,7 @@ export default function Profile() {
               <FaCheck />
             </div>
 
-            {(getUserAllDetails.name === null ||getUserAllDetails.name === undefined) ? "NA" : getUserAllDetails.name}
+            {(userAllDetails .name === null ||userAllDetails .name === undefined) ? "NA" : userAllDetails .name}
           </h1>
         </div>
         {/* ........ */}
@@ -93,11 +95,11 @@ export default function Profile() {
               <IoMdMail />
             </div>
 
-            {(getUserAllDetails.email === null ||getUserAllDetails.email === undefined) ? "NA" : getUserAllDetails.email}
+            {(userAllDetails .email === null ||userAllDetails .email === undefined) ? "NA" : userAllDetails .email}
           </h1>
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
-        
+
         {/* ........ */}
         {/* ........ */}
         <div className="w=[100%] py-[10px] border-t border-t-[#041E27] flex justify-between">
@@ -107,7 +109,7 @@ export default function Profile() {
               <FaMobileAlt />
             </div>
             +91 &nbsp;
-            {(getUserAllDetails.phone === null ||getUserAllDetails.phone === undefined) ? "NA" : getUserAllDetails.phone}
+            {(userAllDetails .phone === null || userAllDetails .phone === undefined) ? "NA" : userAllDetails .phone}
           </h1>
 
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
@@ -154,13 +156,17 @@ export default function Profile() {
               <div
                 onClick={() => setNomineeEditopen(!nomineeEditopen)}
                 style={{ display: `${!nomineeEditopen ? "block" : "none"}` }}
-                className="mr-[20px] text-[#F5CD8E]"
+                className="mr-[20px] text-[#F5CD8E]  "
               >
                 <FaPen />
               </div>
             </div>
           ))}
+
+
           {/* { edit form for nominee} */}
+          
+          
           {nomineeEditopen && (
             <div className="w-[100%]  sm:px-[100px] px-[30px] flex flex-col gap-[20px] mt-[20px]">
               <h1>Add Your New Nominee Detail below :</h1>

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from 'next/router';
 
 
-
 // Import your components
 import Wallet from "@/app/components/dashboard/funds/Wallet/Wallet";
 import Depositefunds from "@/app/components/dashboard/funds/Depositefunds/Depositefunds";
@@ -13,7 +12,7 @@ import Fundshome from "@/app/components/dashboard/funds/Fundshome/Fundshome";
 import tokenMiddleware from '../../../app/middleware/tokenMiddleware';
 import { getUserDataRequest, getUserDataSuccess, getUserDataFailure } from "../../actions/depositeFundActions"
 import Withrawlfunds from "@/app/components/dashboard/funds/Withrawlfunds/Withrawlfunds";
-import Transferhistory from "@/app/components/dashboard/funds/Transferhistory/Transferhistory";
+import Transferhistory from  "@/app/components/dashboard/funds/Transferhistory/Transferhistory";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { getRequestAPIHelper } from "../../utils/lib/requestHelpers"
 const dotenv = require('dotenv')
@@ -63,11 +62,10 @@ const FundsPage: React.FC<FundsPageProps> = () => {
       // 196|$2y$10$gYHdRlPzMDTYJfAI8I4vX.oSZH5FtAFRrCy8L0C0aobdqyAwxGsIi747d31eb
         console.log(getUserDataResponse)
         dispatch(getUserDataSuccess(getUserDataResponse.data))
-
       } catch (err) {
         console.log('Error fetching user details:', err.response.data.error);
         if(err.response.data.error === "Unauthenticated."){
-          console.log("Token does not exist. Redirecting to login page...");
+          console.log("Token does not exist. Redirecting to login page...")
           setTimeout(() => {
               window.location.href = '/login';
           }, 10)

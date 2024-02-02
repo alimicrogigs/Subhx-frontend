@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import "./currency.css";
 
 export default function CurrencySection() {
