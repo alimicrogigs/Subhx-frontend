@@ -100,7 +100,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
         );
         console.log('account no. not done', response)
       }
-    }catch(err){
+    }catch(err:any){
       toast.custom(
         <ToasterCustom type="error" message={err.response.data.message} />,
         {

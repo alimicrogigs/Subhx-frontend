@@ -15,7 +15,7 @@ import { getRequestAPIHelper } from "../../helperfunctions";
 import { postRequestAPIHelper } from "../../helperfunctions";
 
 const apiUrl = process.env.API_URL;
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
 export default function OrderSection() {
   const [selectedTab, setSelectedTab] = useState("buy"); // Default to 'buy'
   const [selectLimit, setSelectLimit] = useState<any>("instant");

@@ -15,6 +15,8 @@ interface StepsixProps {
   onNextStep: () => void;
 }
 
+
+
 const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
 const [video, setvideo] = useState("");
 const [loading, setLoading] = useState(false);
