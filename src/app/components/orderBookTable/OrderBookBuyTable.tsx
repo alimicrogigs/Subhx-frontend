@@ -31,6 +31,8 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
   const [percentages, setPercentages] = useState<number[]>([]);
 
+  console.log("buyData====", data);
+
   useEffect(() => {
     const newData = [...buyData.slice(0, 10)];
 
@@ -60,7 +62,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
               textAlign: "start",
             }}
           >
-            {info.row.original[1]}
+            {info.row.original[1].toFixed(4)}
           </div>
         );
       },
@@ -70,7 +72,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
       accessorKey: "rate",
       cell: (info: cellInfo) => (
         <div style={{ textAlign: "end", color: "rgba(90, 215, 118, 1)" }}>
-          {info.row.original[0]}
+          {info.row.original[0].toFixed(2)}
         </div>
       ),
     },
@@ -124,7 +126,7 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
                   key={cell.id}
                 >
                   <div
-                    className={`nikhil sm:w-[20%]  absolute bg-green-900  right-0 top-0 bottom-0 left-auto`}
+                    className={`nikhil sm:w-[20%]  absolute   right-0 top-0 bottom-0 left-auto`}
                   ></div>
 
                   <div className="relative z-10">

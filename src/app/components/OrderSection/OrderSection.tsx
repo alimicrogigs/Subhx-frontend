@@ -33,7 +33,7 @@ export default function OrderSection() {
   );
   console.log("upiAddress=====", upiAddress);
   console.log("selectedCoinfrom_ordersection", selectedCoin);
-  console.log("ordertype=====", orderType);
+  // console.log("ordertype=====", orderType);
 
   // ========================
   const dispatch = useDispatch();
