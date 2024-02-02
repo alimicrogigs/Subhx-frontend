@@ -195,7 +195,7 @@ export default function () {
           </li>
           <li
             onClick={() => setMobilemenuopen(!mobilemenuopen)}
-            className={`relative w-[50px] h-[70%] bg-tableodd mr-[20px]`}
+            className={`relative w-[60px] h-[70%] bg-[#041E27] mr-[20px] rounded-[5px]`}
           >
             <div
               className={`${

@@ -65,7 +65,7 @@ const Wallet: React.FC<WalletProps> = ({
             TRANSFER HISTORY
           </div>
           {/* .... */}
-          <div className="flex w-[100%] justify-center gap-[20px] sm:relative absolute bottom-0 sm:py-[0px] py-[30px] sm:px-[0px] px-[20px] max-w-[100vw] sm:bg-transparent bg-[#07303F] sm:z-[0] z-[1000]">
+          <div className="sm:flex hidden w-[100%] justify-center gap-[20px] sm:relative bottom-0 sm:py-[0px] py-[30px] sm:px-[0px] px-[20px] max-w-[100vw] sm:bg-transparent bg-[#07303F] sm:z-[0] z-[1000]">
             <div
               style={{ cursor: "pointer" }}
               onClick={handleWithdraw}

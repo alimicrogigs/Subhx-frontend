@@ -30,7 +30,6 @@
   font-style: normal;
 }
 
-
 .poppins-bold {
   font-family: "Poppins-Bold" !important;
 }
@@ -90,4 +89,8 @@
   input::placeholder {
     font-size: 0.7rem !important;
   }
+}
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
