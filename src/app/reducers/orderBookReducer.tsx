@@ -14,7 +14,7 @@ export const orderBookReducer = (state = initialState, action: any) => {
         marketTradeData: action.payload,
       };
 
-      
+
     default:
         return state;
   }

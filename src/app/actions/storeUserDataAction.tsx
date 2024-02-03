@@ -1,7 +1,6 @@
-export const storeUserData = (userData:any) => {
-    return {
-      type: 'STORE_USER_DATA',
-      payload: userData,
-    };
-};
+import { MARKETTRADE_DATA } from "../constants/orderBookConstants";
 
+export const marketData = (marketTradeData: any) => ({
+  type: MARKETTRADE_DATA,
+  payload: marketTradeData,
+});

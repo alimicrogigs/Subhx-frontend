@@ -19,7 +19,7 @@ export default function Profile() {
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
   const {userAllDetails } = useSelector((state :any)=>state.userDetails);
-  console.log("line 222" ,userAllDetails );
+  
   const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
 
 

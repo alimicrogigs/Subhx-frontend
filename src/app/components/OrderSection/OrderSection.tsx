@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
+
 // =============================
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,19 +10,15 @@ import {
 } from "../../actions/depositeFundActions";
 import { orderTypeSet } from "@/app/actions/coinsActions";
 import { getRequestAPIHelper } from "../../helperfunctions";
-// =============================
-import { postRequestAPIHelper } from "../../helperfunctions";
-
 const apiUrl = process.env.API_URL;
-// const token = localStorage.getItem("token");
+
 export default function OrderSection() {
   const [selectedTab, setSelectedTab] = useState("buy"); // Default to 'buy'
   const [selectLimit, setSelectLimit] = useState<any>("instant");
-  const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0");
-  const [enteredAmountINR, setEnteredAmountINR] = useState("0");
+  const [enteredAmountUSDT, setEnteredAmountUSDT] = useState("0.00");
+  const [enteredAmountINR, setEnteredAmountINR] = useState("0.00");
 
 
-  const [buyAmount, setBuyAmount] = useState('0');
   // ===========use selector to get api data from store=======
   const { loading, error, upiAddress } = useSelector((state:any) => state.deposite);
 
@@ -42,29 +37,6 @@ export default function OrderSection() {
 
   const handleLimitSwitch = (tab: any) => {
     setSelectLimit(tab);
-  }
-
- 
-  const handleAmountChangeINR = (event:any) => {
-    setEnteredAmountINR(event.target.value);
-    const enteredAmountNumeric = parseFloat(event.target.value);
-    if (orderType === "buy") {
-      const totalAmount = isNaN(enteredAmountNumeric)
-        ? "0.00"
-        : (
-            enteredAmountNumeric /
-            (currentRates[selectedCoin.lowerCaseName]?.buy || 0)
-          ).toFixed(2);
-      setEnteredAmountUSDT(totalAmount);
-    } else if (orderType === "sell") {
-      const totalAmount = isNaN(enteredAmountNumeric)
-        ? "0.00"
-        : (
-            enteredAmountNumeric /
-            (currentRates[selectedCoin.lowerCaseName]?.sell || 0)
-          ).toFixed(2);
-      setEnteredAmountUSDT(totalAmount);
-    }
   };
 
   const handleAmountChangeUSDT = (event:any) => {
@@ -90,143 +62,44 @@ export default function OrderSection() {
     }
   };
 
+  const handleAmountChangeINR = (event:any) => {
+    setEnteredAmountINR(event.target.value);
+    const enteredAmountNumeric = parseFloat(event.target.value);
+    if (orderType === "buy") {
+      const totalAmount = isNaN(enteredAmountNumeric)
+        ? "0.00"
+        : (
+            enteredAmountNumeric /
+            (currentRates[selectedCoin.lowerCaseName]?.buy || 0)
+          ).toFixed(2);
+      setEnteredAmountUSDT(totalAmount);
+    } else if (orderType === "sell") {
+      const totalAmount = isNaN(enteredAmountNumeric)
+        ? "0.00"
+        : (
+            enteredAmountNumeric /
+            (currentRates[selectedCoin.lowerCaseName]?.sell || 0)
+          ).toFixed(2);
+      setEnteredAmountUSDT(totalAmount);
+    }
+  };
 
   // ====================
 
   //===========function that calls on click ==================
 
-<<<<<<< HEAD
-  const handleSell = async () => {
-    console.log("sell");
-    try {     
-      const requestData: {
-        to_coin_amount: string;
-        to_coin: string;
-        type: string;
-      } = {
-        to_coin_amount: enteredAmountUSDT,
-        to_coin: "USDT",
-        type: "sell"
-      };
-
-      const response = await postRequestAPIHelper(apiUrl + "trade/usdt-to-inr", token, requestData);
-      console.log("response success", response);
-=======
   const handleDeposit = async () => {
     try {
-      const token =
-        "163|$2y$10$TNMR1LoblGCWHFrm.nJbE.NJPBNLlcWXih5qcZBKn30m8VMv.0G8y5c765261";
+      const token = localStorage.getItem("token");
       dispatch(depositeFundRequest());
-      const response = await getRequestAPIHelper(
-        "http://authentication.bit24hr.in/api/v1/upi-address",
-        token
-      );
->>>>>>> 712293a909393c70232f626537f656e21a423352
+      const response = await getRequestAPIHelper(apiUrl+'upi-address', token);
       if (response.success === true) {
-       
-          toast.custom(
-            <ToasterCustom
-              type="success"
-              message="Order placed successfully !!!"
-            />, 
-            {
-              position: "top-right", // Set the position (e.g., "top-center")
-              duration: 1000, // Set the duration in milliseconds
-            }
-          );
-          setEnteredAmountINR('0');
-          
-          return;        
-      }else {
-        toast.custom(
-          <ToasterCustom
-            type="error"
-            message={response.response.data.data}
-          />,
-          {
-            position: "top-right", // Set the position (e.g., "top-center")
-            duration: 1000, // Set the duration in milliseconds
-          }
-        );
-        return;
+        dispatch(depositeFundSuccess(response.data));
       }
     } catch (error) {
-      toast.custom(
-        <ToasterCustom
-          type="error"
-          message="response.data"
-        />,
-        {
-          position: "top-right", // Set the position (e.g., "top-center")
-          duration: 1000, // Set the duration in milliseconds
-        }
-      );
-      return;
-     
+      dispatch(depositeFundFailure(error));
     }
   };
-
-  const handleBuy = async () => {
-    console.log("buy Amount ====", buyAmount);
-    try {     
-      const requestData: {
-        to_coin_amount: string;
-        to_coin: string;
-        type: string;
-      } = {
-        to_coin_amount: enteredAmountINR,
-        to_coin: "INR",
-        type: "buy"
-      };
-
-      const response = await postRequestAPIHelper(apiUrl + "trade/inr-to-usdt", token, requestData);
-      console.log("response===== 89", response);
-      if (response.success === true) {     
-        // Add custom toaster here
-        toast.custom(
-          <ToasterCustom
-            type="success"
-            message={response.response.data.data}
-          />, 
-          {
-            position: "top-right", // Set the position (e.g., "top-center")
-            duration: 1000, // Set the duration in milliseconds
-          }
-        );
-        setEnteredAmountINR('0');
-
-        return;
-        
-      }else{
-        toast.custom(
-          <ToasterCustom
-            type="error"
-            message={response.response.data.data}
-          />,
-          {
-            position: "top-right", // Set the position (e.g., "top-center")
-            duration: 1000, // Set the duration in milliseconds
-          }
-        );
-        return;
-      }
-    } catch (error) {
-      // Add custom toaster here
-      toast.custom(
-        <ToasterCustom
-          type="error"
-          message="Order placed failed !!!"
-        />,
-        {
-          position: "top-right", // Set the position (e.g., "top-center")
-          duration: 1000, // Set the duration in milliseconds
-        }
-      );
-      return;
-      
-    }
-  };
-
   // ====================
   return (
     <section className="bg-dashbgtrans  rounded-lg flex sm:flex-col sm:w-[26.2vw] sm:h-[100%]">
@@ -296,28 +169,27 @@ export default function OrderSection() {
         </div>
       </div>
 
-      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit === "limit" && (
-        <div className="flex sm:flex-col sm:mt-2  ">
-          <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
-          <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
-            <div className="flex sm:flex-row  sm:w-[60%]">
-              <input className="focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] "  />
-              <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
-                USDT
+      {selectedCoin?.lowerCaseName !== "usdt" && selectLimit ==="limit" && (
+            <div className="flex sm:flex-col sm:mt-2  ">
+              <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Price</span>
+              <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
+                <div className="flex sm:flex-row  sm:w-[60%]">
+                  <input className="  focus:outline-none sm:px-2 sm:w-[90%] rounded-l sm:bg-inputBg text-black sm:h-[2rem] " />
+                  <div className="sm:h-[2rem] sm:w-[2.3rem] flex sm:items-center font-poppinsRegular sm:bg-inputBg sm:text-[0.6rem] text-dashbgtrans rounded-r">
+                    USDT
+                  </div>
+                </div>
+                <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] ">
+                  +
+                </div>
+                <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem]">
+                  -
+                </div>
               </div>
             </div>
-            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.6rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-red-200">
-              +
-            </div>
-            <div className="sm:w-17% sm:px-2 sm:bg-inputBg text-[1.8rem] text-dashbgtrans sm:text-center flex sm:items-center rounded sm:h-[2rem] bg-green-200">
-              -
-            </div>
-          </div>
-        </div>
-      )}
-     
+          )}
 
-      {/* <div className="flex sm:flex-col sm:mt-2 ">
+      <div className="flex sm:flex-col sm:mt-2 ">
         <span className="sm:ml-5 sm:text-[0.5rem] sm:py-1">Total</span>
         <div className="flex sm:flex-row sm:justify-evenly sm:items-center">
           <div className="flex sm:flex-row  sm:w-[89%]">
@@ -331,12 +203,12 @@ export default function OrderSection() {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className="flex sm:flex-col sm:mt-8  ">
         {selectedTab === "buy" ? (
           <div
-            onClick={handleBuy}
+            onClick={handleDeposit}
             className="sm:w-[100%] sm:text-[1.3rem] font-poppinsBold sm:h-[2.6rem] flex sm:justify-center sm:items-center bg-contain bg-no-repeat bg-center"
             style={{
               backgroundImage: "url(/dashboard/exchange/buyButton.svg)",
@@ -346,7 +218,6 @@ export default function OrderSection() {
           </div>
         ) : (
           <div
-            onClick={handleSell}
             className="sm:w-[100%] sm:text-[1.3rem]  font-poppinsBold sm:h-[2.6rem] flex sm:justify-center sm:items-center bg-contain bg-no-repeat bg-center"
             style={{
               backgroundImage: "url(/dashboard/exchange/sellButton.svg)",

@@ -196,9 +196,12 @@ export default function MarketTrades() {
                   ? "text-priceRed"
                   : ""
                 : "text-priceRed";
+                const isLastRow = nextIndex === array.length;
             return (
               <tr
-                className={`${rowClassName}  sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem] sm:justify-between items-center sm:items-center`}
+                className={`${rowClassName}  sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem] sm:justify-between items-center sm:items-center ${
+                  isLastRow ? 'rounded-b-lg' : '' // Add this line for rounded corners on the last row
+                }`}
                 key={row.id}
               >
                 {row.getVisibleCells().map((cell) => (
