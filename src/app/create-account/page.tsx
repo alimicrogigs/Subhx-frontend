@@ -40,7 +40,7 @@ export default function page() {
       style={{
         backgroundImage: "url(/signup/signupbg.svg)",
       }}
-      className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
+      className="relative w-[100vw] h-[100vh] min-h-[700px] bg-center bg-cover flex justify-center items-center"
     >
       <Link href="/">
         <div
