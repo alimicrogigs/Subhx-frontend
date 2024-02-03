@@ -54,7 +54,7 @@ export default function CurrencySection() {
           currentRates[coin]?.sell
         );
 
-        changes[coin] = { buy: buyChange, sell: sellChange };
+        changes:any[coin] = { buy: buyChange, sell: sellChange };
       }
     }
 
@@ -146,5 +146,3 @@ export default function CurrencySection() {
     </section>
   );
 }
-
-//https://www.tradingview.com/?utm_source=https%3A%2F%2Fbit24hr.in&utm_medium=library&utm_campaign=library

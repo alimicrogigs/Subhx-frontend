@@ -24,7 +24,7 @@ export default function Profile() {
   const [GSTINopen, setGSTINopen] = useState(false);
 <<<<<<< Updated upstream
   const {userAllDetails } = useSelector((state :any)=>state.userDetails);
-  console.log("line 222" ,userAllDetails );
+  
   const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
 
 =======

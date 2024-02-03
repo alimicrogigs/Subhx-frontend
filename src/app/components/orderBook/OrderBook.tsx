@@ -27,7 +27,7 @@ export default function OrderBook() {
   const { loading, allCoins, currentRates, selectedCoin, error } = useSelector(
     (state) => state.coin
   );
-  const [orderType, setOrderType] = useState("orderBook");
+  const [orderType, setOrderType] = useState("marketTrades");
   const [orderBookData, setOrderBookData] = useState<OrderData>({
     asks: [],
     bids: [],
@@ -116,14 +116,25 @@ export default function OrderBook() {
           Market Trades
         </span>
 
-        <span
+        {/* <span
           className={`${
             orderType === "orderBook" ? "sm:border-b-4 border-b-4" : ""
           } text-sm font-poppinsRegular w-[25%] sm:w-auto text-center   border-borderline   sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
           onClick={() => setOrderType("orderBook")}
         >
           Order Book
-        </span>
+        </span> */}
+
+        {selectedCoin.name !== "USDT" && (
+          <span
+            className={`${
+              orderType === "orderBook" ? "sm:border-b-4 border-b-4" : ""
+            } text-sm font-poppinsRegular w-[25%] sm:w-auto text-center   border-borderline   sm:px-4  py-2 sm:p-3 text-[0.5rem]`}
+            onClick={() => setOrderType("orderBook")}
+          >
+            Order Book
+          </span>
+        )}
 
         {/* <span
           className={`${

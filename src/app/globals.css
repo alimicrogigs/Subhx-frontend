@@ -24,6 +24,12 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Poppins-thin";
+  src: url("/fonts/Poppins-Thin.ttf");
+  font-style: normal;
+}
+
 .poppins-bold {
   font-family: "Poppins-Bold" !important;
 }
@@ -81,4 +87,8 @@
   .accordion-header button {
     padding-left: 43%;
   }
+}
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }

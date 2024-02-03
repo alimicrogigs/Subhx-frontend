@@ -31,7 +31,6 @@ export default function OrderBookBuyTable({ buyData }: OrderBookBuyTableProps) {
   const [data, setData] = useState<Order[]>([]);
   const [percentages, setPercentages] = useState<number[]>([]);
 
-  console.log("buyData====", data);
 
   useEffect(() => {
     const newData = [...buyData.slice(0, 10)];

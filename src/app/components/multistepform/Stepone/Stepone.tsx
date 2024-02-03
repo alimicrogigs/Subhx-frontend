@@ -5,8 +5,8 @@ import InputField_colorfull from "../common/Inputfield/InputField_colorfull";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
-import {postRequestAPIHelper} from "../../../utils/lib/requestHelpers"
-const dotenv = require('dotenv');
+import { postRequestAPIHelper } from "../../../utils/lib/requestHelpers";
+const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
@@ -149,7 +149,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
         }
-      )
+      );
       return;
     }
     if (phoneNumber.length < 10) {
@@ -174,7 +174,6 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
       referralOptional,
       agreeTerms,
     });
-
 
     try {
         const requestData: {
@@ -247,10 +246,10 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           Create Your Account
         </h1>
 
-        <p className="text-[.8rem] text-center">
+        <p className="text-[.8rem] text-center pt-[5px] ">
           Already have an account?
           <Link href="/login">
-            <span className="ml-[90px] text-[#00BFFF]">Login</span>
+            <span className="ml-[40px] text-golden">Login</span>
           </Link>
         </p>
       </div>
