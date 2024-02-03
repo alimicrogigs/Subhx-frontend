@@ -96,6 +96,7 @@ export default function page() {
         password,
         signmein,
       };
+      console.log('API URL:', apiUrl);
 
       const response = await postRequestAPIHelper(apiUrl + 'login', null, requestData);
       if (response.status === 200) {
@@ -119,7 +120,7 @@ export default function page() {
         setCurrentStep("validate");
         window.location.href = '/dashboard/exchange'; 
       } else {
-        console.log('Registration failed:', response.data);
+        console.log("Registration failed:", response.data);
       }
     } catch (error:any) {
       console.error('Controller Error:', error);
@@ -151,7 +152,7 @@ export default function page() {
         style={{
           backgroundImage: "url(/signup/signupbg.svg)",
         }}
-        className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
+        className="relative w-[100vw] h-[100vh] min-h-[700px] bg-center bg-cover flex justify-center items-center"
       >
         <Link href="/">
           <div
@@ -162,7 +163,7 @@ export default function page() {
           ></div>
         </Link>
         <div
-          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
+          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[95%] h-[95%] `}
         >
           {/* ............................................................ */}
           {/* login form start from here  */}
@@ -177,10 +178,10 @@ export default function page() {
                 Login Your Account
               </h1>
 
-              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[0px] pt-[10px]">
+              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[8px] pt-[10px]">
                 Don't have an account?{" "}
                 <Link href="/create-account">
-                  <span className="text-[#00BFFF] sm:ml-[20px] ml-[10px]">
+                  <span className="text-golden sm:ml-[20px] ml-[10px]">
                     Create Account
                   </span>
                 </Link>
