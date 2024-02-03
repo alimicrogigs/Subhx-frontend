@@ -1,33 +1,26 @@
 import { useEffect, useState } from "react";
 
-let resizeTimer;
+let resizeTimer:any;
 
 const useWindowResize = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
-
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 640);
-  };
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
     // Initial check on mount
     handleResize();
 
     // Listen for window resize events
-    const handleResizeThrottled = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        handleResize();
-      }, 250);
-    };
+    window.addEventListener("resize", handleResize);
 
-    window.addEventListener("resize", handleResizeThrottled);
-
-    // Cleanup the event listener on component unmount
+    // Cleanup the listener on component unmount
     return () => {
-      window.removeEventListener("resize", handleResizeThrottled);
+      window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, []); // Empty dependency array to run on mount
 
   return isMobile;
 };

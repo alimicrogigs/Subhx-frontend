@@ -1,10 +1,68 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import LiveChart from "../LiveChart/LiveChart";
 import useWindowResize from "@/app/Hooks/useWindowResize";
+import {
+  getAllCoinsRequest,
+  getAllCoinsSuccess,
+  getAllCoinsFailure,
+  currentRatesRequest,
+  currentRatesSuccess,
+  currentRatesFailure,
+} from "../../actions/coinsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getRequestAPIHelper } from "@/app/helperfunctions";
 
 export default function ChartSection() {
-  const timeframes = ["1M", "5M", "15M", "30M", "1H", "1D", "7D"];
+  const dispatch = useDispatch();
+  const { loading, allCoins, currentRates, selectedCoin, orderType, error } =
+    useSelector((state: any) => state.coin);
 
+
+  const timeframes = ["1M", "5M", "15M", "30M", "1H", "1D", "7D"];
   const isMobile = useWindowResize();
+
+  //get all the coins from api
+  const getAllCoins = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const apiURL = process.env.API_URL;
+      dispatch(getAllCoinsRequest());
+      const response = await getRequestAPIHelper(apiURL, token);
+      if (response) {
+        dispatch(getAllCoinsSuccess(response.coins));
+      }
+    } catch (error) {
+      dispatch(getAllCoinsFailure(error));
+    }
+  };
+
+  useEffect(() => {
+    getAllCoins();
+  }, []);
+
+  useEffect(() => {
+    const socket = new WebSocket("ws://stream.bit24hr.in:8765/current_rate");
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    socket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      dispatch(currentRatesSuccess(data));
+    };
+    socket.onclose = (event) => {
+      console.log("WebSocket connection closed:", event);
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, [dispatch]);
 
   return (
     <section className="flex flex-col sm:flex-col sm:w-[52vw] sm:mr-3 rounded-t sm:rounded-lg  h-[100%]  sm:h-[100%]">
@@ -15,16 +73,19 @@ export default function ChartSection() {
               src="/dashboard/exchange/tron.svg"
               className="h-[1.5rem] mr-3"
             />
-            <span className="font-poppinsMedium mr-1">TetherUS</span>
-            <span className="font-poppinsRegular">Usdt</span>
+            <span className="font-poppinsMedium mr-1"></span>
+            <span className="font-poppinsRegular">{selectedCoin.name}</span>
           </div>
           {isMobile && (
             <div className="sm:mr-12 mr-3 w-[30%]  flex flex-col sm:w-[25%] items-end justify-center sm:items-center sm:justify-evenly">
-              <span className="sm:text-[0.8rem] font-poppinsRegular text-[0.7rem] ">
-                Live Price
+              <span className="sm:text-[0.8rem] font-poppinsRegular text-[0.6rem] ">
+                {orderType === "sell" ? "SELL PRICE" : "BUY PRICE"}
               </span>
               <span className="sm:text-[0.6rem] font-poppinsMedium text-[0.8rem] ">
-                ₹ 2940000.00
+                ₹
+                {currentRates[selectedCoin.lowerCaseName]
+                  ? currentRates[selectedCoin.lowerCaseName].buy
+                  : "0"}
               </span>
             </div>
           )}
@@ -84,14 +145,23 @@ export default function ChartSection() {
         </div>
         {!isMobile && (
           <div className="sm:mr-12  flex sm:w-[25%] sm:items-center sm:justify-evenly">
-            <span className="sm:text-[0.8rem]">Live Price</span>
-            <span className="sm:text-[0.6rem]">₹ 2940000.00</span>
+            <span className="sm:text-[0.6rem]">
+              {orderType === "sell" ? "SELL PRICE" : "BUY PRICE"}
+            </span>
+            <span className="sm:text-[0.6rem]">
+              ₹
+              {orderType === "buy"
+                ? currentRates[selectedCoin.lowerCaseName]?.buy || "0"
+                : orderType === "sell"
+                ? currentRates[selectedCoin.lowerCaseName]?.sell || "0"
+                : "0"}
+            </span>
           </div>
         )}
       </div>
 
       <div className="bg-dashbgtrans sm:mt-0  w-[100%] sm:h-[69.4%] sm:rounded-b-lg sm:w-[100%] sm:p-2 ">
-        <div className="rounded-lg sm:h-[100%] sm:w-[100%]  ">
+        <div className="rounded-lg  sm:h-[100%] sm:w-[100%]  ">
           <LiveChart />
         </div>
       </div>

@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../../common/ToasterCustom/ToasterCustom";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getUpiAddressRequest, getUpiAddressSuccess, getUpiAddressFailure, getManualAccountFailure, getManualAccountRequest, getManualAccountSuccess, getUserVanFailure, getUserVanRequest, getUserVanSuccess } from "../../../../actions/depositeFundActions"
 import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
-// import CardSkeleton from "@/app/components/common/skeleton/depositSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
+import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from "../../../../actions/depositeFundActions"
+import { storeUserData } from "../../../../actions/storeUserDataAction";
 
 
 interface WalletProps {
@@ -17,21 +17,7 @@ interface WalletProps {
   activebutton: string;
 }
 
-
-
-const dotenv = require('dotenv')
-dotenv.config();
 const apiUrl = process.env.API_URL;
-
-// Define your custom toaster component
-// const ToasterCustom = ({ type, message, loading }) => {
-//   return (
-//     <div className={`toaster toaster-${type}`}>
-//       {loading ? <span>Loading...</span> : <span>{message}</span>}
-//     </div>
-//   );
-// };
-
 
 const Wallet: React.FC<WalletProps> = ({
   onAction,
@@ -40,19 +26,20 @@ const Wallet: React.FC<WalletProps> = ({
 
 }) => {
   const dispatch = useDispatch();
-  const { loading, upiAddress, error } = useSelector((state) => state.deposite)
+  const { loading, upiAddress, error } = useSelector((state: any) => state.deposite)
   console.log("upiAddressformredux___", upiAddress)
   // const [loading, setLoading] = useState(true);
   const [apiHitTime, setApiHitTime] = useState(null)
 
 
-  let user_balance = `₹ 5,689.00`
+  const [userBalance, setUserBalance] = useState<string>('0.00');
+
+  const apiData = useSelector((state: any) => state.apiData);
+  var token = localStorage.getItem("token");
   const handleWithdraw = () => {
-    // Trigger withdraw action
     popupactive("withdraw")
   }
   const getUPIaddress = async () => {
-    const token = localStorage.getItem("token");
     try {
       dispatch(getUpiAddressRequest())
       // Fetch UPI address
@@ -69,7 +56,7 @@ const Wallet: React.FC<WalletProps> = ({
     }
   }
   const getManaualAccount = async () => {
-    const token = localStorage.getItem("token");
+   
     try {
       dispatch(getManualAccountRequest())
       // Fetch UPI address
@@ -83,9 +70,9 @@ const Wallet: React.FC<WalletProps> = ({
       dispatch(getManualAccountFailure(error));
     }
   }
-  
+
   const getVanUser = async () => {
-    const token = localStorage.getItem("token");
+  
     try {
       dispatch(getUserVanRequest())
       // Fetch UPI address
@@ -101,8 +88,7 @@ const Wallet: React.FC<WalletProps> = ({
   }
 
   const handleDeposit = async () => {
-    // Trigger deposit action
-    const token = localStorage.getItem("token");
+
     try {
       // Fetch UPI address
       const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token)
@@ -115,7 +101,7 @@ const Wallet: React.FC<WalletProps> = ({
         getUPIaddress();
         getManaualAccount();
         getVanUser();
-      }else{
+      } else {
         toast.custom(
           <ToasterCustom type="error" message="KYC is Pending , Desposite details will not open !!! " />,
           {
@@ -146,17 +132,41 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
+    useEffect(() => {     
+      var token = localStorage.getItem("token");
+          const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+          const socket = new WebSocket(socketUrl);  
+          socket.onopen = () => {
+            console.log("WebSocket connection get_user_balance");
+            socket.send(JSON.stringify({ 'x-auth-token': token }));
+          };
 
+          socket.onmessage = (event) => {
+            console.log("WebSocket data received:", event.data);
+            // add consition to check if the event.data not null
+             if(event.data !== null){
+              const jsonData = JSON.parse(event.data);
+              const inrBalance = jsonData?.inr_balance;
+              console.log('INR Balance:', inrBalance);
+              setUserBalance(inrBalance);
+             }                     
+          };
 
-
-
+          socket.onclose = (event) => {
+            console.log("WebSocket connection closed:", event);
+          };
+          return () => {
+            socket.close();
+          };  
+        
+      }, []);
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
         {/* wallets balance  */}
         <div className="flex gap-[20px]  items-center sm:px-[20px] px-[0px] sm:justify-auto justify-center  sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[10px]">
           <p>Wallet Balance</p>
-          <p>{user_balance}</p>
+          <p>₹ {userBalance} </p>
         </div>
         {/* withdrawl and deposite button  */}
         <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[5px] sm:pt-[0px] pt-[10px]">
@@ -216,6 +226,8 @@ const Wallet: React.FC<WalletProps> = ({
         >
 
         Withdraw
+
+        Withdraw
         </div> */}
 
           {/* <div
@@ -237,3 +249,7 @@ const Wallet: React.FC<WalletProps> = ({
 };
 
 export default Wallet;
+
+function dispatch(arg0: { type: string; payload: any; }) {
+  throw new Error("Function not implemented.");
+}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card/Card";
 
 interface SidebarProps {
@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   ismobilecontainer,
 }) => {
   const [currentActiveButton, setCurrentActiveButton] = useState("Profile");
-
+ 
   const handleCardClick = (title: string) => {
     setCurrentActiveButton(title);
     onSectionChange(title);

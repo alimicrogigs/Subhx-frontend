@@ -20,6 +20,8 @@ export default function Profile() {
   const [GSTINopen, setGSTINopen] = useState(false);
   const {userAllDetails } = useSelector((state :any)=>state.userDetails);
   console.log("line 222" ,userAllDetails );
+  const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
+
 
   // nominee edit form
   const [nomineeEditopen, setNomineeEditopen] = useState(false);
@@ -33,7 +35,6 @@ export default function Profile() {
   });
 
   const handleNewNominee = () => {
-    console.log(nomineeFormData);
   };
 
   const handleNomineeFormDataChange = (e: any) => {
@@ -44,7 +45,6 @@ export default function Profile() {
     }));
   };
   const handleGSTIN = () => {
-    console.log({ GSTno });
     setGSTno("");
   }
 
@@ -66,7 +66,7 @@ export default function Profile() {
     contactno: 9876543210,
     nominee: [{ name: "Alice Johnson", relation: "Spouse" }],
   }
-
+console.log("getUserAllDetails 64",getUserAllDetails)
   return (
     <>
       <HeadContainer

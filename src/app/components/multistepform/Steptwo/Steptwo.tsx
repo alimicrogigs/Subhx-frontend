@@ -54,19 +54,20 @@ const Steptwo: React.FC<SteptwoProps> = ({ active, onNextStep }) => {
       phonecode,
       emailcode,
     });
-    try{
-      const response = await axios.post(apiUrl+'verify-Registration/otp',{
-        reference_id:"telecom_1FmH36xper0Nq8xQf7ntl6c3s4nC3JLl", mobile_otp : phonecode,email_otp : emailcode
-      }) 
-      console.log(response);
-      if (response.status === 200) {
-        onNextStep();
-      }else {
-        console.log('OTP not valid:', response);
-      }
-    }catch(err){
-      console.log(err);
-    }
+    onNextStep();
+    // try{
+    //   const response = await axios.post(apiUrl+'verify-Registration/otp',{
+    //     reference_id:"telecom_1FmH36xper0Nq8xQf7ntl6c3s4nC3JLl", mobile_otp : phonecode,email_otp : emailcode
+    //   }) 
+    //   console.log(response);
+    //   if (response.status === 200) {
+    //     onNextStep();
+    //   }else {
+    //     console.log('OTP not valid:', response);
+    //   }
+    // }catch(err){
+    //   console.log(err);
+    // }
   };
 
   return (

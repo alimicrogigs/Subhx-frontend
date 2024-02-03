@@ -24,7 +24,6 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
   const handlePANChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPANno(value);
-    console.log("line24__" + value)
     if (PANno == "") { 
       toast.custom(
         <ToasterCustom type="error" message="Please provide Pan no " />,
@@ -35,17 +34,18 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
       )
       return
     }
-    console.log("line35__"+ PANno)
+   
     if (value.length ==  10 ) { // Assuming PAN number has 10 characters
       try {
         const token = localStorage.getItem("token")
-        console.log(PANno)
+       
         const response = await axios.post(apiUrl + 'pan-verification',{
         pan_number : value,
       },{ headers: { 'token': token,
                      'Content-Type': 'application/json',
                      'Authorization': `Bearer `+ token}
         }); 
+        console.log('response---------48', response);
         setUserName(response.data.data.name);
         setUserPANresponse(response.data.data)
       } catch (error) {
@@ -59,11 +59,11 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
     e.preventDefault();
     
     try {
-      const token = localStorage.getItem("token")
-      console.log(userPANresponse )
-      const response = await axios.post(apiUrl + 'save-pan-response',{
-      pan_number : PANno , pan_response : userPANresponse 
-    },{ headers: { 'token': token,
+        const token = localStorage.getItem("token")
+        console.log(userPANresponse );
+        const response = await axios.post(apiUrl + 'save-pan-response',{
+        pan_number : PANno , pan_response : userPANresponse 
+      },{ headers: { 'token': token,
                    'Content-Type': 'application/json',
                    'Authorization': `Bearer `+ token}
       })

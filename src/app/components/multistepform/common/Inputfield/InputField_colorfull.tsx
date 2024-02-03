@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from "react";
-
 interface InputProps {
   type: "text" | "password" | "number";
   value: string | number;
@@ -43,5 +42,4 @@ const Input: React.FC<InputProps> = ({
     </div>
   );
 };
-
 export default Input;

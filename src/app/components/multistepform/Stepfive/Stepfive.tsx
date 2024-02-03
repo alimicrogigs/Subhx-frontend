@@ -2,6 +2,13 @@
 import React, { useState } from "react";
 import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
+import {getRequestAPIHelper} from "../../../utils/lib/requestHelpers"
+const dotenv = require('dotenv');
+dotenv.config();
+const apiUrl = process.env.API_URL;
+
 
 interface StepsixProps {
   active: boolean;
@@ -11,16 +18,31 @@ interface StepsixProps {
 
 
 const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
-  const [video, setvideo] = useState("");
+const [video, setvideo] = useState("");
+const [loading, setLoading] = useState(false);
 
-  const handlerecord = () => {};
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Log all form data to the console
-    onNextStep();
-  }
+    try {
+      const token = localStorage.getItem("token");           
 
+      const response = await getRequestAPIHelper(apiUrl + 'get-user-video-kyc-link', token);
+      console.log('response---------27', response);  
+      if (response.status === 200) {             
+        window.location.href = response.data;  
+      } else {
+        console.error('Unexpected status code:', response.status);
+        toast.error("Unexpected status code");
+      } 
+    } catch (error) {
+      console.error('Error fetching PAN details:', error);
+      toast.error("Error fetching PAN details");
+    } finally {
+      setLoading(false);
+    }
+    
+   
+  };
 
   return (
     <form
@@ -54,8 +76,8 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Preview
-        </div> */}
-        <div
+        </div> */} 
+        {/* <div
           onClick={handlerecord}
           style={{
             backgroundImage: "url(/signup/recordfillbg.svg)",
@@ -63,25 +85,19 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Record
-        </div>
-        {/* <div
-          style={{
-            backgroundImage: "url(/signup/recordbutton.svg)",
-          }}
-          className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
-        >
-          Retake
         </div> */}
-      </div>
+        
+      </div> 
+      <h5 className="mt-[20px] gap-[10px]">Please Proceed to complete Video KYC</h5>
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",
         }}
         onClick={handleSubmit}
-        className="w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[20px]"
+        className={`w-[80%] sm:text-signupheading text-signupheadingmobile py-[5px] font-poppinsSemibold flex justify-center bg-center bg-contain bg-no-repeat mt-[20px] ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
       >
-        Next
-      </div>
+        {loading ? 'Processing...' : 'Proceed'}
+    </div>
     </form>
   );
 };

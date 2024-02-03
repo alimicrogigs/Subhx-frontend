@@ -10,7 +10,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
-
 interface SteponeProps {
   active: boolean;
   onNextStep: () => void
@@ -36,14 +35,19 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const handleToggleRetypePassword = () => {
     setShowRetypePassword((prevShowRetypePassword) => !prevShowRetypePassword);
   };
-  const handleReferralOptionalChange = () => {
-    
+  const handleReferralOptionalChange = (e:any) => {
+    console.log(e.target.value)
     setReferralOptional((prevValue) => !prevValue);
+
+    // setReferralOptional((prevReferralOptional) => !prevReferralOptional);
   };
 
   const handleAgreeTermsChange = () => {
     setAgreeTerms((prevAgreeTerms) => !prevAgreeTerms);
   }
+
+
+
   const Handlesetreferalcode = async (e: any)=>{
     setreferalcode(e.target.value)
     if(referalcode.length >= 6){
@@ -173,7 +177,6 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
 
 
     try {
-
         const requestData: {
           email: string;
           phone: string;
@@ -187,27 +190,41 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           password,
           confirm_password: retypePassword,
           register_type: 'individual',
-          referral_code: null, // or undefined, depending on your requirements
+          referral_code: null, 
         };
-        console.log('API URL:', apiUrl)
-
         const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
-        console.log(response);
+        console.log('172',response);
         if (response.status === 200){
           const token = (response.data.token)
 
-          // Check if the token is present
           if (token) {
-            localStorage.setItem('token', response.data.token); 
-            console.log(referralOptional)
+            localStorage.setItem('token', response.data.token);
+            toast.custom(
+              <ToasterCustom
+                type="success"
+                message="Account Created Successfully"
+              />,
+              {
+                position: "top-right", 
+                duration: 1000, 
+              }
+            );
             onNextStep();
           } else {
             console.log('Token not found in response:', response.data);
-          }
-        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
-        onNextStep();
-        
+          }        
         } else {
+
+          toast.custom(
+            <ToasterCustom
+              type="error"
+              message={response.response.data.message}
+            />,
+            {
+              position: "top-right", 
+              duration: 1000, 
+            }
+          );
           console.log('Registration failed:', response.data);
         }
     } catch (error) {
@@ -301,7 +318,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
         />
         <p className="text-[.8rem]">I agree to BIT24HR Term & Conditions </p>
       </div>
-            {/* .................................... */}
+               {/* .................................... */}
       {referralOptional && (
         <div className="w-[80%]  mt-[20px]">
           <InputField_colorfull
@@ -313,8 +330,6 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           />
         </div>
       )}
-
-      {/* ................................. */}
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",

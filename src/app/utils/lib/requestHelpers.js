@@ -47,9 +47,9 @@ exports.getRequestAPIHelper = async (url, authorizationToken) => {
         method: 'get',
         url: url,
         headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+authorizationToken, 
-          // 'User-Agent': JSON.stringify(userAgentInfo),
+          'Content-Type': 'application/json', 
+          'Authorization': 'Bearer ' + authorizationToken,
+          // 'User-Agent': getUserAgentInfo()      
         }
       };
   

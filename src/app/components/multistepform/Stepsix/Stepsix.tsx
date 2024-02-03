@@ -75,9 +75,6 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
 
     try{
       const token = localStorage.getItem("token")
-      // console.log('80', 'bankaccount',bankaccount);
-      // console.log('81', 'confirmbankaccount', confirmbankaccount);
-      // console.log('82', 'ifsc',ifsc);
       const response = await axios.post(apiUrl + 'bank-verification',{
         account_number:bankaccount,
         confirmed_account_number: confirmbankaccount, ifsc_code :ifsc  
@@ -86,7 +83,7 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
       if (response.status === 200){
         console.log('account no. done', response)
         toast.custom(
-          <ToasterCustom type="message" message="Bank verified successfully..." />,
+          <ToasterCustom type="success" message="Bank verified successfully..." />,
           {
             position: "top-right", // Set the position (e.g., "top-center")
             duration: 1000, // Set the duration in milliseconds
@@ -94,9 +91,23 @@ const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
         );
         onNextStep();
       }else {
+        toast.custom(
+          <ToasterCustom type="success" message="Bank not verified successfully..." />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
         console.log('account no. not done', response)
       }
-    }catch(err){
+    }catch(err:any){
+      toast.custom(
+        <ToasterCustom type="error" message={err.response.data.message} />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
       console.log(err);
     }
     // onNextStep();

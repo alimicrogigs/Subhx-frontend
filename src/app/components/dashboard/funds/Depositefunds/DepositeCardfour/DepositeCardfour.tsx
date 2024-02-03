@@ -12,14 +12,9 @@ interface props {
   UPIid: string;
 }
 
-interface props {
-  UPIid: string;
-}
-
-// const DepositeCardone: React.FC<props> = ({ UPIid }) => {
 const DepositeCardone: React.FC<props> = ({ UPIid }) => {
   const upi = "Payments.bit24hr@upi";
-  const {upiAddress} = useSelector((state)=>state.deposite);
+  const {upiAddress} = useSelector((state:any)=>state.deposite);
   const [UPIrrnnumber, setUPIrrnnumber] = useState("");
 
   const handleupisubmit = async () => {
@@ -28,8 +23,7 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
     // if (UPIrrnnumber.length >= 5) {
     try {
       const token = localStorage.getItem("token")
-      console.log(token);
-      console.log(UPIrrnnumber)
+
       const RRNorUTN = await postRequestAPIHelper(apiUrl + 'create-deposit-request', token, {
         deposit_reference_id: UPIrrnnumber
       })

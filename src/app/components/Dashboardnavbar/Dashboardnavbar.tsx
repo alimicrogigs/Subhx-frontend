@@ -11,8 +11,9 @@ const apiUrl = process.env.API_URL;
 import { toast } from "react-hot-toast";
 import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
 import { getRequestAPIHelper } from "../../utils/lib/requestHelpers";
-dotenv.config();
 
+
+dotenv.config();
 
 export default function () {
   // //.............................
@@ -48,7 +49,7 @@ export default function () {
     try {
       // You should replace 'YOUR_LOGOUT_API_URL' with the actual URL of your logout API
       let token = localStorage.getItem("token");
-      const response = await postRequestAPIHelper(apiUrl + 'logout', token, null);
+      const response = await postRequestAPIHelper(apiUrl+'logout', token, null);
       console.log('Logout Response', response);
       if (response.status === 200) {
         toast.custom(
@@ -57,18 +58,18 @@ export default function () {
             message={response.data.message || "Logout successful"}
           />,
           {
-            position: "top-right",
-            duration: 1000,
+            position: "top-right", 
+            duration: 1000, 
           }
         );
         // Remove the token from the storage
         localStorage.removeItem("token");
-        const mainUrl = window.location.origin;
+        const mainUrl = window.location.origin; 
         setTimeout(() => {
           // redirect to hero page
           window.location.href = mainUrl;
-          window.location.href = "/login";
-        }, 2000);
+          // window.location.href = "/login";
+        }, 1000);
       } else {
         toast.custom(
           <ToasterCustom
@@ -76,8 +77,8 @@ export default function () {
             message={response.data.message || "Logout failed"}
           />,
           {
-            position: "top-right",
-            duration: 1000,
+            position: "top-right", 
+            duration: 1000, 
           }
         );
       }

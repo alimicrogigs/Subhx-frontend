@@ -12,7 +12,11 @@ import {
     GET_USER_DETAILS_REQUEST,
     GET_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAILURE,
+    DEPOSITFUND_DETAILS_REQUEST,
+    DEPOSITFUND_DETAILS_SUCCESS,
+    DEPOSITFUND_DETAILS_FAILURE,
   } from "../constants/depositeFundConstants";
+ 
   
   export const getUpiAddressRequest = () => ({
     type: GET_UPI_ADDRESS_REQUEST,
@@ -66,3 +70,20 @@ import {
     type: GET_USER_DETAILS_FAILURE,
     payload: error,
   })
+
+
+export const depositeFundRequest = () => ({
+  type: DEPOSITFUND_DETAILS_REQUEST,
+});
+
+export const depositeFundSuccess = (upiAddress: any) => ({
+  type: DEPOSITFUND_DETAILS_SUCCESS,
+  payload: upiAddress,
+});
+
+export const depositeFundFailure = (error:any) => ({
+  type: DEPOSITFUND_DETAILS_FAILURE,
+  payload: error,
+});
+
+

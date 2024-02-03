@@ -6,10 +6,10 @@ export default function navbar() {
     <section className="w-[100vw] border-b border-borderline">
       <nav className="">
         <ul className="w-[95%] m-auto h-[70px] flex justify-between  text-white px-[5%]">
-          <Link href="/dashboard">
+          <Link href="/dashboard/exchange">
             <li className="flex items-center h-[100%]">Exchange</li>
           </Link>
-          <li className="flex items-center">Funds</li>
+          {/* <li className="flex items-center">Funds</li> */}
           <li className="flex items-center">
             <div
               style={{
@@ -18,7 +18,7 @@ export default function navbar() {
               className="h-[100%] w-[200px]  bg-center bg-[60%] bg-no-repeat"
             ></div>
           </li>
-          <li className="flex items-center">Refer & Rewardss</li>
+          {/* <li className="flex items-center">Refer & Rewardss</li> */}
           <li className="flex items-center ">
             <Link href="/login">
               <div

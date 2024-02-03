@@ -17,7 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-maincolor">
       <body className="font-poppinsRegular bg-maincolor">
-        <Providers>{children}</Providers>
+        <Providers><Providers>{children}</Providers></Providers>
+
         <Toaster />
       </body>
     </html>

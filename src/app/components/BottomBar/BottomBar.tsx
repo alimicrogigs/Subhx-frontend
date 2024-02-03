@@ -26,7 +26,7 @@ export default function BottomBar({ onChangeLayout }: BottomBarProps) {
       case "CHARTS":
         // Task for CHARTS
         onChangeLayout("CHARTS");
-        console.log("Charts-clicked");
+        
 
         break;
       case "ORDERBOOK":
@@ -39,7 +39,7 @@ export default function BottomBar({ onChangeLayout }: BottomBarProps) {
         break;
       default:
         // Default case
-        console.log(`Clicked on ${label}`);
+       
     }
   };
 

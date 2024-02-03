@@ -5,54 +5,8 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import moment from "moment";
-
-const tableData = [
-  {
-    id: 1,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-  {
-    id: 2,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "buy",
-  },
-  {
-    id: 3,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-
-  {
-    id: 1,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-  {
-    id: 2,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "buy",
-  },
-  {
-    id: 3,
-    price: 41789.2,
-    volume: 0.00018,
-    time: "01:23:30",
-    type: "sell",
-  },
-];
 
 interface CellInfo {
   value: any;
@@ -69,26 +23,46 @@ interface CustomColumnDef {
   cell?: (info: CellInfo) => React.ReactNode;
 }
 
-export default function MarketTrades() {
-  const data = useMemo(() => tableData, []);
+interface OrderBookSellTableProps {
+  sellData: Order[];
+}
+
+export default function OrderBookSellTable({
+  sellData,
+}: OrderBookSellTableProps) {
+  const [data, setData] = useState<Order[]>([]);
+
+  console.log("sellData====", data);
+
+  useEffect(() => {
+    const newData = [...sellData.slice(0, 10)];
+    setData(newData);
+
+    // Update state with the latest 6 entries
+    // setData((prevData) => {
+    //   const previousData = prevData.slice(0, 10 - newData.length);
+
+    //   return [...newData, ...previousData];
+    // });
+  }, [sellData]);
 
   const columns: CustomColumnDef[] = [
     {
-      header: "PRICE",
-      accessorKey: "price",
-      cell: (info: CellInfo) => (
-        <div style={{ textAlign: "start" }}>{info.row.original.price}</div>
+      header: "SELL PRICE",
+      accessorKey: "rate",
+      cell: (info: cellInfo) => (
+        <div style={{ textAlign: "start", color: "rgba(230, 86, 97, 1)" }}>
+          {info.row.original[0].toFixed(2)}
+        </div>
       ),
     },
     {
       header: "VOLUME",
       accessorKey: "volume",
-    },
-    {
-      header: "TIME",
-      accessorKey: "time",
-      cell: (info: CellInfo) => (
-        <div style={{ textAlign: "end" }}>{info.row.original.time}</div>
+      cell: (info: cellInfo) => (
+        <div style={{ textAlign: "end" }}>
+          {info.row.original[1].toFixed(4)}
+        </div>
       ),
     },
   ];
@@ -110,11 +84,11 @@ export default function MarketTrades() {
               {headerGroup.headers.map((header) => (
                 <th
                   className={`${
-                    header.column.columnDef.accessorKey === "volume"
-                      ? "text-center"
+                    header.column.columnDef.accessorKey === "rate"
+                      ? "text-start"
                       : ""
                   } ${
-                    header.column.columnDef.accessorKey === "time"
+                    header.column.columnDef.accessorKey === "volume"
                       ? "text-end"
                       : ""
                   }  text-[0.65rem] sm:text-[0.8rem] font-thin sm:font-normal px-3 py-2 sm:p-0 sm:px-4 sm:py-2 sm:items-center`}
@@ -138,12 +112,12 @@ export default function MarketTrades() {
                   : row.original.type === "buy"
                   ? "bg-green"
                   : ""
-              } sm:text-[0.8rem] sm:h-[2.8rem] text-[0.8rem] border-b-[1px] sm:border-b-[1px] border-borderline sm:justify-between items-center sm:items-center`}
+              } sm:text-[0.8rem] sm:h-[1.4rem] text-[0.8rem]  sm:justify-between items-center sm:items-center`}
               key={row.id}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
-                  className={`  text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
+                  className={`font-poppinsSemibold  text-center sm:text-center px-3 sm:px-0 py-2 sm:py-0 text-[0.6rem] sm:text-[0.6rem] font-normal `}
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
