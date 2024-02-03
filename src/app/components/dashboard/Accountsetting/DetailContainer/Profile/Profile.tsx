@@ -46,7 +46,7 @@ export default function Profile() {
   const handleGSTIN = () => {
     console.log({ GSTno });
     setGSTno("");
-  };
+  }
 
   interface Nominee {
     name: string;
