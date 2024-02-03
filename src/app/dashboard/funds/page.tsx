@@ -184,6 +184,7 @@ const FundsPage: React.FC<FundsPageProps> = () => {
         </div>
       </div>
       {/* ...... fix footer start from here ........... */}
+
     </>
   );
       
