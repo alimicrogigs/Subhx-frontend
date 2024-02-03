@@ -5,6 +5,8 @@ import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
 import { postRequestAPIHelper } from "../../../utils/lib/requestHelpers";
+import Checkboxcustom from "../../common/Checkboxcustom/Checkboxcustom";
+
 const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
@@ -21,7 +23,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [retypePassword, setRetypePassword] = useState("");
   const [showRetypePassword, setShowRetypePassword] = useState(false);
-  const [referralOptional, setReferralOptional] = useState(null);
+  const [referralOptional, setReferralOptional] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
   const handleTogglePassword = () => {
@@ -32,6 +34,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
     setShowRetypePassword((prevShowRetypePassword) => !prevShowRetypePassword);
   };
   const handleReferralOptionalChange = (e: any) => {
+    setReferralOptional(!referralOptional);
     console.log(e.target.value);
   };
 
@@ -256,18 +259,18 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
       </div>
       {/* ... */}
       <div className="w-[80%] flex gap-[10px] mt-[15px] pl-[5px]">
-        <input
-          className="h-[100%] w-[20px]"
-          type="checkbox"
-          // checked={referralOptional}
+        <Checkboxcustom
+          top="0px"
+          id="refer"
+          checked={referralOptional}
           onChange={handleReferralOptionalChange}
         />
         <p className="text-[.8rem]">I have Referral Optional </p>
       </div>
       <div className="w-[80%] flex gap-[10px] mt-[20px] pl-[5px]">
-        <input
-          className="h-[100%] w-[20px]"
-          type="checkbox"
+        <Checkboxcustom
+          top="0px"
+          id="agreeterms"
           checked={agreeTerms}
           onChange={handleAgreeTermsChange}
         />

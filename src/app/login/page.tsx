@@ -5,6 +5,7 @@ import Inputfield from "../components/multistepform/common/Inputfield/Inputfield
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
+import Checkboxcustom from "../components/common/Checkboxcustom/Checkboxcustom";
 import { postRequestAPIHelper } from "../utils/lib/requestHelpers";
 const dotenv = require("dotenv");
 dotenv.config();
@@ -27,7 +28,7 @@ export default function page() {
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-  const handlesignmein = () => {
+  const handlesigmein = () => {
     setSignmein((prevsetSignmein) => !prevsetSignmein);
   };
   const handleresendmobilecode = (e: any) => {};
@@ -204,12 +205,12 @@ export default function page() {
             {/* ..................................... */}
             {/* ..................................... */}
             <div className="w-[80%] flex gap-[10px] mt-[15px] pl-[5px] justify-between items-center">
-              <div className="flex gap-[10px]  sm:pl-[5px] pl-[0px] items-center">
-                <input
-                  className="h-[100%] w-[20px]"
-                  type="checkbox"
+              <div className="flex gap-[0px]  sm:pl-[5px] pl-[0px] items-center">
+                <Checkboxcustom
+                  top="-10px"
+                  id="agreeterms"
                   checked={signmein}
-                  onChange={handlesignmein}
+                  onChange={handlesigmein}
                 />
                 <p className="sm:text-[.8rem] text-[.7rem]">
                   Keep me signed in.{" "}

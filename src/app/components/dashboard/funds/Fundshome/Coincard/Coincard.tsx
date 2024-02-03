@@ -73,7 +73,7 @@ const Coincard: React.FC<coincardsprops> = ({
             <>
               <motion.div
                 whileTap={{ x: 2, y: 2 }}
-                transition={{ type: "spring", stiffness: 500, damping: 5 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 onClick={() => {
                   setiswithdrawopen(!iswithdrawopen);
                   setisdepositewopen(false);
@@ -82,22 +82,24 @@ const Coincard: React.FC<coincardsprops> = ({
                   backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
                   cursor: "pointer",
                 }}
-                className="flex justify-center items-center px-[20px] bg-contain bg-center bg-no-repeat"
+                className="flex justify-center items-center px-[40px] bg-contain bg-center bg-no-repeat"
               >
                 Withdraw
               </motion.div>
               <motion.div
                 whileTap={{ x: 2, y: 2 }}
-                transition={{ type: "spring", stiffness: 500, damping: 5 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 onClick={() => {
                   setisdepositewopen(!isdepositewopen);
                   setiswithdrawopen(false);
                 }}
                 style={{
-                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
+                  backgroundImage:
+                    "url(/dashboard/funds/portfolio/greenbutton.svg)",
+
                   cursor: "pointer",
                 }}
-                className="flex justify-center items-center px-[30px] bg-contain bg-center bg-no-repeat"
+                className="flex justify-center items-center px-[40px] bg-contain bg-center bg-no-repeat"
               >
                 Deposit
               </motion.div>
@@ -114,7 +116,7 @@ const Coincard: React.FC<coincardsprops> = ({
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
           >
             <div className="sm:w-[55%] w-[90%] mx-auto pt-[70px] pb-[10px]">
               <h1 className=" border-b border-b-[#07303F] border-b-[2px] pb-[10px] text-[.9rem]">
@@ -184,7 +186,7 @@ const Coincard: React.FC<coincardsprops> = ({
                   onClick={() => {
                     onAction(depositeBTCdetail);
                   }}
-                  className="bg-[#E65661] inline mx-auto px-[100px] py-[5px] text-[2rem] font-poppinsSemibold rounded rounded-[5px]"
+                  className="bg-[#E65661] inline mx-auto sm:px-[100px] px-[50px] py-[5px] sm:text-[2rem] text-[1.2rem] font-poppinsSemibold rounded rounded-[5px]"
                 >
                   Proceed with Withdrawal
                 </div>
@@ -216,7 +218,7 @@ const Coincard: React.FC<coincardsprops> = ({
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
           >
             <div className="sm:w-[50%] w-[90%] mx-auto pt-[50px] pb-[10px]">
               <p className="border-b border-b-[#07303F] border-b-[2px] pb-[10px]">

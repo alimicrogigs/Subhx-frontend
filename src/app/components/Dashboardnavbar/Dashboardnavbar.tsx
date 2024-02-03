@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Link from "next/link";
@@ -11,6 +11,13 @@ dotenv.config();
 const apiUrl = process.env.API_URL;
 
 export default function () {
+  //...............................
+  const [mobilemenuopen, setMobilemenuopen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  let pathname = usePathname();
+
+  //..................
+
   // //.............................
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -34,10 +41,7 @@ export default function () {
 
   //   fetchData();
   // }, []);
-  //...............................
-  const [mobilemenuopen, setMobilemenuopen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  let pathname = usePathname();
+
   // let active = href == pathname;
 
   const closeallmenu = () => {
