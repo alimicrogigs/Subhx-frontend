@@ -10,18 +10,26 @@ import { FaPlay } from "react-icons/fa";
 import { TbReceiptTax } from "react-icons/tb";
 import { GoDotFill } from "react-icons/go";
 import { IoIosAddCircle } from "react-icons/io";
+<<<<<<< Updated upstream
 import {useSelector} from "react-redux";
 
+=======
+import { useSelector } from "react-redux";
+>>>>>>> Stashed changes
 
 export default function Profile() {
   // data
-  const [GSTno, setGSTno] = useState("")
+  const [GSTno, setGSTno] = useState("");
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
+<<<<<<< Updated upstream
   const {userAllDetails } = useSelector((state :any)=>state.userDetails);
   console.log("line 222" ,userAllDetails );
   const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
 
+=======
+  const { getUserAllDetails } = useSelector((state: any) => state.deposite);
+>>>>>>> Stashed changes
 
   // nominee edit form
   const [nomineeEditopen, setNomineeEditopen] = useState(false);
@@ -33,10 +41,14 @@ export default function Profile() {
     panNumber: "",
     emailAddress: "",
   });
+<<<<<<< Updated upstream
 
   const handleNewNominee = () => {
   };
 
+=======
+  const handleNewNominee = () => {};
+>>>>>>> Stashed changes
   const handleNomineeFormDataChange = (e: any) => {
     const { name, value } = e.target;
     setNomineeFormData((prevData) => ({
@@ -65,8 +77,8 @@ export default function Profile() {
     mail: "john.doe@example.com",
     contactno: 9876543210,
     nominee: [{ name: "Alice Johnson", relation: "Spouse" }],
-  }
-console.log("getUserAllDetails 64",getUserAllDetails)
+  };
+  console.log("getUserAllDetails 64", getUserAllDetails);
   return (
     <>
       <HeadContainer
@@ -83,7 +95,15 @@ console.log("getUserAllDetails 64",getUserAllDetails)
               <FaCheck />
             </div>
 
+<<<<<<< Updated upstream
             {(userAllDetails .name === null ||userAllDetails .name === undefined) ? "NA" : userAllDetails .name}
+=======
+            {getUserAllDetails.name === null ||
+            getUserAllDetails.name === undefined ||
+            getUserAllDetails.name === undefined
+              ? "NA"
+              : getUserAllDetails.name}
+>>>>>>> Stashed changes
           </h1>
         </div>
         {/* ........ */}
@@ -95,7 +115,14 @@ console.log("getUserAllDetails 64",getUserAllDetails)
               <IoMdMail />
             </div>
 
+<<<<<<< Updated upstream
             {(userAllDetails .email === null ||userAllDetails .email === undefined) ? "NA" : userAllDetails .email}
+=======
+            {getUserAllDetails.email === null ||
+            getUserAllDetails.email === undefined
+              ? "NA"
+              : getUserAllDetails.email}
+>>>>>>> Stashed changes
           </h1>
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
@@ -109,7 +136,14 @@ console.log("getUserAllDetails 64",getUserAllDetails)
               <FaMobileAlt />
             </div>
             +91 &nbsp;
+<<<<<<< Updated upstream
             {(userAllDetails .phone === null || userAllDetails .phone === undefined) ? "NA" : userAllDetails .phone}
+=======
+            {getUserAllDetails.phone === null ||
+            getUserAllDetails.phone === undefined
+              ? "NA"
+              : getUserAllDetails.phone}
+>>>>>>> Stashed changes
           </h1>
 
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
@@ -218,7 +252,8 @@ console.log("getUserAllDetails 64",getUserAllDetails)
 
               <button
                 onClick={handleNewNominee}
-                className="bg-[#F5CD8E] mb-[30px] py-[10px] rounded-[10px] w-auto">
+                className="bg-[#F5CD8E] mb-[30px] py-[10px] rounded-[10px] w-auto"
+              >
                 {" "}
                 Save Changes
               </button>
