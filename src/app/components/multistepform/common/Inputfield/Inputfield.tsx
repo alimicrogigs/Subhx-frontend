@@ -18,11 +18,11 @@ const Input: React.FC<InputProps> = ({
   onToggle,
 }) => {
   return (
-    <div className="w-[100%] relative">
+    <div className="w-[100%] relative text-[.8rem]">
       {showToggle && (
         <div
           onClick={onToggle}
-          className="absolute top-0 right-[20px] flex justify-center items-center h-[100%] text-[#DC04FF] cursor-pointer"
+          className="absolute top-0 right-[20px] flex justify-center items-center h-[100%] text-[#0C4E66] cursor-pointer"
         >
           {type === "password" ? "Show" : "Hide"}
         </div>

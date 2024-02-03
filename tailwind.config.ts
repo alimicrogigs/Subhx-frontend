@@ -16,6 +16,7 @@ const config: Config = {
         poppinsThin: "Poppins-thin",
       },
       colors: {
+        golden: "#F5CD8E",
         buttonborder: "#829CA5",
         dashboardbgone: "#07303F",
         activedashboardbutton: "#829CA5",
@@ -33,14 +34,9 @@ const config: Config = {
         bordersBg: "rgba(130, 156, 165, 1)",
 
         maincolor: "#00090C",
-        
-        
-       
-       
-       
+
         tableodd: "#002B50",
         absolutetrans: "rgba(4, 30, 39, .8)",
-
       },
       fontSize: {
         signupheading: "1.8rem",

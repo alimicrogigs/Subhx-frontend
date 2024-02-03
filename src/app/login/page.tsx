@@ -5,8 +5,8 @@ import Inputfield from "../components/multistepform/common/Inputfield/Inputfield
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
-import {postRequestAPIHelper} from "../utils/lib/requestHelpers"
-const dotenv = require('dotenv');
+import { postRequestAPIHelper } from "../utils/lib/requestHelpers";
+const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
@@ -91,44 +91,44 @@ export default function page() {
       signmein,
     });
     try {
-
       const requestData: {
         email: string;
         password: string;
         signmein: any;
-
       } = {
         email,
         password,
-        signmein,// or undefined, depending on your requirements
+        signmein, // or undefined, depending on your requirements
       };
-      console.log('API URL:', apiUrl);
+      console.log("API URL:", apiUrl);
 
-      const response = await postRequestAPIHelper(apiUrl+'login', null, requestData);
+      const response = await postRequestAPIHelper(
+        apiUrl + "login",
+        null,
+        requestData
+      );
       console.log(response);
-      if (response.status === 200){
-        const token = (response.data.token)
+      if (response.status === 200) {
+        const token = response.data.token;
 
         // Check if the token is present
         if (token) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
+          localStorage.setItem("token", JSON.stringify(response.data.token));
           setCurrentStep("validate");
         } else {
-          console.log('Token not found in response:', response.data);
+          console.log("Token not found in response:", response.data);
         }
-      // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
-      setCurrentStep("validate");
-      
+        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) )
+        setCurrentStep("validate");
       } else {
-        console.log('Registration failed:', response.data);
+        console.log("Registration failed:", response.data);
       }
-  } catch (error) {
-    // Handle API error in your controller
-    console.error('Controller Error:', error);
-  }
+    } catch (error) {
+      // Handle API error in your controller
+      console.error("Controller Error:", error);
+    }
 
     // this will take us to code validation page
-  
   };
 
   // validation form submit button here
@@ -138,7 +138,6 @@ export default function page() {
       email,
       password,
     });
-
   };
 
   return (
@@ -147,7 +146,7 @@ export default function page() {
         style={{
           backgroundImage: "url(/signup/signupbg.svg)",
         }}
-        className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
+        className="relative w-[100vw] h-[100vh] min-h-[700px] bg-center bg-cover flex justify-center items-center"
       >
         <Link href="/">
           <div
@@ -158,7 +157,7 @@ export default function page() {
           ></div>
         </Link>
         <div
-          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
+          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[95%] h-[95%] `}
         >
           {/* ............................................................ */}
           {/* login form start from here  */}
@@ -173,10 +172,10 @@ export default function page() {
                 Login Your Account
               </h1>
 
-              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[0px] pt-[10px]">
+              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[8px] pt-[10px]">
                 Don't have an account?{" "}
                 <Link href="/create-account">
-                  <span className="text-[#00BFFF] sm:ml-[20px] ml-[10px]">
+                  <span className="text-golden sm:ml-[20px] ml-[10px]">
                     Create Account
                   </span>
                 </Link>

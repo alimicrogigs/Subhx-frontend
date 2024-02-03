@@ -4,11 +4,10 @@ import Inputfield from "../common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
-import {postRequestAPIHelper} from "../../../utils/lib/requestHelpers"
-const dotenv = require('dotenv');
+import { postRequestAPIHelper } from "../../../utils/lib/requestHelpers";
+const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
-
 
 interface SteponeProps {
   active: boolean;
@@ -32,9 +31,8 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
   const handleToggleRetypePassword = () => {
     setShowRetypePassword((prevShowRetypePassword) => !prevShowRetypePassword);
   };
-  const handleReferralOptionalChange = (e:any) => {
-    console.log(e.target.value)
-
+  const handleReferralOptionalChange = (e: any) => {
+    console.log(e.target.value);
   };
 
   const handleAgreeTermsChange = () => {
@@ -121,7 +119,7 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
         }
-      )
+      );
       return;
     }
     if (phoneNumber.length < 10) {
@@ -147,52 +145,53 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
       agreeTerms,
     });
 
-
     try {
+      const requestData: {
+        email: string;
+        phone: string;
+        password: string;
+        confirm_password: string;
+        register_type: string;
+        referral_code?: null | undefined;
+      } = {
+        email,
+        phone: phoneNumber,
+        password,
+        confirm_password: retypePassword,
+        register_type: "individual",
+        referral_code: null, // or undefined, depending on your requirements
+      };
+      console.log("API URL:", apiUrl);
 
-        const requestData: {
-          email: string;
-          phone: string;
-          password: string;
-          confirm_password: string;
-          register_type: string;
-          referral_code?: null | undefined;
-        } = {
-          email,
-          phone: phoneNumber,
-          password,
-          confirm_password: retypePassword,
-          register_type: 'individual',
-          referral_code: null, // or undefined, depending on your requirements
-        };
-        console.log('API URL:', apiUrl);
+      const response = await postRequestAPIHelper(
+        apiUrl + "register",
+        null,
+        requestData
+      );
+      console.log(response);
+      if (response.status === 200) {
+        const token = response.data.token;
 
-        const response = await postRequestAPIHelper(apiUrl+'register', null, requestData);
-        console.log(response);
-        if (response.status === 200){
-          const token = (response.data.token)
-
-          // Check if the token is present
-          if (token) {
-            localStorage.setItem('token', JSON.stringify(response.data.token));
-            onNextStep();
-          } else {
-            console.log('Token not found in response:', response.data);
-          }
-        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
-        onNextStep();
-        
+        // Check if the token is present
+        if (token) {
+          localStorage.setItem("token", JSON.stringify(response.data.token));
+          onNextStep();
         } else {
-          console.log('Registration failed:', response.data);
+          console.log("Token not found in response:", response.data);
         }
+        // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) )
+        onNextStep();
+      } else {
+        console.log("Registration failed:", response.data);
+      }
     } catch (error) {
       // Handle API error in your controller
-      console.error('Controller Error:', error);
+      console.error("Controller Error:", error);
     }
   };
 
   return (
-    <form 
+    <form
       action=""
       style={{ display: active ? "flex" : "none" }}
       className="w-[100%] h-[100%]  flex flex-col justify-center items-center text-white"
@@ -204,10 +203,10 @@ const Stepone: React.FC<SteponeProps> = ({ active, onNextStep }) => {
           Create Your Account
         </h1>
 
-        <p className="text-[.8rem] text-center">
+        <p className="text-[.8rem] text-center pt-[5px] ">
           Already have an account?
           <Link href="/login">
-            <span className="ml-[90px] text-[#00BFFF]">Login</span>
+            <span className="ml-[40px] text-golden">Login</span>
           </Link>
         </p>
       </div>
