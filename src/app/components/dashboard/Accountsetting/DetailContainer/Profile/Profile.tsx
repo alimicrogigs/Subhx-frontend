@@ -43,7 +43,8 @@ export default function Profile() {
       ...prevData,
       [name]: value,
     }));
-  };
+  }
+
   const handleGSTIN = () => {
     setGSTno("");
   }
@@ -275,3 +276,4 @@ console.log("getUserAllDetails 64",getUserAllDetails)
     </>
   );
 }
+

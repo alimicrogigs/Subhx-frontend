@@ -7,7 +7,7 @@ import {
   const initialState = {
     loading: false,
     userAllDetails:{},
-    error: null,
+    userError: null,
   };
   
   export const userData = (state = initialState, action: any) => {

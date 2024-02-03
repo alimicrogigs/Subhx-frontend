@@ -7,6 +7,8 @@ import ChartSection from "@/app/components/chartSection/ChartSection";
 import CurrencySection from "@/app/components/currencySection/CurrencySection";
 import OrderBook from "@/app/components/orderBook/OrderBook";
 import useWindowResize from "@/app/Hooks/useWindowResize";
+import { getUserDataRequest, getUserDataSuccess, getUserDataFailure } from "../../actions/depositeFundActions"
+
 import BottomBar from "@/app/components/BottomBar/BottomBar";
 import {
   getAllCoinsRequest,
@@ -32,6 +34,35 @@ export default function page() {
     setCurrentLayout(newLayout);
   };
 
+  const { userAllDetails  , userError} = useSelector((state: any) => state.userDetails);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+
+      try {
+        dispatch(getUserDataRequest())
+        // Make the API call to fetch user details
+        const getUserDataResponse = await getRequestAPIHelper(apiUrl + 'user', token)
+        console.log( "--------------->",getUserDataResponse.success )
+        if(getUserDataResponse.success === true){
+          dispatch(getUserDataSuccess(getUserDataResponse.data))
+        }
+      } catch (err:any) {
+        console.log('Error fetching user details:', err.response.data.error);
+        if(err.response.data.error === "Unauthenticated."){
+          console.log("Token does not exist ")
+          dispatch(getUserDataFailure(err.response.data.error));
+          console.log(err.response.data.error);
+        }
+      }
+    }
+    // Call the fetchUserData function when the component mounts
+    fetchUserData()
+    return () => {
+
+    };
+  }, [])
+
 
   //get all the coins from api
   const getAllCoins = async () => {
@@ -51,6 +82,7 @@ export default function page() {
   useEffect(() => {
     getAllCoins();
   }, []);
+
 
   //fethcing currentRates from socket
   useEffect(() => {

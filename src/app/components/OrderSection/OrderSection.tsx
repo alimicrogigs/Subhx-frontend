@@ -2,7 +2,7 @@
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../common/ToasterCustom/ToasterCustom";
-// =============================
+import { getUserDataRequest, getUserDataSuccess, getUserDataFailure } from "../../actions/depositeFundActions"
 import { useDispatch, useSelector } from "react-redux";
 import {
   depositeFundRequest,
@@ -28,15 +28,21 @@ export default function OrderSection() {
   // ===========use selector to get api data from store=======
   const { loading, error, upiAddress } = useSelector((state:any) => state.deposite);
 
-  const { selectedCoin, currentRates, orderType } = useSelector(
-    (state: any) => state.coin
-  );
-  console.log("upiAddress=====", upiAddress);
-  console.log("selectedCoinfrom_ordersection", selectedCoin);
+  const { selectedCoin, currentRates, orderType } = useSelector((state: any) => state.coin);
+  const { userAllDetails  , userError} = useSelector((state: any) => state.userDetails);
+  
+  console.log(userAllDetails , "-----oeder section-----------------------" );
+  
+  // console.log("upiAddress=====", upiAddress);
+  // console.log("selectedCoinfrom_ordersection", selectedCoin);
   // console.log("ordertype=====", orderType);
 
   // ========================
   const dispatch = useDispatch();
+
+  const handleBUYandSELLusdt = (a:any) =>{
+    // if(userAllDetails.email === "")
+  }
 
   const handleOrderSwitch = (tab: any) => {
     console.log("==tab===", tab);
@@ -221,7 +227,10 @@ export default function OrderSection() {
 
   // ====================
   return (
-    <section className="bg-dashbgtrans  rounded-lg flex sm:flex-col sm:w-[26.2vw] sm:h-[100%]">
+
+    <>
+    
+    {<section className="bg-dashbgtrans  rounded-lg flex sm:flex-col sm:w-[26.2vw] sm:h-[100%]">
       <div className="flex sm:h-[15%] bg-dashbgtrans sm:flex-row sm:justify-center sm:items-center">
         <div
           onClick={() => handleOrderSwitch("buy")}
@@ -348,6 +357,7 @@ export default function OrderSection() {
           </div>
         )}
       </div>
-    </section>
+    </section>}
+    </>
   );
 }

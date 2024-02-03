@@ -41,10 +41,6 @@ const FundsPage: React.FC<FundsPageProps> = () => {
   
   // const router = useRouter();
   useEffect(() => {
-    // Function to fetch user details from API
-    const token = localStorage.getItem('token');
-
-
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
 
@@ -52,13 +48,11 @@ const FundsPage: React.FC<FundsPageProps> = () => {
         dispatch(getUserDataRequest())
         // Make the API call to fetch user details
         const getUserDataResponse = await getRequestAPIHelper(apiUrl + 'user', token)
-        console.log("line___57")
-        console.log(getUserDataResponse.data.error)
-        console.log(getUserDataResponse.error)
-      // 196|$2y$10$gYHdRlPzMDTYJfAI8I4vX.oSZH5FtAFRrCy8L0C0aobdqyAwxGsIi747d31eb
-        console.log(getUserDataResponse)
-        dispatch(getUserDataSuccess(getUserDataResponse.data))
-      } catch (err) {
+        console.log( "--------------->",getUserDataResponse.success )
+        if(getUserDataResponse.success === true){
+          dispatch(getUserDataSuccess(getUserDataResponse.data))
+        }
+      } catch (err:any) {
         console.log('Error fetching user details:', err.response.data.error);
         if(err.response.data.error === "Unauthenticated."){
           console.log("Token does not exist. Redirecting to login page...")
@@ -66,13 +60,13 @@ const FundsPage: React.FC<FundsPageProps> = () => {
               window.location.href = '/login';
           }, 10)
         }
-        dispatch(getUserDataFailure(err));
+        dispatch(getUserDataFailure(err.response.data.error));
       }
     }
     // Call the fetchUserData function when the component mounts
     fetchUserData()
     return () => {
-      // Any cleanup code if needed
+
     };
   }, [])
 
