@@ -230,7 +230,7 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1rem]  border-b border-b-[.5px] "
+                className="hover:bg-[#041E27] w-[100%] py-[20px] pl-[20px] text-[1rem]  border-b border-b-[.5px] "
               >
                 EXCHANGE
               </div>
@@ -243,7 +243,7 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1rem] bg-[#07303F] border-b border-b-[.5px]"
+                className="hover:bg-red-500 w-[100%] py-[20px] pl-[20px] text-[1rem] bg-[#07303F] border-b border-b-[.5px]"
               >
                 FUNDS
               </div>
@@ -258,7 +258,7 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(false)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1rem] border-b border-b-[.5px]"
+                className=" w-[100%] py-[20px] pl-[20px] text-[1rem] border-b border-b-[.5px]"
               >
                 REFER & REWARD
               </div>
@@ -274,7 +274,7 @@ export default function () {
                   }`,
                 }}
                 onClick={closeallmenu}
-                className="flex gap-[10px] py-[20px] text-[1rem] items-center pl-[20px] bg-[#07303F] border-b border-b-[.5px]"
+                className=" flex gap-[10px] py-[20px] text-[1rem] items-center pl-[20px] bg-[#07303F] border-b border-b-[.5px]"
               >
                 <div
                   style={{
@@ -288,7 +288,7 @@ export default function () {
             </Link>
 
             <Link href="/dashboard/account-setting">
-              <div className="flex gap-[10px] py-[20px] text-[1rem] items-center pl-[20px] bg-[#07303F] border-b border-b-[.5px]">
+              <div className=" flex gap-[10px] py-[20px] text-[1rem] items-center pl-[20px] bg-[#07303F] border-b border-b-[.5px]">
                 <div
                   style={{
                     backgroundImage:
