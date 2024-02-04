@@ -110,5 +110,4 @@ const FundsPage: React.FC<FundsPageProps> = () => {
     </>
   );
 };
-
 export default FundsPage;
