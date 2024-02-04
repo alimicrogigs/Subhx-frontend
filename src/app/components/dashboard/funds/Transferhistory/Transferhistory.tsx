@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Modal from "react-bootstrap/Modal";
 import Coincard from "../Fundshome/Coincard/Coincard";
 import { MdOutlineUnfoldMore } from "react-icons/md";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 export default function Fundshome() {
   const [show, setShow] = useState(false);
@@ -185,7 +186,10 @@ export default function Fundshome() {
       >
         <Modal.Header className="bg-[#07303F] text-white">
           <Modal.Title>TRANSFER HISTORY</Modal.Title>
-          <div onClick={handleClose}> x</div>
+          <div onClick={handleClose} className="text-[2rem]">
+            {" "}
+            <IoIosCloseCircleOutline />
+          </div>
         </Modal.Header>
         <Modal.Body className="bg-[#07303F] text-white">
           <section className="flex flex-col gap-[20px]">
