@@ -22,6 +22,8 @@ export default function page() {
 
   // for functionality front end
   const [showPassword, setShowPassword] = useState(false);
+  // create state to save tempToken
+  const [tempToken, setTempToken] = useState("");
   const [currentStep, setCurrentStep] = useState("login");
 
   const handleTogglePassword = () => {
@@ -104,7 +106,7 @@ export default function page() {
         requestData
       );
       if (response.status === 200) {
-        const token = response.data.token;
+        const token = response.data.temp_token;
         toast.custom(
           <ToasterCustom type="success" message="Login Successfully" />,
           {
@@ -112,14 +114,16 @@ export default function page() {
             duration: 1000,
           }
         );
+
         if (token) {
-          localStorage.setItem("token", response.data.token);
+          console.log("Token:", response.data.temp_token);
+          setTempToken(response.data.temp_token);
           setCurrentStep("validate");
         } else {
           console.log("Token not found in response:", response.data);
         }
         setCurrentStep("validate");
-        window.location.href = "/dashboard/exchange";
+        // window.location.href = "/dashboard/exchange";
       } else {
         console.log("Registration failed:", response.data);
       }
@@ -133,12 +137,53 @@ export default function page() {
   };
 
   // validation form submit button here
-  const handlevalidationsubmit = (e: any) => {
+  const handlevalidationsubmit = async (e: any) => {
     e.preventDefault();
-    console.log({
-      email,
-      password,
-    });
+    console.log("phonecode:", phonecode);
+    console.log("emailcode:", emailcode);
+    const requestData: {
+      email_otp: string;
+      phone_otp: string;
+      temp_token: string | null;
+    } = {
+      email_otp: emailcode,
+      phone_otp: phonecode,
+      temp_token: tempToken, 
+    };
+    console.log("API URL:", apiUrl);
+
+    const response = await postRequestAPIHelper(
+      apiUrl + "verify-login-otp",
+      null,
+      requestData
+    );
+    if (response.status === 200) {
+      const token = response.data.token;
+      toast.custom(
+        <ToasterCustom type="success" message="OTP verification Successfully" />,
+        {
+          position: "top-right",
+          duration: 1000,
+        }
+      );
+      if (token) {
+        localStorage.setItem("token", response.data.token);
+        setCurrentStep("validate");
+      } else {
+        console.log("Token not found in response:", response.response.data.message);
+      }
+      setCurrentStep("validate");
+      window.location.href = "/dashboard/exchange";
+    } else {
+      toast.custom(
+        <ToasterCustom type="error" message={response.response.data.message} />,
+        {
+          position: "top-right",
+          duration: 1000,
+        }
+      );
+    }
+    
   };
 
   return (
@@ -261,8 +306,8 @@ export default function page() {
             <div className="w-[80%] mt-[50px]  gap-[10px]">
               <Inputfield
                 type="number"
-                value={phonecode}
-                onChange={(e) => setphonecode(e.target.value)}
+                value={emailcode}
+                onChange={(e) => setemailcode(e.target.value)}
                 placeholder="Email Verification Code"
               />
             </div>
@@ -276,8 +321,8 @@ export default function page() {
               </div>
               <Inputfield
                 type="number"
-                value={emailcode}
-                onChange={(e) => setemailcode(e.target.value)}
+                value={phonecode}
+                onChange={(e) => setphonecode(e.target.value)}
                 placeholder="Mobile No. Verification Code"
               />
             </div>
