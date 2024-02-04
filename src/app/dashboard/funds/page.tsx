@@ -87,8 +87,19 @@ const FundsPage: React.FC<FundsPageProps> = () => {
           {currentfundsstep === "transferhistory" && <Transferhistory />}
         </div>
       </div>
+
       {/* ...... fix footer start from here ........... */}
-      <div className="sticky bottom-0 w-[100%] py-[20px] bg-[#07303F] sm:hidden block flex justify-evenly text-white font-poppinsSemibold  rounded-tl-[15px] rounded-tr-[15px]">
+      <div
+        style={{
+          display: `${
+            currentpopupactive === "withdraw" ||
+            currentpopupactive === "deposite"
+              ? "none"
+              : "flex"
+          }`,
+        }}
+        className="sticky bottom-0 w-[100%] py-[20px] bg-[#07303F] sm:hidden block flex justify-evenly text-white font-poppinsSemibold  rounded-tl-[15px] rounded-tr-[15px]"
+      >
         <div
           style={{ cursor: "pointer" }}
           onClick={() => setCurrentpopupactive("withdraw")}
