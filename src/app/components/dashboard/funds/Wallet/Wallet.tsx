@@ -35,8 +35,8 @@ const Wallet: React.FC<WalletProps> = ({
       <div className="flex justify-between  sm:py-[25px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[0px] ">
         {/* wallets balance  */}
         <div className="flex gap-[20px]   sm:px-[20px] px-[20px] sm:justify-auto   sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[20px] ">
-          <p>Wallet Balance</p>
-          <p>{user_balance}</p>
+          <p className="flex items-center">Wallet Balance</p>
+          <p className="flex items-center">{user_balance}</p>
         </div>
         {/* withdrawl and deposite button  */}
         <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[0px] sm:pt-[0px] sm:pt-[10px] pt-[0px] sm:justify-auto justify-between">

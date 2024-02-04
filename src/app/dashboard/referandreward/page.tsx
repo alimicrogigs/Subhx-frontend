@@ -5,6 +5,7 @@ import ToasterCustom from "@/app/components/common/ToasterCustom/ToasterCustom";
 import ReferHIstory from "@/app/components/dashboard/ReferandReward/ReferHIstory/ReferHIstory";
 import Referfriend from "@/app/components/dashboard/ReferandReward/Referfriend/Referfriend";
 import styles from "./page.module.css";
+import Footer from "@/app/components/Footer/Footer";
 import {
   motion,
   useAnimation,
