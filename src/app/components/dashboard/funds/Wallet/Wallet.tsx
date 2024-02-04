@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import styles from "./page.module.css";
 interface WalletProps {
   onAction: (action: string) => void;
   popupactive: (action: string) => void;
@@ -46,11 +47,11 @@ const Wallet: React.FC<WalletProps> = ({
                 activebutton == "Portfolio" ? "#07303F" : ""
               }`,
               borderBottom: `${
-                activebutton == "Portfolio" ? "2px solid #829CA5" : ""
+                activebutton == "Portfolio" ? "5px solid #829CA5" : ""
               }`,
             }}
             onClick={handleHome}
-            className="flex-1 sm:min-w-[200px] min-w-[150px] text-[1rem] text-center sm:py-[5px] py-[15px]  sm:rounded-[5px] rounded-[0px] sm:border-[2px] sm:border-buttonborder"
+            className={`${styles.walletheading} flex-1 sm:min-w-[200px] min-w-[150px] text-[1rem] text-center sm:py-[5px] py-[15px]  sm:rounded-[5px] rounded-[0px] sm:border-[2px] sm:border-buttonborder`}
           >
             PORTFOLIO
           </div>
@@ -62,11 +63,11 @@ const Wallet: React.FC<WalletProps> = ({
                 activebutton == "transferhistory" ? "#07303F" : ""
               }`,
               borderBottom: `${
-                activebutton == "transferhistory" ? "2px solid #829CA5" : ""
+                activebutton == "transferhistory" ? "5px solid #829CA5" : ""
               }`,
             }}
             onClick={handletransferhostory}
-            className="flex-1 sm:min-w-[200px] min-w-[180px] text-[1rem] text-center sm:py-[5px] py-[15px] px-[15px] sm:rounded-[5px] rounded-[0px] sm:border-[2px] sm:border-buttonborder"
+            className={`${styles.walletheading} flex-1 sm:min-w-[200px]  min-w-[180px] text-[1rem] text-center sm:py-[5px] py-[15px] px-[15px] sm:rounded-[5px] rounded-[0px] sm:border-[2px] sm:border-buttonborder`}
           >
             TRANSFER HISTORY
           </div>

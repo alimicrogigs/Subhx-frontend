@@ -7,12 +7,7 @@ interface DashboardProps {
 
 const DashboardLayout: React.FC<DashboardProps> = ({ children }) => {
   return (
-    <section
-      style={{
-        background: "black",
-      }}
-      className="w-[100vw] h-[100vh]"
-    >
+    <section className="w-[100vw] h-[100vh] sm:bg-black bg-[#041E27] ">
       <Dashboardnavbar />
       <div
         style={{ height: "calc(100vh - 80px )" }}

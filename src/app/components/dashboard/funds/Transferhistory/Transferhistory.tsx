@@ -103,13 +103,13 @@ export default function Fundshome() {
       <table className={`${styles.table} w-[100%]  text-white`}>
         <thead className="ml-[20px] bg-[#07303F]">
           <tr className="bg-[#07303F] text-[.8rem] ">
-            <th className="px-[20px] py-[5px]">Assets</th>
-            <th className="px-[20px] py-[5px]">Type</th>
-            <th className="px-[20px] py-[5px] text-center">Volume</th>
+            <th className="px-[20px] py-[5px]">ASSETS</th>
+            <th className="px-[20px] py-[5px]">TYPE</th>
+            <th className="px-[20px] py-[5px] text-center">VOLUME</th>
             <th className="sm:block hidden px-[20px] py-[5px] text-right">
-              Status
+              STATUS
             </th>
-            <th className="px-[20px] py-[5px] text-right">Time</th>
+            <th className="px-[20px] py-[5px] text-right">TIME</th>
           </tr>
         </thead>
         <tbody>

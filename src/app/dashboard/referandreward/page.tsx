@@ -65,6 +65,7 @@ export default function page() {
   return (
     <>
       <motion.div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-x-scroll rounded-[10px]">
+        <div className="w-[100%] h-[10px] sm:hidden block bg-black"></div>
         {/* .................................. hero section .............. */}
         <div className="w-[100%] sm:h-[100%] h-[100vh] text-white flex sm:flex-row flex-col">
           <div

@@ -35,8 +35,9 @@ const FundsPage: React.FC<FundsPageProps> = () => {
               : "scroll"
           }`,
         }}
-        className="relative sm:w-[99%] w-[100%] h-[98%] max-h-[98%] bg-[#041E27]  sm:rounded-[10px] rounded-[0px]"
+        className="relative sm:w-[99%] w-[100%] h-[98%] max-h-[98%] bg-[#041E27]  sm:rounded-[10px] rounded-[0px]sm:mt-[0px] "
       >
+        <div className="w-[100%] h-[10px] sm:hidden block bg-black"></div>
         {/* first popup  */}
         {currentpopupactive === "deposite" && (
           <div

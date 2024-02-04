@@ -51,7 +51,7 @@ export default function () {
 
   console.log(pathname);
   return (
-    <div className="w-[100%] h-[80px] bg-dashboardbgone text-white">
+    <div className="w-[100%] h-[80px] sm:bg-dashboardbgone bg-[#041E27] text-white">
       <nav className="sm:flex hidden h-[100%] items-center justify-between">
         <ul className="flex gap-[50px] pl-[50px] h-[100%] ">
           <li className="flex items-center justify-center h-[100%] ">
@@ -199,7 +199,7 @@ export default function () {
           </li>
           <li
             onClick={() => setMobilemenuopen(!mobilemenuopen)}
-            className={`relative w-[60px] h-[70%] bg-[#041E27] mr-[20px] rounded-[5px]`}
+            className={`relative w-[50px] h-[50%] bg-[#07303F] mr-[20px] rounded-[5px]`}
           >
             <div
               className={`${
@@ -230,7 +230,7 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1.2rem]  border-b border-b-[.5px] "
+                className="w-[100%] py-[20px] pl-[20px] text-[1rem]  border-b border-b-[.5px] "
               >
                 EXCHANGE
               </div>
@@ -243,17 +243,65 @@ export default function () {
                   }`,
                 }}
                 onClick={() => setMobilemenuopen(!mobilemenuopen)}
-                className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]"
+                className="w-[100%] py-[20px] pl-[20px] text-[1rem] bg-[#07303F] border-b border-b-[.5px]"
               >
                 FUNDS
               </div>
             </Link>
-            <div className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px]">
-              Refer & Rewards
-            </div>
-            <div
+            <Link href="/dashboard/referandreward">
+              <div
+                style={{
+                  background: `${
+                    pathname === "/dashboard/referandreward"
+                      ? "#041E27"
+                      : "#07303F"
+                  }`,
+                }}
+                onClick={() => setMobilemenuopen(false)}
+                className="w-[100%] py-[20px] pl-[20px] text-[1rem] border-b border-b-[.5px]"
+              >
+                REFER & REWARD
+              </div>
+            </Link>
+
+            <Link href="/dashboard/account-setting">
+              <div
+                style={{
+                  background: `${
+                    pathname === "/dashboard/account-setting"
+                      ? "#041E27"
+                      : "#07303F"
+                  }`,
+                }}
+                onClick={closeallmenu}
+                className="flex gap-[10px] py-[20px] text-[1rem] items-center pl-[20px] bg-[#07303F] border-b border-b-[.5px]"
+              >
+                <div
+                  style={{
+                    backgroundImage:
+                      "url(/dashboard/dashboradnavbar/accountseting.svg)",
+                  }}
+                  className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
+                ></div>
+                <p>Account Settings</p>
+              </div>
+            </Link>
+
+            <Link href="/dashboard/account-setting">
+              <div className="flex gap-[10px] py-[20px] text-[1rem] items-center pl-[20px] bg-[#07303F] border-b border-b-[.5px]">
+                <div
+                  style={{
+                    backgroundImage:
+                      "url(/dashboard/dashboradnavbar/logout.svg)",
+                  }}
+                  className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
+                ></div>
+                <p>logout</p>
+              </div>
+            </Link>
+            {/* <div
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-[100%] py-[20px] pl-[20px] text-[1.2rem] bg-[#07303F] border-b border-b-[.5px] flex gap-[20px] items-center"
+              className="w-[100%] py-[20px] pl-[20px] text-[1rem] bg-[#07303F] border-b border-b-[.5px] flex gap-[20px] items-center"
             >
               <div
                 style={{
@@ -264,7 +312,7 @@ export default function () {
                 }}
                 className="w-[25px] h-[30px]"
               ></div>
-              <p> jason</p>
+              <p className="text-[1rem]"> jason</p>
               <div
                 style={{
                   transform: `${
@@ -275,61 +323,59 @@ export default function () {
               >
                 <IoIosArrowDropdownCircle />
               </div>
-            </div>
+            </div> */}
             {/* .................................................................................................. */}
             <AnimatePresence>
-              {dropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.1 }}
-                  className="  bg-[#07303F] rounded-bl-[10px] rounded-br-[10px] px-[30px]"
-                >
-                  {/* ....... first menu ........ */}
-                  <Link href="/dashboard/account-setting">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.1 }}
+                className="  bg-[#07303F] rounded-bl-[10px] rounded-br-[10px] px-[30px]"
+              >
+                {/* ....... first menu ........ */}
+                {/* <Link href="/dashboard/account-setting">
+                  <div
+                    onClick={closeallmenu}
+                    className="flex gap-[20px] py-[20px] text-[1rem] items-center pl-[10px] "
+                  >
                     <div
-                      onClick={closeallmenu}
-                      className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px] "
-                    >
-                      <div
-                        style={{
-                          backgroundImage:
-                            "url(/dashboard/dashboradnavbar/accountseting.svg)",
-                        }}
-                        className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
-                      ></div>
-                      <p>Account Settings</p>
-                    </div>
-                  </Link>
-                  {/* ..... second item ..... */}
-                  <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
-                      <div
-                        style={{
-                          backgroundImage:
-                            "url(/dashboard/dashboradnavbar/refer.svg)",
-                        }}
-                        className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
-                      ></div>
-                      <p>refer & rewards</p>
-                    </div>
-                  </Link>
-                  {/* ......... third item .......... */}
-                  <Link href="/dashboard/account-setting">
-                    <div className="flex gap-[20px] py-[20px] text-[1.2rem] items-center pl-[10px]">
-                      <div
-                        style={{
-                          backgroundImage:
-                            "url(/dashboard/dashboradnavbar/logout.svg)",
-                        }}
-                        className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
-                      ></div>
-                      <p>logout</p>
-                    </div>
-                  </Link>
-                </motion.div>
-              )}
+                      style={{
+                        backgroundImage:
+                          "url(/dashboard/dashboradnavbar/accountseting.svg)",
+                      }}
+                      className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
+                    ></div>
+                    <p>Account Settings</p>
+                  </div>
+                </Link> */}
+                {/* ..... second item ..... */}
+                {/* <Link href="/dashboard/referandreward">
+                  <div className="flex gap-[20px] py-[20px] text-[1rem] items-center pl-[10px]">
+                    <div
+                      style={{
+                        backgroundImage:
+                          "url(/dashboard/dashboradnavbar/refer.svg)",
+                      }}
+                      className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
+                    ></div>
+                    <p>REFER & REWARDS</p>
+                  </div>
+                </Link> */}
+                {/* ......... third item .......... */}
+                {/* <Link href="/dashboard/account-setting">
+                  <div className="flex gap-[20px] py-[20px] text-[1rem] items-center pl-[10px]">
+                    <div
+                      style={{
+                        backgroundImage:
+                          "url(/dashboard/dashboradnavbar/logout.svg)",
+                      }}
+                      className="h-[30px] w-[30px] bg-no-repeat bg-contain bg-center"
+                    ></div>
+                    <p>logout</p>
+                  </div>
+                </Link> */}
+              </motion.div>
             </AnimatePresence>
             {/* .................................................................................................. */}
             <div></div>
