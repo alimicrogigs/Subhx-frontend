@@ -95,7 +95,7 @@ const FundsPage: React.FC<FundsPageProps> = () => {
             currentpopupactive === "withdraw" ||
             currentpopupactive === "deposite"
               ? "none"
-              : "flex"
+              : ""
           }`,
         }}
         className="sticky bottom-0 w-[100%] py-[20px] bg-[#07303F] sm:hidden block flex justify-evenly text-white font-poppinsSemibold  rounded-tl-[15px] rounded-tr-[15px]"
