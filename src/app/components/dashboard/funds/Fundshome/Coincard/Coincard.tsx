@@ -54,8 +54,10 @@ const Coincard: React.FC<coincardsprops> = ({
           }}
           onClick={() => {
             setisexpand(!isexpand);
+            setisdepositewopen(false);
+            setiswithdrawopen(false);
           }}
-          className="absolute top-[30%] text-[1rem] right-[30px]"
+          className="sm:hidden block absolute top-[30%] text-[1rem] right-[30px]"
         >
           <GoTriangleDown />
         </div>

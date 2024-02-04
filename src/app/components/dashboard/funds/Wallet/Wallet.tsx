@@ -85,7 +85,7 @@ const Wallet: React.FC<WalletProps> = ({
             <div
               style={{ cursor: "pointer" }}
               onClick={handleDeposit}
-              className="relative sm:min-w-[160px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[30px] rounded-[5px] bg-[#5AD776] sm:block"
+              className="relative sm:min-w-[160px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[30px] rounded-[5px] bg-[#5AD776] sm:block text-black"
             >
               <div className="cut absolute top-0 right-0 w-[20px] h-[20px] sm:bg-[#041E27] bg-[#07303F] transform rotate-45 translate-x-[50%] translate-y-[-50%] "></div>
               DEPOSIT INR

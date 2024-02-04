@@ -4,6 +4,7 @@ import Inputfield from "../common/Inputfield/Inputfield";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface StepthreeProps {
   active: boolean;
@@ -11,6 +12,9 @@ interface StepthreeProps {
 }
 
 const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
+  // .... for animation .....
+  const [adharverified, setadharverified] = useState(false);
+  // ......... for animaton end here .....
   const [adharno, setadharno] = useState("");
   const [adharotp, setadharotp] = useState("");
 
@@ -96,27 +100,51 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
           placeholder="Aadhar OTP"
         />
       </div>
-
-      <div className="w-[80%] mt-[20px] flex bg-white text-[#00090C] py-[20px] px-[20px] gap-[30px] rounded-[5px]">
-        <div className="w-[120px] h-[150px]  rounded-[5px]">
-          <Image
-            src="/signup/avatar.svg"
-            alt="Avatar"
-            width={120}
-            height={150}
-          />
-        </div>
-        <div className="flex-1 ">
-          <ul className="text-[.6rem] h-[100%] flex-col flex justify-center gap-[5px] font-poppinsSemibold">
-            <li> Full Name : Random Jones</li>
-            <li>D.O.B : 02/11/2016</li>
-            <li>Gender : Female</li>
-            <li>Father : Randomness</li>
-            <li> Address : 83849 Mayert Squares, Hudsonport, MT 99884-6612</li>
-          </ul>
-        </div>
+      <div
+        onClick={() => {
+          setadharverified(true);
+        }}
+      >
+        verifed adhar{" "}
       </div>
-
+      {/* ......... adhar detail to be animated ......... */}
+      <AnimatePresence>
+        {adharverified && (
+          <motion.div className="w-[80%] mt-[20px] flex bg-white text-[#00090C] py-[20px] px-[20px] gap-[30px] rounded-[5px]">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100, transition: { duration: 0 } }}
+              className="w-[120px] h-[150px]  rounded-[5px]"
+            >
+              <Image
+                src="/signup/avatar.svg"
+                alt="Avatar"
+                width={120}
+                height={150}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 100, transition: { duration: 0 } }}
+              className="flex-1 "
+            >
+              <ul className="text-[.6rem] h-[100%] flex-col flex justify-center gap-[10px] font-poppinsMedium">
+                <li> Full Name : Random Jones</li>
+                <li>D.O.B : 02/11/2016</li>
+                <li>Gender : Female</li>
+                <li>Father : Randomness</li>
+                <li>
+                  {" "}
+                  Address : 83849 Mayert Squares, Hudsonport, MT 99884-6612
+                </li>
+              </ul>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* ..................................................... */}
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",
