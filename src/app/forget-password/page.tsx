@@ -4,19 +4,19 @@ import styles from "./page.module.css";
 import Inputfield from "../components/multistepform/common/Inputfield/Inputfield";
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
-import Link from "next/link"
-import {postRequestAPIHelper} from "../utils/lib/requestHelpers"
-const dotenv = require('dotenv');
+import { postRequestAPIHelper } from "../utils/lib/requestHelpers";
+import Link from "next/link";
+const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
 export default function page() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmation, setconfirmation ] = useState("")
-  const [emailcode, setemailcode] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmation, setconfirmation] = useState("");
+  const [emailcode, setemailcode] = useState("");
   const [phonecode, setphonecode] = useState("");
-  
+
   //  this is just for frond end toggle password
   const [showRetypePassword, setShowRetypePassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -106,10 +106,10 @@ export default function page() {
       email,
       password,
     });
-    
+
     try {
       const requestData: {
-        email: string;       
+        email: string;
         emailcode: string;
         phonecode: string;
         password: string;
@@ -119,19 +119,22 @@ export default function page() {
         password,
         password_confirmation: confirmation,
         emailcode,
-        phonecode
-      };     
-      const response = await postRequestAPIHelper(apiUrl+'verify-otp', null, requestData);
+        phonecode,
+      };
+      const response = await postRequestAPIHelper(
+        apiUrl + "verify-otp",
+        null,
+        requestData
+      );
       console.log(response);
-      if (response.status === 200){             
+      if (response.status === 200) {
         setCurrentStep("validate");
-      
       } else {
-        console.log('Registration failed:', response.data);
+        console.log("Verify OTP failed:", response.data);
       }
     } catch (error) {
       // Handle API error in your controller
-      console.error('Controller Error:', error);
+      console.error("Controller Error:", error);
     }
   };
   const handlesendotp = async (e: any) => {
@@ -151,6 +154,7 @@ export default function page() {
       );
       return;
     }
+
     // this validate that email is valid
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.custom(
@@ -167,37 +171,38 @@ export default function page() {
       email,
       password,
     });
+
     try {
-      const requestData: {
-        email: string;       
-      } = {
-        email     
-      };
-      console.log('API URL:', apiUrl);
+      const requestData: { email: string } = { email };
+      console.log("API URL:", apiUrl);
 
-      const response = await postRequestAPIHelper(apiUrl+'send-otp', null, requestData);
+      const response = await postRequestAPIHelper(
+        apiUrl + "send-otp",
+        null,
+        requestData
+      );
       console.log(response);
-      if (response.status === 200){
-        const token = (response.data.token)
-
-        // Check if the token is present
-        if (token) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
-          setCurrentStep("validate");
-        } else {
-          console.log('Token not found in response:', response.data);
-        }
-      // console.log(localStorage.setItem('token', JSON.stringify(response.data.token)) ) 
-      setCurrentStep("validate");
-      
+      if (response.status === 200) {
+        const token = response.data.token;
+        toast.custom(
+          <ToasterCustom
+            type="success"
+            message="The OTP has been sent successfully."
+          />,
+          {
+            position: "top-right", // Set the position (e.g., "top-center")
+            duration: 1000, // Set the duration in milliseconds
+          }
+        );
+        return;
+        setCurrentStep("validate");
       } else {
-        console.log('Registration failed:', response.data);
+        console.log("OTP send failed:", response.data);
       }
     } catch (error) {
       // Handle API error in your controller
-      console.error('Controller Error:', error);
+      console.error("Controller Error:", error);
     }
-   
   };
 
   return (
@@ -328,9 +333,6 @@ export default function page() {
               Reset Password
             </div>
           </form>
-          {/* ............................................................ */}
-          {/* code authentication form end from here  */}
-          {/* ............................................................ */}
         </div>
       </section>
     </>

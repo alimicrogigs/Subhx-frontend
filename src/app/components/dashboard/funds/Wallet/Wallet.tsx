@@ -1,7 +1,15 @@
 "use client";
-import React, { useEffect ,useState } from "react";
-import axios from "axios"
-// import { checkAuthorization } from '../../../../utils/auth';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import ToasterCustom from "../../../common/ToasterCustom/ToasterCustom";
+import 'react-loading-skeleton/dist/skeleton.css'
+import { getUpiAddressRequest, getUpiAddressSuccess, getUpiAddressFailure, getManualAccountFailure, getManualAccountRequest, getManualAccountSuccess, getUserVanFailure, getUserVanRequest, getUserVanSuccess } from "../../../../actions/depositeFundActions"
+import { getRequestAPIHelper } from "../../../../utils/lib/requestHelpers"
+import 'react-loading-skeleton/dist/skeleton.css'
+import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from "../../../../actions/depositeFundActions"
+import { storeUserData } from "../../../../actions/storeUserDataAction";
+
 
 interface WalletProps {
   onAction: (action: string) => void;
@@ -9,49 +17,114 @@ interface WalletProps {
   activebutton: string;
 }
 
-
-const dotenv = require('dotenv')
-dotenv.config();
 const apiUrl = process.env.API_URL;
-
 
 const Wallet: React.FC<WalletProps> = ({
   onAction,
   activebutton,
   popupactive,
+
 }) => {
-  let upitisend = "saad";
-  let user_balance = `₹ 5,689.00`;
+  const dispatch = useDispatch();
+  const { loading, upiAddress, error } = useSelector((state: any) => state.deposite)
+  console.log("upiAddressformredux___", upiAddress)
+  // const [loading, setLoading] = useState(true);
+  const [apiHitTime, setApiHitTime] = useState(null)
+
+
+  const [userBalance, setUserBalance] = useState<string>('0.00');
+
+  const apiData = useSelector((state: any) => state.apiData);
+  var token = localStorage.getItem("token");
   const handleWithdraw = () => {
-    // Trigger withdraw action
-    popupactive("withdraw");
-  };
-  
-  const handleDeposit =async () => {
-    // Trigger deposit action
-
+    popupactive("withdraw")
+  }
+  const getUPIaddress = async () => {
     try {
-      const token = localStorage.getItem("token")
-      // console.log(userPANresponse );
-      const response1 = await axios.get(apiUrl + 'upi-address',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
-      const response2= await axios.get(apiUrl + 'manul-account',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
-      const response3= await axios.get(apiUrl + 'get-user-van',{ headers: { 'token': token, 'Content-Type': 'application/json', 'Authorization': `Bearer `+ token}})
-
-      if(response1.status === 200 && response2.status === 200 && response3.status === 200){
-        popupactive("deposite");
-        var upiID = response1.data.data[0].upi_id;
-        console.log(upiID)
-        console.log(response2.data.data)
-        console.log(response3.data.data)
+      dispatch(getUpiAddressRequest())
+      // Fetch UPI address
+      const upiAddressResponse = await getRequestAPIHelper(apiUrl + 'upi-address', token);
+      if (upiAddressResponse.status === 200) {
+        const upiAddressData = upiAddressResponse.data;
+        console.log("UPI Address Data:", upiAddressData);
+        dispatch(getUpiAddressSuccess(upiAddressResponse.data))
+        // Perform actions based on upiAddressData if needed
       }
-    }
-
-    
-    catch (error) {
-      console.error('Error UPI not generated:', error);
-      // toast.error("Error fetching PAN details");
+    } catch (error) {
+      console.error('Error fetching UPI address:', error);
+      dispatch(getUpiAddressFailure(error));
     }
   }
+  const getManaualAccount = async () => {
+   
+    try {
+      dispatch(getManualAccountRequest())
+      // Fetch UPI address
+      const manualAccountResponse = await getRequestAPIHelper(apiUrl + 'manul-account', token);
+      if (manualAccountResponse.status === 200) {
+        dispatch(getManualAccountSuccess(manualAccountResponse.data))
+        // Perform actions based on upiAddressData if needed
+      }
+    } catch (error) {
+      console.error('Error fetching manual account:', error);
+      dispatch(getManualAccountFailure(error));
+    }
+  }
+
+  const getVanUser = async () => {
+  
+    try {
+      dispatch(getUserVanRequest())
+      // Fetch UPI address
+      const vanUserResponse = await getRequestAPIHelper(apiUrl + 'get-user-van', token);
+      if (vanUserResponse.status === 200) {
+        dispatch(getUserVanSuccess(vanUserResponse.data))
+        // Perform actions based on upiAddressData if needed
+      }
+    } catch (error) {
+      console.error('Error fetching VAN USER account:', error);
+      dispatch(getUserVanFailure(error));
+    }
+  }
+
+  const handleDeposit = async () => {
+
+    try {
+      // Fetch UPI address
+      const getUserResponse = await getRequestAPIHelper(apiUrl + 'user', token)
+      // setLoading(true);
+      console.log(getUserResponse.data.kyc_verification)
+      if (getUserResponse.status === 200 && getUserResponse.data.kyc_verification === "approved") {
+        const getUserData = getUserResponse.data;
+        console.log("UPI Address Data:", getUserData)
+        // Perform actions based on upiAddressData if needed
+        getUPIaddress();
+        getManaualAccount();
+        getVanUser();
+      } else {
+        toast.custom(
+          <ToasterCustom type="error" message="KYC is Pending , Desposite details will not open !!! " />,
+          {
+            position: "top-right",
+            duration: 1000,
+          }
+        )
+        return;
+      }
+    }
+    catch (error) {
+      console.error('Error fetching UPI address:', error);
+      toast.custom(
+        <ToasterCustom type="error" message="KYC is Pending , Desposite details will not open !!! " />,
+        {
+          position: "top-right",
+          duration: 1000,
+        }
+      )
+      return;
+    }
+
+  };
 
   const handleHome = () => {
     onAction("Portfolio");
@@ -59,18 +132,41 @@ const Wallet: React.FC<WalletProps> = ({
   const handletransferhostory = () => {
     onAction("transferhistory");
   }
-  // useEffect(() => {
-  //   // Simulate getting token from localStorage or cookie
-  //   const token = localStorage.getItem('token');
-  //   checkAuthorization(token);
-  // }, []);
+    useEffect(() => {     
+      var token = localStorage.getItem("token");
+          const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+          const socket = new WebSocket(socketUrl);  
+          socket.onopen = () => {
+            console.log("WebSocket connection get_user_balance");
+            socket.send(JSON.stringify({ 'x-auth-token': token }));
+          };
+
+          socket.onmessage = (event) => {
+            console.log("WebSocket data received:", event.data);
+            // add consition to check if the event.data not null
+             if(event.data !== null){
+              const jsonData = JSON.parse(event.data);
+              const inrBalance = jsonData?.inr_balance;
+              console.log('INR Balance:', inrBalance);
+              setUserBalance(inrBalance);
+             }                     
+          };
+
+          socket.onclose = (event) => {
+            console.log("WebSocket connection closed:", event);
+          };
+          return () => {
+            socket.close();
+          };  
+        
+      }, []);
   return (
     <>
       <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
         {/* wallets balance  */}
         <div className="flex gap-[20px]  items-center sm:px-[20px] px-[0px] sm:justify-auto justify-center  sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[10px]">
           <p>Wallet Balance</p>
-          <p>{user_balance}</p>
+          <p>₹ {userBalance} </p>
         </div>
         {/* withdrawl and deposite button  */}
         <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[5px] sm:pt-[0px] pt-[10px]">
@@ -98,7 +194,7 @@ const Wallet: React.FC<WalletProps> = ({
             TRANSFER HISTORY
           </div>
           {/* .... */}
-          <div className="flex w-[100%] justify-center gap-[20px] sm:relative absolute bottom-0 sm:py-[0px] py-[30px] sm:px-[0px] px-[20px] max-w-[100vw] sm:bg-transparent bg-[#07303F] sm:z-[0] z-[1000]">
+          <div className="sm:flex hidden w-[100%] justify-center gap-[20px] sm:relative bottom-0 sm:py-[0px] py-[30px] sm:px-[0px] px-[20px] max-w-[100vw] sm:bg-transparent bg-[#07303F] sm:z-[0] z-[1000]">
             <div
               style={{ cursor: "pointer" }}
               onClick={handleWithdraw}
@@ -128,7 +224,10 @@ const Wallet: React.FC<WalletProps> = ({
           }}
           className="bg-center bg-no-repeat bg-contain px-[30px] py-[10px]"
         >
-          Withdraw
+
+        Withdraw
+
+        Withdraw
         </div> */}
 
           {/* <div
@@ -150,3 +249,7 @@ const Wallet: React.FC<WalletProps> = ({
 };
 
 export default Wallet;
+
+function dispatch(arg0: { type: string; payload: any; }) {
+  throw new Error("Function not implemented.");
+}

@@ -106,7 +106,9 @@ export default function Fundshome() {
             <th className="px-[20px] py-[5px]">Assets</th>
             <th className="px-[20px] py-[5px]">Type</th>
             <th className="px-[20px] py-[5px] text-center">Volume</th>
-            <th className="px-[20px] py-[5px] text-right">Status</th>
+            <th className="sm:block hidden px-[20px] py-[5px] text-right">
+              Status
+            </th>
             <th className="px-[20px] py-[5px] text-right">Time</th>
           </tr>
         </thead>

@@ -1,36 +1,56 @@
 import React, { useState, ChangeEvent } from "react";
 import DepositeCard from "../DepositeCard/DepositeCard";
 import ToasterCustom from "@/app/components/common/ToasterCustom/ToasterCustom";
+import { postRequestAPIHelper } from "../../../../../utils/lib/requestHelpers"
+import {useSelector} from "react-redux"; 
+const dotenv = require('dotenv');
+dotenv.config();
+const apiUrl = process.env.API_URL;
+
 import toast from "react-hot-toast";
 interface props {
   UPIid: string;
 }
 
-<<<<<<< HEAD
-const DepositeCardone: React.FC<props> = ({ UPIid })=> {
-=======
-interface props {
-  UPIid: string;
-}
-
 const DepositeCardone: React.FC<props> = ({ UPIid }) => {
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
   const upi = "Payments.bit24hr@upi";
-
+  const {upiAddress} = useSelector((state:any)=>state.deposite);
   const [UPIrrnnumber, setUPIrrnnumber] = useState("");
 
-  const handleupisubmit = () => {
-    console.log({ UPIrrnnumber })
+  const handleupisubmit = async () => {
+    // console.log({ UPIrrnnumber })
+
+    // if (UPIrrnnumber.length >= 5) {
+    try {
+      const token = localStorage.getItem("token")
+
+      const RRNorUTN = await postRequestAPIHelper(apiUrl + 'create-deposit-request', token, {
+        deposit_reference_id: UPIrrnnumber
+      })
+
+      toast.custom(
+        <ToasterCustom type="success" message={RRNorUTN.status === 200 ? "Please wait for 5 min and check again" : "Loading"} />,
+        {
+          position: "top-right", // Set the position (e.g., "top-center")
+          duration: 1000, // Set the duration in milliseconds
+        }
+      );
+    } catch (error) {
+      console.error('Error UPI not generated:', error);
+      // toast.error("Error fetching PAN details");
+    }
+    // }
   };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUPIrrnnumber(e.target.value);
 
   };
   const handlecopyupi = async () => {
     try {
-      await navigator.clipboard.writeText(upi);
+      await navigator.clipboard.writeText(upiAddress[0]?.upi_id);
       toast.custom(
-        <ToasterCustom type="success" message={`${upi} is copied `} />,
+        <ToasterCustom type="success" message={`${upiAddress[0]?.upi_id} is copied `} />,
         {
           position: "top-right", // Set the position (e.g., "top-center")
           duration: 1000, // Set the duration in milliseconds
@@ -49,7 +69,8 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
     <>
       <DepositeCard eventKey="3" heading="UPI ID" >
         <div className="w-[100%] flex justify-between px-[20px] py-[20px] border-[1px] rounded-[5px]">
-          <p>{UPIid}</p>
+          <p>{upiAddress[0]?.upi_id}</p>
+          {/* <p>{UPIid}</p> */}
           <div
             onClick={handlecopyupi}
             style={{
@@ -83,12 +104,7 @@ const DepositeCardone: React.FC<props> = ({ UPIid }) => {
       </DepositeCard>
     </>
   );
-<<<<<<< HEAD
 }
 
 
 export default DepositeCardone;
-=======
-};
-export default DepositeCardone;
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174

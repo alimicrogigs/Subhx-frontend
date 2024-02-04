@@ -12,6 +12,7 @@ import {
   useViewportScroll,
   useTransform,
 } from "framer-motion";
+import { duration } from "moment";
 
 export default function page() {
   // .. testing
@@ -63,7 +64,7 @@ export default function page() {
   // .....
   return (
     <>
-      <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-x-scroll rounded-[10px]">
+      <motion.div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-x-scroll rounded-[10px]">
         {/* .................................. hero section .............. */}
         <div className="w-[100%] sm:h-[100%] h-[100vh] text-white flex sm:flex-row flex-col">
           <div
@@ -128,9 +129,23 @@ export default function page() {
         </div>
         {/* .................................. hero section  end.............. */}
         {/* .................................. card section .............. */}
-        <div className="w-[100%] sm:h-[80vh] flex justify-center items-center sm:gap-[100px] gap-[0px] text-white sm:flex-row flex-col">
+        <motion.div
+          whileInView={"visible"}
+          className="w-[100%] sm:h-[80vh] flex justify-center items-center sm:gap-[100px] gap-[0px] text-white sm:flex-row flex-col"
+        >
           {/* ...... 1st card goes here .... */}
           <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            variants={{
+              visible: {
+                opacity: 1,
+                transition: { duration: 2 },
+              },
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
             style={{
               backgroundImage: "url(/dashboard/refer/border.svg)",
             }}
@@ -199,7 +214,7 @@ export default function page() {
             </p>
           </div>
           {/* .... */}
-        </div>
+        </motion.div>
         {/* .................................. card section  end.............. */}
 
         {/* ....................... referal card and referal code start here ......... */}
@@ -274,7 +289,7 @@ export default function page() {
           </div>
         </div>
         {/* ....................... referal card and referal code end here ......... */}
-      </div>
+      </motion.div>
     </>
   );
 }

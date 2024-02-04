@@ -1,8 +1,10 @@
 import React from "react";
 import DepositeCard from "../DepositeCard/DepositeCard";
 import CopyCard from "../../../Common/CopyCard/CopyCard";
+import {useSelector} from "react-redux";
 
 export default function DepositeCardone() {
+  const {manualAccount , vanAccount} = useSelector((state)=>state.deposite);
   return (
     <>
       <DepositeCard eventKey="2" heading="RTGS">
@@ -14,17 +16,17 @@ export default function DepositeCardone() {
           a beneficiary and make the payment.
         </h1>
         <div className="flex w-[100%] flex-wrap gap-[20px] justify-between">
-          <CopyCard heading="Beneficiary name" subheading="JJ Trading Cmpany" />
-          <CopyCard heading="IFSC Code" subheading="SBIN000466" />
-          <CopyCard heading="Bank Name" subheading="State Bank of India" />
+          <CopyCard heading="Beneficiary name" subheading={manualAccount[0]?.name} />
+          <CopyCard heading="IFSC Code" subheading={vanAccount[0]?.ifsc_code} />
+          <CopyCard heading="Bank Name" subheading={manualAccount[0]?.bank_name} />
           <div
             className="w-[45%]
             "
           >
             <h1>Account Type</h1>
-            <p>Savings</p>
+            <p>{manualAccount[0]?.type}</p>
           </div>
-          <CopyCard heading="Account Number" subheading="ZANM1754665623" />
+          <CopyCard heading="Account Number" subheading={vanAccount[0]?.van_number}  />
         </div>
       </DepositeCard>
     </>

@@ -79,7 +79,7 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
       adharotp,
     })
 
-    if (adharotp.length === 5) {
+    if (adharotp.length === 6) {
       try {
         const token = localStorage.getItem("token")
         const requestID = localStorage.getItem("requestId")
@@ -123,10 +123,18 @@ const Stepthree: React.FC<StepthreeProps> = ({ active, onNextStep }) => {
             return;
           }
         } else {
+          toast.custom(
+            <ToasterCustom type="success" message="Otp is valid" />,
+            {
+              position: "top-right", // Set the position (e.g., "top-center")
+              duration: 1000,
+            }
+          )
+          return;
           console.log('OTP not valid:', response)
         }
       } catch (err) {
-        console.log(err);
+        console.log('Error', err);
       }
     }
 

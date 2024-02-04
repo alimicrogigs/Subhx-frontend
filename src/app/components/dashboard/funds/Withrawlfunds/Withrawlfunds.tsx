@@ -1,11 +1,47 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
+import { getRequestAPIHelper } from "@/app/utils/lib/requestHelpers";
+import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { storeUserData } from "@/app/actions/storeUserDataAction";
 
+const apiUrl = process.env.API_URL;
 export default function Withrawlfunds() {
+  const [userBalance, setUserBalance] = useState<string>('0.00');
+  const [freezeamount, setFreezeamount] = useState(0);
   const [withdrawlamount, setWithdrawlamount] = useState(0);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {       
+      const socketUrl = `ws://stream.bit24hr.in:8765/get_user_balance`;
+      const socket = new WebSocket(socketUrl);  
+      socket.onopen = () => {
+        console.log("WebSocket connection get_user_balance");
+        socket.send(JSON.stringify({ 'x-auth-token': token }));
+      };
+
+      socket.onmessage = (event) => {
+        const jsonData = JSON.parse(event.data);
+        const inrBalance = jsonData.inr_balance;
+        console.log('INR Balance:', inrBalance);
+        setUserBalance(inrBalance);
+      };
+
+      socket.onclose = (event) => {
+        console.log("WebSocket connection closed:", event);
+      };
+      return () => {
+        socket.close();
+      };  
+    
+  }, []);
+   
+
+    
   const handlewithdrawal = () => {
     console.log({ withdrawlamount });
   };
+  
   return (
     <>
       <section className="w-[100%]">
@@ -13,7 +49,6 @@ export default function Withrawlfunds() {
           <h1 className="pt-[20px] text-white font-poppinsSemibold sm:text-[1.6rem] text-[1rem] sm:mt-[0px] mt-[60px]">
             Withdraw INR to Bank
           </h1>
-          {/* ..... inr wallet balance ... */}
 
           {/* forst card start from here  */}
           <div className="bg-[#07303F] mt-[30px] font-poppinsSemibold pt-[30px] px-[30px] sm:text-[1.5rem] text-[1rem] pb-[30px] rounded-[10px]">
@@ -41,7 +76,7 @@ export default function Withrawlfunds() {
 
               <div>
                 <li className="flex ">
-                  <p>₹ 5,520.00</p>
+                  <p>₹ {userBalance}</p>
                 </li>
                 {/* ........ */}
                 <li className="flex  ">

@@ -5,8 +5,8 @@ import Inputfield from "../components/multistepform/common/Inputfield/Inputfield
 import toast, { Toaster } from "react-hot-toast";
 import ToasterCustom from "../components/common/ToasterCustom/ToasterCustom";
 import Link from "next/link";
-import { postRequestAPIHelper } from "../utils/lib/requestHelpers"
-const dotenv = require('dotenv');
+import { postRequestAPIHelper } from "../utils/lib/requestHelpers";
+const dotenv = require("dotenv");
 dotenv.config();
 const apiUrl = process.env.API_URL;
 
@@ -30,7 +30,7 @@ export default function page() {
   const handlesignmein = () => {
     setSignmein((prevsetSignmein) => !prevsetSignmein);
   };
-  const handleresendmobilecode = (e: any) => { };
+  const handleresendmobilecode = (e: any) => {};
 
   // login submit button
   const handleloginSubmit = async (e: any) => {
@@ -86,7 +86,7 @@ export default function page() {
       password,
       signmein,
     });
-    try {      
+    try {
       const requestData: {
         email: string;
         password: string;
@@ -96,48 +96,44 @@ export default function page() {
         password,
         signmein,
       };
+      console.log("API URL:", apiUrl);
 
-      const response = await postRequestAPIHelper(apiUrl + 'login', null, requestData);
+      const response = await postRequestAPIHelper(
+        apiUrl + "login",
+        null,
+        requestData
+      );
       if (response.status === 200) {
-        const token = (response.data.token)        
+        const token = response.data.token;
         toast.custom(
-          <ToasterCustom
-            type="success"
-            message="Login Successfully"
-          />,
+          <ToasterCustom type="success" message="Login Successfully" />,
           {
-            position: "top-right", 
-            duration: 1000, 
+            position: "top-right",
+            duration: 1000,
           }
         );
         if (token) {
-          localStorage.setItem('token', response.data.token);
+          localStorage.setItem("token", response.data.token);
           setCurrentStep("validate");
         } else {
-          console.log('Token not found in response:', response.data);
-        } 
-        setCurrentStep("validate");
-        window.location.href = '/dashboard/exchange'; 
-      } else {
-        console.log('Registration failed:', response.data);
-      }
-    } catch (error:any) {
-      console.error('Controller Error:', error);
-      toast.custom(
-        <ToasterCustom
-          type="error"
-          message={error.message}
-        />,
-        {
-          position: "top-right", 
-          duration: 1000, 
+          console.log("Token not found in response:", response.data);
         }
-      );
+        setCurrentStep("validate");
+        window.location.href = "/dashboard/exchange";
+      } else {
+        console.log("Registration failed:", response.data);
+      }
+    } catch (error: any) {
+      console.error("Controller Error:", error);
+      toast.custom(<ToasterCustom type="error" message={error.message} />, {
+        position: "top-right",
+        duration: 1000,
+      });
     }
   };
 
   // validation form submit button here
-  const handlevalidationsubmit = (e: any) => {  
+  const handlevalidationsubmit = (e: any) => {
     e.preventDefault();
     console.log({
       email,
@@ -151,7 +147,7 @@ export default function page() {
         style={{
           backgroundImage: "url(/signup/signupbg.svg)",
         }}
-        className="relative w-[100vw] h-[100vh] min-h-[600px] bg-center bg-cover flex justify-center items-center"
+        className="relative w-[100vw] h-[100vh] min-h-[700px] bg-center bg-cover flex justify-center items-center"
       >
         <Link href="/">
           <div
@@ -162,7 +158,7 @@ export default function page() {
           ></div>
         </Link>
         <div
-          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[90%] h-[95%] `}
+          className={`${styles.border_to_design} sm:w-[32%] w-[95%] sm:h-[95%] h-[95%] `}
         >
           {/* ............................................................ */}
           {/* login form start from here  */}
@@ -177,10 +173,10 @@ export default function page() {
                 Login Your Account
               </h1>
 
-              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[0px] pt-[10px]">
+              <p className="sm:text-[.8rem] text-[.7rem] text-center sm:pt-[8px] pt-[10px]">
                 Don't have an account?{" "}
                 <Link href="/create-account">
-                  <span className="text-[#00BFFF] sm:ml-[20px] ml-[10px]">
+                  <span className="text-golden sm:ml-[20px] ml-[10px]">
                     Create Account
                   </span>
                 </Link>
@@ -209,7 +205,7 @@ export default function page() {
             {/* ..................................... */}
             {/* ..................................... */}
             <div className="w-[80%] flex gap-[10px] mt-[15px] pl-[5px] justify-between items-center">
-              {/* <div className="flex gap-[10px]  sm:pl-[5px] pl-[0px] items-center">
+              <div className="flex gap-[10px]  sm:pl-[5px] pl-[0px] items-center">
                 <input
                   className="h-[100%] w-[20px]"
                   type="checkbox"
@@ -219,7 +215,7 @@ export default function page() {
                 <p className="sm:text-[.8rem] text-[.7rem]">
                   Keep me signed in.{" "}
                 </p>
-              </div>{" "} */}
+              </div>{" "}
               <Link href="/forget-password">
                 <div className="sm:text-[.8rem] text-[.7rem]">
                   Forget Password?

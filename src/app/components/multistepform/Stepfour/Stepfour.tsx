@@ -12,6 +12,7 @@ import ToasterCustom from "../../common/ToasterCustom/ToasterCustom";
 interface StepfourProps {
   active: boolean;
   onNextStep: () => void;
+
 }
 
 const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
@@ -69,6 +70,7 @@ const Stepfour: React.FC<StepfourProps> = ({ active, onNextStep }) => {
       if(response.status ===200){
         onNextStep();
       }
+      
     } catch (error) {
       console.error('Error fetching PAN details:', error);
       toast.error("Error fetching PAN details");

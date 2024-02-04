@@ -10,12 +10,26 @@ import { FaPlay } from "react-icons/fa";
 import { TbReceiptTax } from "react-icons/tb";
 import { GoDotFill } from "react-icons/go";
 import { IoIosAddCircle } from "react-icons/io";
+<<<<<<< Updated upstream
+import {useSelector} from "react-redux";
+
+=======
+import { useSelector } from "react-redux";
+>>>>>>> Stashed changes
 
 export default function Profile() {
   // data
   const [GSTno, setGSTno] = useState("");
   const [nomineeopen, setNomineeopen] = useState(false);
   const [GSTINopen, setGSTINopen] = useState(false);
+<<<<<<< Updated upstream
+  const {userAllDetails } = useSelector((state :any)=>state.userDetails);
+  
+  const {getUserAllDetails} = useSelector((state :any)=>state.deposite);
+
+=======
+  const { getUserAllDetails } = useSelector((state: any) => state.deposite);
+>>>>>>> Stashed changes
 
   // nominee edit form
   const [nomineeEditopen, setNomineeEditopen] = useState(false);
@@ -27,9 +41,14 @@ export default function Profile() {
     panNumber: "",
     emailAddress: "",
   });
+<<<<<<< Updated upstream
+
   const handleNewNominee = () => {
-    console.log(nomineeFormData);
   };
+
+=======
+  const handleNewNominee = () => {};
+>>>>>>> Stashed changes
   const handleNomineeFormDataChange = (e: any) => {
     const { name, value } = e.target;
     setNomineeFormData((prevData) => ({
@@ -38,7 +57,6 @@ export default function Profile() {
     }));
   };
   const handleGSTIN = () => {
-    console.log({ GSTno });
     setGSTno("");
   };
 
@@ -60,6 +78,7 @@ export default function Profile() {
     contactno: 9876543210,
     nominee: [{ name: "Alice Johnson", relation: "Spouse" }],
   };
+  console.log("getUserAllDetails 64", getUserAllDetails);
   return (
     <>
       <HeadContainer
@@ -76,7 +95,15 @@ export default function Profile() {
               <FaCheck />
             </div>
 
-            {user.name}
+<<<<<<< Updated upstream
+            {(userAllDetails .name === null ||userAllDetails .name === undefined) ? "NA" : userAllDetails .name}
+=======
+            {getUserAllDetails.name === null ||
+            getUserAllDetails.name === undefined ||
+            getUserAllDetails.name === undefined
+              ? "NA"
+              : getUserAllDetails.name}
+>>>>>>> Stashed changes
           </h1>
         </div>
         {/* ........ */}
@@ -88,10 +115,18 @@ export default function Profile() {
               <IoMdMail />
             </div>
 
-            {user.mail}
+<<<<<<< Updated upstream
+            {(userAllDetails .email === null ||userAllDetails .email === undefined) ? "NA" : userAllDetails .email}
+=======
+            {getUserAllDetails.email === null ||
+            getUserAllDetails.email === undefined
+              ? "NA"
+              : getUserAllDetails.email}
+>>>>>>> Stashed changes
           </h1>
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
+
         {/* ........ */}
         {/* ........ */}
         <div className="w=[100%] py-[10px] border-t border-t-[#041E27] flex justify-between">
@@ -101,8 +136,16 @@ export default function Profile() {
               <FaMobileAlt />
             </div>
             +91 &nbsp;
-            {user.contactno}
+<<<<<<< Updated upstream
+            {(userAllDetails .phone === null || userAllDetails .phone === undefined) ? "NA" : userAllDetails .phone}
+=======
+            {getUserAllDetails.phone === null ||
+            getUserAllDetails.phone === undefined
+              ? "NA"
+              : getUserAllDetails.phone}
+>>>>>>> Stashed changes
           </h1>
+
           <div className="mr-[20px] text-[#F5CD8E]">{/* <FaPen /> */}</div>
         </div>
         {/* ........ */}
@@ -147,13 +190,17 @@ export default function Profile() {
               <div
                 onClick={() => setNomineeEditopen(!nomineeEditopen)}
                 style={{ display: `${!nomineeEditopen ? "block" : "none"}` }}
-                className="mr-[20px] text-[#F5CD8E]"
+                className="mr-[20px] text-[#F5CD8E]  "
               >
                 <FaPen />
               </div>
             </div>
           ))}
+
+
           {/* { edit form for nominee} */}
+          
+          
           {nomineeEditopen && (
             <div className="w-[100%]  sm:px-[100px] px-[30px] flex flex-col gap-[20px] mt-[20px]">
               <h1>Add Your New Nominee Detail below :</h1>

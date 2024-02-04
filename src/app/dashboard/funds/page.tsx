@@ -10,32 +10,35 @@ interface FundsPageProps {}
 
 const FundsPage: React.FC<FundsPageProps> = () => {
   const [currentfundsstep, setCurrentfundsstep] = useState<string>("Portfolio");
+
   const [currentpopupactive, setCurrentpopupactive] = useState("");
+
   const handleWalletAction = (action: string): void => {
     // Update the currentfundsstep based on the action
     setCurrentfundsstep(action);
-  }
+  };
+
   const handlepopupactive = (action: string): void => {
     setCurrentpopupactive(action);
-  }
+  };
 
-
+  const handledepositeinsdiecoin = () => {};
   return (
     <>
-<<<<<<< HEAD
-    <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
-      {/* first popup  */}
-      {currentpopupactive === "deposite" && (
-        <div
-          style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
-          className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
-        >
-          {/* this is back button */}
-=======
-      <div className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27] overflow-y-scroll rounded-[10px]">
+      {/* below condition is for if popup active scroll disable  */}
+      <div
+        style={{
+          overflowY: `${
+            currentpopupactive === "deposite" ||
+            currentpopupactive === "withdraw"
+              ? "hidden"
+              : "scroll"
+          }`,
+        }}
+        className="relative w-[99%] h-[98%] max-h-[98%] bg-[#041E27]  sm:rounded-[10px] rounded-[0px]"
+      >
         {/* first popup  */}
         {currentpopupactive === "deposite" && (
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
           <div
             style={{ backgroundColor: "rgba(4, 30, 39, .9)" }}
             className="absolute w-[100%] h-[100%]  top-0 right-0 z-[1000] overflow-x-scroll"
@@ -48,8 +51,8 @@ const FundsPage: React.FC<FundsPageProps> = () => {
               className="fixed top-[100px] sm:left-[100px] left-[20px] w-[50px] h-[50px] bg-center bg-no-repeat bg-contain"
               onClick={() => setCurrentpopupactive("")}
             ></div>
-            {/* this is back button */}
 
+            {/* this is back button  ........*/}
             <Depositefunds />
           </div>
         )}
@@ -82,37 +85,29 @@ const FundsPage: React.FC<FundsPageProps> = () => {
           {currentfundsstep === "Portfolio" && <Fundshome />}
           {currentfundsstep === "transferhistory" && <Transferhistory />}
         </div>
-<<<<<<< HEAD
-      )}
-      {/* wallet start form here  */}
-      <Wallet
-        onAction={handleWalletAction}
-        popupactive={handlepopupactive}
-        activebutton={currentfundsstep}
-      />
+      </div>
+      {/* ...... fix footer start from here ........... */}
+      <div className="sticky bottom-0 w-[100%] py-[20px] bg-[#07303F] sm:hidden block flex justify-evenly ">
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => setCurrentpopupactive("withdraw")}
+          className="relative sm:min-w-[200px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[20px] rounded-[5px] bg-[#E65661] sm:block "
+        >
+          <div className="cut absolute top-0 right-0 w-[20px] h-[20px] sm:bg-[#041E27] bg-[#07303F] transform rotate-45 translate-x-[50%] translate-y-[-50%] "></div>
+          WITHDRAW INR
+        </div>
 
-      <div className="w-[100%] relative overflow-scroll">
-        {currentfundsstep === "Portfolio" && <Fundshome />}
-        {currentfundsstep === "transferhistory" && <Transferhistory />}
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => setCurrentpopupactive("deposite")}
+          className="relative sm:min-w-[200px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[30px] rounded-[5px] bg-[#5AD776] sm:block"
+        >
+          <div className="cut absolute top-0 right-0 w-[20px] h-[20px] sm:bg-[#041E27] bg-[#07303F] transform rotate-45 translate-x-[50%] translate-y-[-50%] "></div>
+          DEPOSIT INR
+        </div>
       </div>
-    </div>
-    {/* <div
-      onClick={() => setCurrentpopupactive("withdraw")}
-      className="sticky bottom-0 w-[100%] py-[20px] bg-white sm:hidden block"
-    >
-      Saad
-    </div> */}
-  </>
-=======
-      </div>
-      {/* <div
-        onClick={() => setCurrentpopupactive("withdraw")}
-        className="sticky bottom-0 w-[100%] py-[20px] bg-white sm:hidden block"
-      >
-        Saad
-      </div> */}
+      {/* ...... fix footer start from here ........... */}
     </>
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
   );
 };
 

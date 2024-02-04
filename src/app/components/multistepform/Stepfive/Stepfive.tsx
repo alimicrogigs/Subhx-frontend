@@ -15,23 +15,20 @@ interface StepsixProps {
   onNextStep: () => void;
 }
 
+
+
 const Stepsix: React.FC<StepsixProps> = ({ active, onNextStep }) => {
 const [video, setvideo] = useState("");
 const [loading, setLoading] = useState(false);
 
-<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
-=======
-  const handlerecord = () => {};
-
-  const handleSubmit = (e: React.FormEvent) => {
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");           
+
       const response = await getRequestAPIHelper(apiUrl + 'get-user-video-kyc-link', token);
-      if (response.status === 200) {
-        console.log('response---------48', response);        
+      console.log('response---------27', response);  
+      if (response.status === 200) {             
         window.location.href = response.data;  
       } else {
         console.error('Unexpected status code:', response.status);
@@ -71,21 +68,16 @@ const [loading, setLoading] = useState(false);
         <div className="hidden absolute w-[100%] h-[100%] bg-red-500 top-0 right-0 videoelement"></div>
       </div>
       <div className="progressbar w-[40%] h-[5px] bg-white mt-[10px]"></div>
-<<<<<<< HEAD
-      {/* <div className="controller flex gap-[10px] mt-[30px]">
-        <div
-=======
       <div className="controller flex gap-[10px] mt-[30px]">
         {/* <div
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
           style={{
             backgroundImage: "url(/signup/recordbutton.svg)",
           }}
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Preview
-        </div> */}
-        <div
+        </div> */} 
+        {/* <div
           onClick={handlerecord}
           style={{
             backgroundImage: "url(/signup/recordfillbg.svg)",
@@ -93,22 +85,10 @@ const [loading, setLoading] = useState(false);
           className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
         >
           Record
-        </div>
-        {/* <div
-          style={{
-            backgroundImage: "url(/signup/recordbutton.svg)",
-          }}
-          className="text-white py-[10px] px-[20px] bg-center bg-contain bg-no-repeat"
-        >
-          Retake
-<<<<<<< HEAD
-        </div>
-      </div> */}
-      <h5 className="mt-[20px] gap-[10px]">Please Proceed to complete Video KYC</h5>
-=======
         </div> */}
-      </div>
->>>>>>> 6c921e71a3731e66f029af4270e40b08845b4174
+        
+      </div> 
+      <h5 className="mt-[20px] gap-[10px]">Please Proceed to complete Video KYC</h5>
       <div
         style={{
           backgroundImage: "url(/signup/button.svg)",
