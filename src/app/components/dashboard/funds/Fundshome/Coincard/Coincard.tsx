@@ -147,7 +147,7 @@ const Coincard: React.FC<coincardsprops> = ({
               </span>
             </div>
             {/* ...................... */}
-            <div className="flex flex-1 text-[.8rem] gap-[5px]">
+            <div className="flex flex-1 text-[.8rem] gap-[15px]">
               <motion.div
                 whileTap={{ x: 2, y: 2 }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
