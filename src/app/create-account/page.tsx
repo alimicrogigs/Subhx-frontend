@@ -1,5 +1,5 @@
 "use client";
-import { motion, useAnimation } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import Stepone from "../components/multistepform/Stepone/Stepone";
 import Steptwo from "../components/multistepform/Steptwo/Steptwo";
@@ -14,18 +14,10 @@ import Link from "next/link";
 import styles from "./page.module.css";
 export default function page() {
   //..
-  const controls = useAnimation();
+
   //..
   const [currentstep, setcurrentstep] = useState(1);
-  ///.....
-  useEffect(() => {
-    // Add animations based on the current step
-    if (currentstep === 1) {
-      controls.start({ opacity: 1, y: 0 });
-    } else {
-      controls.start({ opacity: 0, y: -200 });
-    }
-  }, [currentstep, controls]);
+
   ////...
   const handleNextStep = () => {
     // Update the current step to move to the next one
@@ -65,10 +57,12 @@ export default function page() {
           onNextStep={handleNextStep}
           active={currentstep == 1 ? true : false}
         />
+
         <Steptwo
           onNextStep={handleNextStep}
           active={currentstep == 2 ? true : false}
         />
+
         <Stepthree
           onNextStep={handleNextStep}
           active={currentstep == 3 ? true : false}
