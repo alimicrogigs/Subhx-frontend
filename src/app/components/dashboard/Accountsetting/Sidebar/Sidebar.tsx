@@ -50,13 +50,13 @@ const Sidebar: React.FC<SidebarProps> = ({
         logo="/dashboard/account-setting/sidebar/verifykyc.svg"
       />{" "}
 
-      <Card
+      {/* <Card
         action={() => handleCardClick("referal")}
         isActive={currentActiveButton == "referal" ? true : false}
         iconscale="1.1"
         title="REFERRAL"
         logo="/dashboard/account-setting/sidebar/refereal.svg"
-      />{" "}
+      />{" "} */}
       <Card
         action={() => handleCardClick("payment-option")}
         isActive={currentActiveButton == "payment-option" ? true : false}

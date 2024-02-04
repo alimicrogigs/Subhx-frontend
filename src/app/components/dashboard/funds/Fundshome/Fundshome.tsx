@@ -52,11 +52,11 @@ export default function Fundshome() {
       style={{}}
       className={`${styles.oddevencolor} sm:min-w-[900px] min-w-[100vw] w-[100%] `}
     >
-      <div className="w-[100%]  flex justify-between bg-[#07303f] py-[5px] text-white sm:text-[.8rem] text-[.6rem] px-[20px]">
-        <div className="sm:flex-1">Assets</div>
-        <div className="sm:flex-1">Total Balance</div>
-        <div className="sm:flex-1 text-left ">Today’s Gains</div>
-        <div className="sm:flex-1 ">Current Portfolio </div>
+      <div className="w-[100%]  flex justify-between bg-[#07303f] py-[5px] text-white sm:text-[.8rem] text-[.6rem] sm:px-[20px] px-[10px]">
+        <div className="flex-1">ASSETS</div>
+        <div className="flex-1">TOTAL BALANCE</div>
+        <div className="flex-1 text-left ">TODAY'S GAIN</div>
+        <div className="sm:flex-1 sm:block hidden">CURRENT PORTFOLIO</div>
         <div className="sm:flex-1 sm:block hidden"></div>
       </div>
 

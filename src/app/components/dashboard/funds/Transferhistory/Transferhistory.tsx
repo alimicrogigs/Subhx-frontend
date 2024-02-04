@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./page.module.css";
+import Modal from "react-bootstrap/Modal";
 import Coincard from "../Fundshome/Coincard/Coincard";
+import { MdOutlineUnfoldMore } from "react-icons/md";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 export default function Fundshome() {
+  const [show, setShow] = useState(false);
+  const [currentpopupindex, setcurrentpopupindex] = useState(0);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handlepopupwithdata = (index: number) => {
+    setcurrentpopupindex(index);
+    handleShow();
+  };
+
   const yourData = [
     {
       asset: "Bitcoin (BTC)",
@@ -99,39 +112,114 @@ export default function Fundshome() {
   ];
 
   return (
-    <div style={{}} className={`${styles.oddevencolor} min-w-[900px] w-[100%]`}>
-      <table className={`${styles.table} w-[100%]  text-white`}>
-        <thead className="ml-[20px] bg-[#07303F]">
-          <tr className="bg-[#07303F] text-[.8rem] ">
-            <th className="px-[20px] py-[5px]">Assets</th>
-            <th className="px-[20px] py-[5px]">Type</th>
-            <th className="px-[20px] py-[5px] text-center">Volume</th>
-            <th className="sm:block hidden px-[20px] py-[5px] text-right">
-              Status
-            </th>
-            <th className="px-[20px] py-[5px] text-right">Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* data to be map here */}
-          {yourData.map((item, index) => (
-            <tr key={index} className="py-[20px]">
-              <td className="px-[20px] py-[10px]">{item.asset}</td>
-              <td
-                style={{
-                  color: `${item.type == "Deposit" ? "#5AD776" : "#E65661"}`,
-                }}
-                className="px-[20px] py-[10px]"
-              >
-                {item.type}
-              </td>
-              <td className="px-[20px] py-[20px] text-center">{item.volume}</td>
-              <td className="px-[20px] py-[20px] text-right">{item.status}</td>
-              <td className="px-[20px] py-[20px] text-right">{item.time}</td>
+    <>
+      <div
+        style={{}}
+        className={`${styles.oddevencolor} sm:min-w-[900px] w-[100%]`}
+      >
+        {/* ...... desktop table ......... */}
+        <table className={`${styles.table} w-[100%]  text-white `}>
+          <thead className="ml-[20px] bg-[#07303F]">
+            <tr className="bg-[#07303F] text-[.8rem] relative">
+              <th className="px-[20px] py-[5px]">ASSETS</th>
+              <th className="px-[20px] py-[5px]">TYPE</th>
+              <th className="px-[20px] py-[5px] text-center">VOLUME</th>
+              <th className="hidden sm:table-cell px-[20px] py-[5px] text-right">
+                RRN NUMBER
+              </th>
+              <th className="hidden sm:table-cell px-[20px] py-[5px] text-right">
+                STATUS
+              </th>
+              <th className="hidden sm:table-cell px-[20px] py-[5px] text-right">
+                TIME
+              </th>
+              <th className="table-cell sm:hidden"></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {/* data to be map here */}
+            {yourData.map((item, index) => (
+              <tr key={index} className="py-[20px]">
+                <td className="px-[20px] py-[10px]">{item.asset}</td>
+                <td
+                  style={{
+                    color: `${item.type == "Deposit" ? "#5AD776" : "#E65661"}`,
+                  }}
+                  className="px-[20px] py-[10px]"
+                >
+                  {item.type}
+                </td>
+                <td className="px-[20px] py-[20px] text-center">
+                  {item.volume}
+                </td>
+                <td className="hidden sm:table-cell px-[20px] py-[20px] text-right">
+                  {item.status}
+                </td>
+                <td className="hidden sm:table-cell px-[20px] py-[20px] text-right">
+                  {item.time}
+                </td>
+                <td className="hidden sm:table-cell px-[20px] py-[20px] text-right">
+                  {item.asset}
+                </td>
+                <td
+                  className="bg-no-repeat bg-contain bg-center table-cell sm:hidden w-[40px] h-[80%]  mr-[5px]"
+                  onClick={() => {
+                    handlepopupwithdata(index);
+                  }}
+                >
+                  <MdOutlineUnfoldMore />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* ...... desktop table ......... */}
+      </div>
+      {/* ..... modals ...... */}
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show}
+        onHide={handleClose}
+        className="bg-opacitywith"
+      >
+        <Modal.Header className="bg-[#07303F] text-white">
+          <Modal.Title>TRANSFER HISTORY</Modal.Title>
+          <div onClick={handleClose} className="text-[2rem]">
+            {" "}
+            <IoIosCloseCircleOutline />
+          </div>
+        </Modal.Header>
+        <Modal.Body className="bg-[#07303F] text-white">
+          <section className="flex flex-col gap-[20px]">
+            <div className="flex gap-[30px]">
+              <p>ASSETS :</p>
+              <p> {yourData[currentpopupindex].asset} </p>
+            </div>
+            <div className="flex gap-[30px]">
+              <p>TYPE :</p>
+              <p> {yourData[currentpopupindex].type} </p>
+            </div>
+            <div className="flex gap-[30px]">
+              <p>VOLUME :</p>
+              <p> {yourData[currentpopupindex].volume} </p>
+            </div>
+            <div className="flex gap-[30px]">
+              <p>RRN NUMBER :</p>
+              <p> {yourData[currentpopupindex].asset} </p>
+            </div>
+            <div className="flex gap-[30px]">
+              <p>STATUS :</p>
+              <p> {yourData[currentpopupindex].status} </p>
+            </div>
+            <div className="flex gap-[30px]">
+              <p>TIME :</p>
+              <p> {yourData[currentpopupindex].time} </p>
+            </div>
+          </section>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }

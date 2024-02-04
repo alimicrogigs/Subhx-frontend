@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SiBitcoinsv } from "react-icons/si";
 import { FaExclamationCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { GoTriangleDown } from "react-icons/go";
 
 interface coincardsprops {
   coinname: string;
@@ -32,6 +33,7 @@ const Coincard: React.FC<coincardsprops> = ({
 }) => {
   const [iswithdrawopen, setiswithdrawopen] = useState(false);
   const [isdepositewopen, setisdepositewopen] = useState(false);
+  const [isexpand, setisexpand] = useState(false);
   const [depositeBTCdetail, setdepositeBTCdetail] = useState({
     amount: null as string | null,
     remark: "",
@@ -43,16 +45,33 @@ const Coincard: React.FC<coincardsprops> = ({
         style={{
           background: `${backgroundcolor ? backgroundcolor : "transparent"}`,
         }}
-        className="w-[100%] flex justify-between py-[15px] text-white sm:text-[1rem] text-[.6rem] sm:px-[20px] px-[5px] py-[10px]"
+        className="relative w-[100%] flex justify-between py-[15px] text-white sm:text-[1rem] text-[.6rem] sm:px-[20px] px-[5px] py-[10px]"
       >
+        <div
+          style={{
+            transition: "all .1s ease-in-out ",
+            transform: `${isexpand ? "rotate(-180deg)" : "rotate(0deg)"}`,
+          }}
+          onClick={() => {
+            setisexpand(!isexpand);
+          }}
+          className="absolute top-[30%] text-[1rem] right-[30px]"
+        >
+          <GoTriangleDown />
+        </div>
+        {/* .... first row .... */}
         <div className="flex-1 items-center flex">
           {" "}
           <SiBitcoinsv className="mr-[5px] text-[1.5rem]" />
           {coinname}
         </div>
+
+        {/* .... second row .... */}
         <div className="flex-1 items-center flex">
           {coinQuantity} {coinname}
         </div>
+
+        {/* .... third row .... */}
         <div
           style={{
             color: `${profit ? "#5AD776" : "#E65661"}`,
@@ -61,19 +80,20 @@ const Coincard: React.FC<coincardsprops> = ({
         >
           {profitlosspercentage}
         </div>
-        {/* ........ */}
-        <div className="flex-1 justify-center flex  flex-col ">
+        {/* .... forth row .... */}
+        <div className="flex-1 justify-center sm:flex  flex-col hidden">
           ₹ {currentportfolio}
           <br />
           <span className="text-[.7rem] opacity-50"> Live : ₹{liveprice} </span>
         </div>
+
         {/* ........ */}
-        <div className="flex-1  sm:gap-[20px] gap-[5px] justify-evenly  flex">
+        <div className="flex-1  sm:gap-[20px] gap-[5px] justify-evenly  sm:flex hidden">
           {isbutton && (
             <>
               <motion.div
                 whileTap={{ x: 2, y: 2 }}
-                transition={{ type: "spring", stiffness: 500, damping: 5 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 onClick={() => {
                   setiswithdrawopen(!iswithdrawopen);
                   setisdepositewopen(false);
@@ -82,22 +102,24 @@ const Coincard: React.FC<coincardsprops> = ({
                   backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
                   cursor: "pointer",
                 }}
-                className="flex justify-center items-center px-[20px] bg-contain bg-center bg-no-repeat"
+                className="flex justify-center items-center px-[40px] bg-contain bg-center bg-no-repeat"
               >
                 Withdraw
               </motion.div>
               <motion.div
                 whileTap={{ x: 2, y: 2 }}
-                transition={{ type: "spring", stiffness: 500, damping: 5 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 onClick={() => {
                   setisdepositewopen(!isdepositewopen);
                   setiswithdrawopen(false);
                 }}
                 style={{
-                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
+                  backgroundImage:
+                    "url(/dashboard/funds/portfolio/greenbutton.svg)",
+
                   cursor: "pointer",
                 }}
-                className="flex justify-center items-center px-[30px] bg-contain bg-center bg-no-repeat"
+                className="flex justify-center items-center px-[40px] bg-contain bg-center bg-no-repeat"
               >
                 Deposit
               </motion.div>
@@ -105,6 +127,63 @@ const Coincard: React.FC<coincardsprops> = ({
           )}
         </div>
       </div>
+
+      {/* this is for mobile view  */}
+      <AnimatePresence>
+        {isexpand && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
+            className="w-[100%] text-white sm:hidden flex px-[20px] py-[10px]"
+          >
+            {/* ................ */}
+            <div className="flex-1 text-[.7rem] justify-center sm:flex  flex-col ">
+              ₹ {currentportfolio}
+              <br />
+              <span className="text-[.7rem] opacity-50">
+                {" "}
+                Live : ₹{liveprice}{" "}
+              </span>
+            </div>
+            {/* ...................... */}
+            <div className="flex flex-1 text-[.8rem] gap-[15px]">
+              <motion.div
+                whileTap={{ x: 2, y: 2 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                onClick={() => {
+                  setiswithdrawopen(!iswithdrawopen);
+                  setisdepositewopen(false);
+                }}
+                style={{
+                  backgroundImage: "url(/dashboard/funds/portfolio/button.svg)",
+                  cursor: "pointer",
+                }}
+                className="flex justify-center items-center px-[15px] bg-contain bg-center bg-no-repeat"
+              >
+                Withdraw
+              </motion.div>
+              <motion.div
+                whileTap={{ x: 2, y: 2 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                onClick={() => {
+                  setisdepositewopen(!isdepositewopen);
+                  setiswithdrawopen(false);
+                }}
+                style={{
+                  backgroundImage:
+                    "url(/dashboard/funds/portfolio/greenbutton.svg)",
+
+                  cursor: "pointer",
+                }}
+                className="flex justify-center items-center px-[20px] bg-contain bg-center bg-no-repeat"
+              >
+                Deposit
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* form below the deposite form start .... */}
       {/* .......................................................................... */}
       <AnimatePresence>
@@ -114,7 +193,7 @@ const Coincard: React.FC<coincardsprops> = ({
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
           >
             <div className="sm:w-[55%] w-[90%] mx-auto pt-[70px] pb-[10px]">
               <h1 className=" border-b border-b-[#07303F] border-b-[2px] pb-[10px] text-[.9rem]">
@@ -184,7 +263,7 @@ const Coincard: React.FC<coincardsprops> = ({
                   onClick={() => {
                     onAction(depositeBTCdetail);
                   }}
-                  className="bg-[#E65661] inline mx-auto px-[100px] py-[5px] text-[2rem] font-poppinsSemibold rounded rounded-[5px]"
+                  className="bg-[#E65661] inline mx-auto sm:px-[100px] px-[50px] py-[5px] sm:text-[2rem] text-[1.2rem] font-poppinsSemibold rounded rounded-[5px]"
                 >
                   Proceed with Withdrawal
                 </div>
@@ -216,7 +295,7 @@ const Coincard: React.FC<coincardsprops> = ({
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100, transition: { duration: 0 } }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
           >
             <div className="sm:w-[50%] w-[90%] mx-auto pt-[50px] pb-[10px]">
               <p className="border-b border-b-[#07303F] border-b-[2px] pb-[10px]">

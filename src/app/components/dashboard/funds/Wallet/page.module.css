@@ -1,0 +1,9 @@
+.walletheading {
+  border-bottom: 2px solid #829ca5;
+}
+
+@media only screen and (max-width: 500px) {
+  .walletheading {
+    background: none !important;
+  }
+}

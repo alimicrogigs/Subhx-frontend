@@ -11,6 +11,7 @@ import { depositeFundFailure, depositeFundRequest, depositeFundSuccess } from ".
 import { storeUserData } from "../../../../actions/storeUserDataAction";
 
 
+import styles from "./page.module.css";
 interface WalletProps {
   onAction: (action: string) => void;
   popupactive: (action: string) => void;
@@ -162,22 +163,25 @@ const Wallet: React.FC<WalletProps> = ({
       }, []);
   return (
     <>
-      <div className="flex justify-between  sm:py-[20px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[20px] ">
+      <div className="flex justify-between  sm:py-[25px] py-[0px]  border-b border-b-[2px] border-b-[#00BFFF] text-white sm:text-[1.5rem] text-[1rem] sm:flex-row flex-col-reverse sm:gap-0 gap-[0px] ">
         {/* wallets balance  */}
-        <div className="flex gap-[20px]  items-center sm:px-[20px] px-[0px] sm:justify-auto justify-center  sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[10px]">
-          <p>Wallet Balance</p>
-          <p>₹ {userBalance} </p>
+        <div className="flex gap-[20px]   sm:px-[20px] px-[20px] sm:justify-auto   sm:bg-transparent bg-[#07303F] sm:py-[0px] py-[20px] ">
+          <p className="flex items-center">Wallet Balance</p>
+          <p className="flex items-center">₹ {userBalance} </p>
         </div>
         {/* withdrawl and deposite button  */}
-        <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[5px] sm:pt-[0px] pt-[10px]">
+        <div className="flex sm:gap-[20px] gap-[0px]  items-center sm:px-[20px] px-[0px] sm:pt-[0px] sm:pt-[10px] pt-[0px] sm:justify-auto justify-between">
           <div
             style={{
               cursor: "pointer",
               backgroundColor: `${activebutton == "Portfolio" ? "#07303F" : ""
                 }`,
+              borderBottom: `${
+                activebutton == "Portfolio" ? "5px solid #829CA5" : ""
+              }`,
             }}
             onClick={handleHome}
-            className="sm:min-w-[200px] min-w-[150px] text-[1rem] text-center py-[5px]  rounded-[5px] sm:border-[2px] sm:border-buttonborder"
+            className={`${styles.walletheading} flex-1 sm:min-w-[200px] min-w-[150px] text-[1rem] text-center sm:py-[5px] py-[15px]  sm:rounded-[5px] rounded-[0px] sm:border-[2px] sm:border-buttonborder`}
           >
             PORTFOLIO
           </div>
@@ -187,9 +191,12 @@ const Wallet: React.FC<WalletProps> = ({
               cursor: "pointer",
               backgroundColor: `${activebutton == "transferhistory" ? "#07303F" : ""
                 }`,
+              borderBottom: `${
+                activebutton == "transferhistory" ? "5px solid #829CA5" : ""
+              }`,
             }}
             onClick={handletransferhostory}
-            className="sm:min-w-[200px] min-w-[180px] text-[1rem] text-center py-[5px] px-[15px] rounded-[5px] sm:border-[2px] sm:border-buttonborder"
+            className={`${styles.walletheading} flex-1 sm:min-w-[200px]  min-w-[180px] text-[1rem] text-center sm:py-[5px] py-[15px] px-[15px] sm:rounded-[5px] rounded-[0px] sm:border-[2px] sm:border-buttonborder`}
           >
             TRANSFER HISTORY
           </div>
@@ -198,7 +205,7 @@ const Wallet: React.FC<WalletProps> = ({
             <div
               style={{ cursor: "pointer" }}
               onClick={handleWithdraw}
-              className="relative sm:min-w-[200px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[20px] rounded-[5px] bg-[#E65661] sm:block "
+              className="relative sm:min-w-[160px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[20px] rounded-[5px] bg-[#E65661] sm:block "
             >
               <div className="cut absolute top-0 right-0 w-[20px] h-[20px] sm:bg-[#041E27] bg-[#07303F] transform rotate-45 translate-x-[50%] translate-y-[-50%] "></div>
               WITHDRAW INR
@@ -207,7 +214,7 @@ const Wallet: React.FC<WalletProps> = ({
             <div
               style={{ cursor: "pointer" }}
               onClick={handleDeposit}
-              className="relative sm:min-w-[200px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[30px] rounded-[5px] bg-[#5AD776] sm:block"
+              className="relative sm:min-w-[160px] min-w-[0px] text-[1rem] text-center py-[5px] sm:px-[15px] px-[30px] rounded-[5px] bg-[#5AD776] sm:block"
             >
               <div className="cut absolute top-0 right-0 w-[20px] h-[20px] sm:bg-[#041E27] bg-[#07303F] transform rotate-45 translate-x-[50%] translate-y-[-50%] "></div>
               DEPOSIT INR

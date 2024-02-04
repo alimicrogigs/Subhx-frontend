@@ -1,0 +1,14 @@
+.border_to_design {
+  background-image: url(/signup/border.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 450px;
+}
+@media only screen and (max-width: 500px) {
+  .border_to_design {
+    background-image: url(/signup/mobileborder.svg);
+    min-width: 0px;
+    height: 100%;
+  }
+}
